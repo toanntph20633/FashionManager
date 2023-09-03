@@ -11,14 +11,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 @Entity
-@Table(name = "role_entity")
+@Table(name = "user_role_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class UserRoleEntity extends CommonEntity {
+public class UserRoleEntity extends CommonEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private RoleEntity roleEntity;

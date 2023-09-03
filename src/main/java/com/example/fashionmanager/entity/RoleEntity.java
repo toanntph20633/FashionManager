@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "role_entity")
 @Getter
@@ -17,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class RoleEntity extends CommonEntity {
+public class RoleEntity extends CommonEntity implements Serializable {
     @Column(name = "role_name")
     private String roleName;
 }
