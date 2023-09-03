@@ -1,4 +1,4 @@
-package com.example.fashionmanager.security.model;
+package com.example.fashionmanager.security;
 
 import com.example.fashionmanager.entity.UserEntity;
 import lombok.Getter;

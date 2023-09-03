@@ -1,8 +1,6 @@
-package com.example.fashionmanager.security;
+package com.example.fashionmanager.jwt;
 
-import com.example.fashionmanager.security.service.IJwtService;
-import com.example.fashionmanager.security.service.impl.CustomUserDetailService;
-import com.example.fashionmanager.security.service.impl.JwtService;
+import com.example.fashionmanager.security.CustomUserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;

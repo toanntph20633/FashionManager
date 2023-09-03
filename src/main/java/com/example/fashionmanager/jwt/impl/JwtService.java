@@ -1,6 +1,7 @@
-package com.example.fashionmanager.security.service.impl;
+package com.example.fashionmanager.jwt.impl;
 
-import com.example.fashionmanager.security.service.IJwtService;
+import com.example.fashionmanager.jwt.IJwtService;
+import com.example.fashionmanager.util.DateUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,6 +12,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
@@ -47,8 +50,8 @@ public class JwtService implements IJwtService {
         return Jwts.builder()
                 .addClaims(extraClaims)
                 .setSubject(username)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 5))
+                .setIssuedAt(DateUtils.convertInstantToDate(DateUtils.getInstantNow()))
+                .setExpiration(DateUtils.convertInstantToDate(Instant.now().plus(jwtExpiration, ChronoUnit.SECONDS)))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

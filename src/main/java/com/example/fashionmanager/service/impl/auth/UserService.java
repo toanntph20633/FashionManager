@@ -2,26 +2,20 @@ package com.example.fashionmanager.service.impl.auth;
 
 import com.example.fashionmanager.dto.auth.request.LoginRequest;
 import com.example.fashionmanager.dto.auth.response.LoginResponse;
-import com.example.fashionmanager.entity.UserEntity;
 import com.example.fashionmanager.repository.RoleRepository;
 import com.example.fashionmanager.repository.UserRepository;
 import com.example.fashionmanager.repository.UserRoleRepository;
-import com.example.fashionmanager.security.JwtUtilities;
-import com.example.fashionmanager.security.model.CustomUserDetail;
-import com.example.fashionmanager.security.service.IJwtService;
+import com.example.fashionmanager.security.CustomUserDetail;
+import com.example.fashionmanager.jwt.IJwtService;
 import com.example.fashionmanager.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService implements IUserService {

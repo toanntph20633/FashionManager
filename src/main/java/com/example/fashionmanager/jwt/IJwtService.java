@@ -1,4 +1,4 @@
-package com.example.fashionmanager.security.service;
+package com.example.fashionmanager.jwt;
 
 import org.springframework.security.core.userdetails.UserDetails;
 

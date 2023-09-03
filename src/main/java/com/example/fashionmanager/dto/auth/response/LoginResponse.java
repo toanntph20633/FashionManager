@@ -1,7 +1,6 @@
 package com.example.fashionmanager.dto.auth.response;
 
-import com.example.fashionmanager.entity.UserEntity;
-import com.example.fashionmanager.security.model.CustomUserDetail;
+import com.example.fashionmanager.security.CustomUserDetail;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

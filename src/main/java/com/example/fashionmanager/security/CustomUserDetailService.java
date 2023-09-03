@@ -1,10 +1,10 @@
-package com.example.fashionmanager.security.service.impl;
+package com.example.fashionmanager.security;
 
 import com.example.fashionmanager.entity.UserEntity;
 import com.example.fashionmanager.repository.RoleRepository;
 import com.example.fashionmanager.repository.UserRepository;
 import com.example.fashionmanager.repository.UserRoleRepository;
-import com.example.fashionmanager.security.model.CustomUserDetail;
+import com.example.fashionmanager.security.CustomUserDetail;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
