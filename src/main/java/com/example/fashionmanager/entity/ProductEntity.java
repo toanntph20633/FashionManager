@@ -17,6 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Type;
 
 import java.io.Serializable;
@@ -25,12 +26,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "image_entity")
+@Table(name = "product_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 public class ProductEntity extends CommonEntity implements Serializable {
     @Column(name = "product_code")
     private String productCode;
