@@ -13,15 +13,15 @@ import lombok.Setter;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "rank_entity")
+@Table(name = "category_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RankEntity extends CommonEntity implements Serializable {
-    @Column(name = "rank_code")
-    private String rankCode;
-    @Column(name = "rank_name")
-    private String rankName;
+public class CategoryEntity extends CommonEntity implements Serializable {
+    @Column(name = "category_code")
+    private String categoryCode;
+    @Column(name = "category_name")
+    private String categoryName;
 }

@@ -1,7 +1,7 @@
 package com.example.fashionmanager.entity;
 
 import com.example.fashionmanager.entity.common.CommonEntity;
-import com.example.fashionmanager.enums.HistoryMethod;
+import com.example.fashionmanager.enums.ReviewPoint;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,20 +18,21 @@ import lombok.Setter;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "product_history_entity")
+@Table(name = "review_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProductHistoryEntity extends CommonEntity implements Serializable {
+public class ReviewEntity extends CommonEntity implements Serializable {
+    @Column(name = "review_point")
+    @Enumerated(EnumType.STRING)
+    private ReviewPoint reviewPoint;
+    @Column(name = "reviewer_name")
+    private String reviewName;
+    @Column(name = "description", columnDefinition = "LONGTEXT")
+    private String description;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity productEntity;
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private EmployeeEntity employeeEntity;
-    @Column(name = "method")
-    @Enumerated(EnumType.STRING)
-    private HistoryMethod historyMethod;
 }
