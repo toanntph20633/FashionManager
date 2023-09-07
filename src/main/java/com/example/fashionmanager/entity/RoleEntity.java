@@ -22,4 +22,5 @@ import java.io.Serializable;
 public class RoleEntity extends CommonEntity implements Serializable {
     @Column(name = "role_name")
     private String roleName;
+
 }

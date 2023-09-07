@@ -10,6 +10,7 @@ public class CommonEmtityListener {
     private void prePersistCreate(CommonEntity entity) {
 
         entity.setDateCreate(LocalDate.now());
+        entity.setDateUpdate(LocalDate.now());
     }
 
     @PreUpdate
