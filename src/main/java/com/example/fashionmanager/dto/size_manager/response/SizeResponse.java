@@ -6,5 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SizeResponse {
+    private Long id;
+
+    private String sizeCode;
+
     private String sizeName;
 }
