@@ -1,6 +1,7 @@
 package com.example.fashionmanager.security;
 
 import com.example.fashionmanager.jwt.JwtAuthenticationFilter;
+import com.example.fashionmanager.jwt.UnauthorizedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,15 +24,19 @@ public class SpringSecurityConfig {
     @Autowired
     UserDetailsService userDetailsService;
 
+    @Autowired
+    UnauthorizedHandler unauthorizedHandler;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
-        security.csrf(o -> o.disable())
+        security.csrf(o -> o.disable()).cors(o -> o.disable())
                 .authorizeHttpRequests(o ->
                         o
-                                .requestMatchers("admin/**","auth/admin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPER_ADMIN")
+                                .requestMatchers("admin/**", "auth/admin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPER_ADMIN")
                                 .requestMatchers("super-admin/**").hasAuthority("ROLE_SUPER_ADMIN")
                                 .requestMatchers("auth/authenticate").permitAll()
                 );
+        security.exceptionHandling(o -> o.authenticationEntryPoint(unauthorizedHandler));
         security.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return security.build();
     }
