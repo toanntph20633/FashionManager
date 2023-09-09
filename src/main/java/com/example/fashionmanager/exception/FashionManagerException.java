@@ -8,10 +8,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class FashionManagerException extends RuntimeException{
     private ErrorResponse errorResponse;
+    public FashionManagerException(ErrorResponse errorResponse) {
+        this.errorResponse = errorResponse;
+    }
 
 }
