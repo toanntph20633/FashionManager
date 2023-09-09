@@ -28,10 +28,9 @@ public class SpringSecurityConfig {
         security.csrf(o -> o.disable())
                 .authorizeHttpRequests(o ->
                         o
-                                .requestMatchers("admin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPER_ADMIN")
+                                .requestMatchers("admin/**","auth/admin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPER_ADMIN")
                                 .requestMatchers("super-admin/**").hasAuthority("ROLE_SUPER_ADMIN")
                                 .requestMatchers("auth/authenticate").permitAll()
-                                .requestMatchers("auth/admin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPER_ADMIN")
                 );
         security.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return security.build();
