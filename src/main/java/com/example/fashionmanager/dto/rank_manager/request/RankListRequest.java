@@ -8,13 +8,13 @@ import lombok.Setter;
 @Setter
 @Builder
 public class RankListRequest {
-    private int page;
+    private Integer page;
 
-    private int size;
+    private Integer size;
 
     private String code;
 
     private String name;
 
-    private boolean active = true;
+    private Boolean active = true;
 }
