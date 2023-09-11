@@ -1,4 +1,4 @@
-package com.example.fashionmanager.controller.size_manager;
+package com.example.fashionmanager.controller.admin.size_manager;
 
 import com.example.fashionmanager.dto.ListReponseDto;
 import com.example.fashionmanager.dto.ResponseDto;
