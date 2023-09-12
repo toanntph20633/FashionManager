@@ -17,4 +17,6 @@ public class RankReponse {
     private String rankCode;
 
     private String rankName;
+
+    private Boolean active;
 }

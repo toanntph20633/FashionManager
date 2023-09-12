@@ -26,7 +26,7 @@ public class RankController {
     @GetMapping("list")
     public ListReponseDto<RankReponse> getList(@RequestParam(value = "page", defaultValue = "0") int page,
                                                @RequestParam(value = "size", defaultValue = "10") int size,
-                                               @RequestParam(value = "active", defaultValue = "true") Boolean active,
+                                               @RequestParam(value = "active", required = false) Boolean active,
                                                @RequestParam(value = "name", required = false) String name,
                                                @RequestParam(value = "code", required = false) String code) {
         RankListRequest request = RankListRequest.builder()

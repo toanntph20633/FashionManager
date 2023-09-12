@@ -49,8 +49,10 @@ public class RankService implements IRankService {
             if (StringUtils.isNotBlank(request.getName())) {
                 predicates.add(criteriaBuilder.like(root.get("rankName"), "%" + request.getName() + "%"));
             }
+            if (request.getActive() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("active"), request.getActive()));
+            }
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
-            predicates.add(criteriaBuilder.equal(root.get("active"), request.getActive()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
         Page<RankEntity> rankEntities = rankRepository.findAll(rankEntitySpecification, pageable);
