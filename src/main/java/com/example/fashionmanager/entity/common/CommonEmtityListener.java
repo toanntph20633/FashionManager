@@ -11,6 +11,8 @@ public class CommonEmtityListener {
 
         entity.setDateCreate(LocalDate.now());
         entity.setDateUpdate(LocalDate.now());
+        entity.setActive(true);
+        entity.setDeleted(false);
     }
 
     @PreUpdate
