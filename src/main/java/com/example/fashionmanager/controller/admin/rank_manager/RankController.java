@@ -61,14 +61,14 @@ public class RankController {
 
     @PutMapping("update/{id}")
     public ResponseDto<RankReponse> update(@PathVariable Long id, @RequestBody @Valid RankUpdateRequest request, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new FashionManagerException(ErrorResponse
-                    .builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .message(bindingResult.getAllErrors().stream()
-                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
-                    .build());
-        }
+//        if (bindingResult.hasErrors()) {
+//            throw new FashionManagerException(ErrorResponse
+//                    .builder()
+//                    .status(HttpStatus.BAD_REQUEST)
+//                    .message(bindingResult.getAllErrors().stream()
+//                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
+//                    .build());
+//        }
         request.setId(id);
         return rankService.update(request);
     }
