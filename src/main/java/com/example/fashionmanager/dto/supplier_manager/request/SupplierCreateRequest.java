@@ -1,4 +1,4 @@
-package com.example.fashionmanager.dto.Supplier.request;
+package com.example.fashionmanager.dto.supplier_manager.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SuppliearCreatRequest {
+public class SupplierCreateRequest {
     @NotNull(message = "Không để trống supplierCode")
     @NotBlank(message = "Không để trống supplierCode")
     private String supplierCode;

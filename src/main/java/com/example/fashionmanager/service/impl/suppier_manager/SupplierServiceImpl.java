@@ -1,17 +1,17 @@
-package com.example.fashionmanager.service.impl.Supplier;
+package com.example.fashionmanager.service.impl.suppier_manager;
 
 
 import com.example.fashionmanager.dto.ListReponseDto;
 import com.example.fashionmanager.dto.ResponseDto;
-import com.example.fashionmanager.dto.Supplier.request.SuppliearCreatRequest;
-import com.example.fashionmanager.dto.Supplier.request.SupplierListRequest;
-import com.example.fashionmanager.dto.Supplier.request.SupplierUpdateRequest;
-import com.example.fashionmanager.dto.Supplier.response.SupplierResponse;
+import com.example.fashionmanager.dto.supplier_manager.request.SupplierCreateRequest;
+import com.example.fashionmanager.dto.supplier_manager.request.SupplierListRequest;
+import com.example.fashionmanager.dto.supplier_manager.request.SupplierUpdateRequest;
+import com.example.fashionmanager.dto.supplier_manager.response.SupplierResponse;
 import com.example.fashionmanager.entity.SupplierEntity;
 import com.example.fashionmanager.enums.ResponseStatus;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
-import com.example.fashionmanager.mapping.Supplier.SupplierMapper;
+import com.example.fashionmanager.mapping.supplier_manager.SupplierMapper;
 import com.example.fashionmanager.repository.SupplierRepository;
 import com.example.fashionmanager.service.ISupplierService;
 import org.apache.commons.lang3.StringUtils;
@@ -74,8 +74,8 @@ public class SupplierServiceImpl implements ISupplierService {
     }
 
     @Override
-    public ResponseDto<SupplierResponse> save(SuppliearCreatRequest request) {
-        if (supplierRepository.existsBySupplierCondeAndDeleted(request.getSupplierCode(), false)) {
+    public ResponseDto<SupplierResponse> save(SupplierCreateRequest request) {
+        if (supplierRepository.existsBySuppilerCodeAndDeleted(request.getSupplierCode(), false)) {
             throw new FashionManagerException(
                     new ErrorResponse(
                             HttpStatus.INTERNAL_SERVER_ERROR, "Mã code đã tồn tại"
@@ -102,7 +102,7 @@ public class SupplierServiceImpl implements ISupplierService {
             );
         }
 
-        if (supplierRepository.existsBySupplierCodeAndDeleteAndIdNot(request.getSupplierCode(), false, request.getId())) {
+        if (supplierRepository.existsBySuppilerCodeAndDeletedAndIdNot(request.getSupplierCode(), false, request.getId())) {
             throw new FashionManagerException(
                     new ErrorResponse(
                             HttpStatus.INTERNAL_SERVER_ERROR,

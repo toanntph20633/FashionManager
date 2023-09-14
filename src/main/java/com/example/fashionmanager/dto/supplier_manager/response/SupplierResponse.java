@@ -1,4 +1,4 @@
-package com.example.fashionmanager.dto.Supplier.response;
+package com.example.fashionmanager.dto.supplier_manager.response;
 
 import lombok.*;
 

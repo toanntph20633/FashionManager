@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.function.Supplier;
 @Repository
 public interface SupplierRepository extends JpaRepository<SupplierEntity, Long>, JpaSpecificationExecutor<SupplierEntity>{
-    boolean existsBySupplierCondeAndDeleted (String code, Boolean delete);
-    boolean existsBySupplierCodeAndDeleteAndIdNot( String code, Boolean delete, Long id);
+    boolean existsBySuppilerCodeAndDeleted(String suppilerCode,boolean deleted);
+    boolean existsBySuppilerCodeAndDeletedAndIdNot( String code, Boolean delete, Long id);
 
 }

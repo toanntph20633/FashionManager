@@ -1,12 +1,12 @@
-package com.example.fashionmanager.controller.admin.supplier;
+package com.example.fashionmanager.controller.admin.supplier_manager;
 
 
 import com.example.fashionmanager.dto.ListReponseDto;
 import com.example.fashionmanager.dto.ResponseDto;
-import com.example.fashionmanager.dto.Supplier.request.SuppliearCreatRequest;
-import com.example.fashionmanager.dto.Supplier.request.SupplierListRequest;
-import com.example.fashionmanager.dto.Supplier.request.SupplierUpdateRequest;
-import com.example.fashionmanager.dto.Supplier.response.SupplierResponse;
+import com.example.fashionmanager.dto.supplier_manager.request.SupplierCreateRequest;
+import com.example.fashionmanager.dto.supplier_manager.request.SupplierListRequest;
+import com.example.fashionmanager.dto.supplier_manager.request.SupplierUpdateRequest;
+import com.example.fashionmanager.dto.supplier_manager.response.SupplierResponse;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
 import com.example.fashionmanager.service.ISupplierService;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin/supplier")
-public class Supplier {
+public class SupplierController {
     @Autowired
     private ISupplierService supplierService;
 
@@ -42,8 +42,8 @@ public class Supplier {
         return supplierService.getList(request);
     }
 
-    @PostMapping("creat")
-    public ResponseDto<SupplierResponse> create(@RequestBody @Valid SuppliearCreatRequest request, BindingResult bindingResult){
+    @PostMapping("create")
+    public ResponseDto<SupplierResponse> create(@RequestBody @Valid SupplierCreateRequest request, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new RuntimeException("ok");
         }
