@@ -11,4 +11,6 @@ public class SizeResponse {
     private String sizeCode;
 
     private String sizeName;
+
+    private Boolean active;
 }

@@ -26,7 +26,7 @@ public class RankController {
     @GetMapping("list")
     public ListReponseDto<RankReponse> getList(@RequestParam(value = "page", defaultValue = "0") int page,
                                                @RequestParam(value = "size", defaultValue = "10") int size,
-                                               @RequestParam(value = "active", defaultValue = "true") Boolean active,
+                                               @RequestParam(value = "active", required = false) Boolean active,
                                                @RequestParam(value = "name", required = false) String name,
                                                @RequestParam(value = "code", required = false) String code) {
         RankListRequest request = RankListRequest.builder()
@@ -61,14 +61,14 @@ public class RankController {
 
     @PutMapping("update/{id}")
     public ResponseDto<RankReponse> update(@PathVariable Long id, @RequestBody @Valid RankUpdateRequest request, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new FashionManagerException(ErrorResponse
-                    .builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .message(bindingResult.getAllErrors().stream()
-                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
-                    .build());
-        }
+//        if (bindingResult.hasErrors()) {
+//            throw new FashionManagerException(ErrorResponse
+//                    .builder()
+//                    .status(HttpStatus.BAD_REQUEST)
+//                    .message(bindingResult.getAllErrors().stream()
+//                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
+//                    .build());
+//        }
         request.setId(id);
         return rankService.update(request);
     }
