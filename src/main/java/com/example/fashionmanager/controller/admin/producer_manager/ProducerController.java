@@ -54,6 +54,14 @@ public class ProducerController {
     public ResponseDto<ProducerResponse> create(
             @RequestBody @Valid ProducerCreateRequest request, BindingResult bindingResult
             ){
+        if(bindingResult.hasErrors()){
+            throw new FashionManagerException(
+                    ErrorResponse.builder()
+                            .status(HttpStatus.BAD_REQUEST)
+                            .message(bindingResult.getAllErrors().stream()
+                                    .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString()).build()
+            );
+        }
         return producerService.save(request);
     }
 

@@ -81,7 +81,7 @@ public class ProducerService implements IProducerService {
         ResponseDto<ProducerResponse> responseDto = new ResponseDto<>();
         responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(producerEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
-        responseDto.setMessage("tạo thứ nhà sản xuất thành công");
+        responseDto.setMessage("tạo nhà sản xuất thành công");
         return responseDto;
     }
 
@@ -106,7 +106,7 @@ public class ProducerService implements IProducerService {
         ResponseDto<ProducerResponse> responseDto = new ResponseDto<>();
         responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(producerEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
-        responseDto.setMessage("Cập nhập thứ hạng thành công");
+        responseDto.setMessage("Cập nhập nhà sản xuất thành công");
         return responseDto;
     }
 
