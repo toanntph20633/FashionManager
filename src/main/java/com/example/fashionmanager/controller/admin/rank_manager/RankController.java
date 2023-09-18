@@ -6,7 +6,6 @@ import com.example.fashionmanager.dto.rank_manager.request.RankCreateRequest;
 import com.example.fashionmanager.dto.rank_manager.request.RankListRequest;
 import com.example.fashionmanager.dto.rank_manager.request.RankUpdateRequest;
 import com.example.fashionmanager.dto.rank_manager.response.RankReponse;
-import com.example.fashionmanager.enums.ResponseStatus;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
 import com.example.fashionmanager.service.IRankService;
@@ -14,15 +13,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
 
@@ -35,7 +26,7 @@ public class RankController {
     @GetMapping("list")
     public ListReponseDto<RankReponse> getList(@RequestParam(value = "page", defaultValue = "0") int page,
                                                @RequestParam(value = "size", defaultValue = "10") int size,
-                                               @RequestParam(value = "active", defaultValue = "true") Boolean active,
+                                               @RequestParam(value = "active", required = false) Boolean active,
                                                @RequestParam(value = "name", required = false) String name,
                                                @RequestParam(value = "code", required = false) String code) {
         RankListRequest request = RankListRequest.builder()
@@ -58,7 +49,7 @@ public class RankController {
 //                    .message(bindingResult.getAllErrors().stream()
 //                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
 //                    .build());
-            throw new RuntimeException("hihii");
+            throw new RuntimeException("Thêm thành công");
         }
         return rankService.save(request);
     }
@@ -70,14 +61,14 @@ public class RankController {
 
     @PutMapping("update/{id}")
     public ResponseDto<RankReponse> update(@PathVariable Long id, @RequestBody @Valid RankUpdateRequest request, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new FashionManagerException(ErrorResponse
-                    .builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .message(bindingResult.getAllErrors().stream()
-                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
-                    .build());
-        }
+//        if (bindingResult.hasErrors()) {
+//            throw new FashionManagerException(ErrorResponse
+//                    .builder()
+//                    .status(HttpStatus.BAD_REQUEST)
+//                    .message(bindingResult.getAllErrors().stream()
+//                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
+//                    .build());
+//        }
         request.setId(id);
         return rankService.update(request);
     }

@@ -24,9 +24,6 @@ public class UnauthorizedHandler implements AuthenticationEntryPoint {
                          HttpServletResponse response,
                          AuthenticationException e)
             throws IOException {
-
-        log.error("Unauthorized error. Message - {}", e.getMessage());
-
         ErrorResponse errorResponse = ErrorResponse
                 .builder()
                 .status(HttpStatus.UNAUTHORIZED)
