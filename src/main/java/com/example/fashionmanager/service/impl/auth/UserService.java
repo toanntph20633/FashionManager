@@ -2,6 +2,9 @@ package com.example.fashionmanager.service.impl.auth;
 
 import com.example.fashionmanager.dto.auth.request.LoginRequest;
 import com.example.fashionmanager.dto.auth.response.LoginResponse;
+import com.example.fashionmanager.dto.user.request.UserCreateRequest;
+import com.example.fashionmanager.entity.UserEntity;
+import com.example.fashionmanager.entity.UserRoleEntity;
 import com.example.fashionmanager.repository.RoleRepository;
 import com.example.fashionmanager.repository.UserRepository;
 import com.example.fashionmanager.repository.UserRoleRepository;
@@ -43,12 +46,29 @@ public class UserService implements IUserService {
         return LoginResponse.builder().user((CustomUserDetail) userDetails).token(token).build();
     }
 
+    @Override
+    public void add(UserEntity userEntity, UserRoleEntity userRoleEntity) {
+        // Lưu UserEntity vào cơ sở dữ liệu
+        userRepository.save(userEntity);
+
+        // Lưu UserRoleEntity vào cơ sở dữ liệu
+        userRoleRepository.save(userRoleEntity);
+    }
+
     public String getToken(UserDetails userDetails) {
         final var roles = userDetails.getAuthorities();
         final var username = userDetails.getUsername();
         return jwtService.generateToken(Map.of("role", roles), username);
     }
 
+    private UserEntity convertEntity(UserCreateRequest userRequest){
+        return UserEntity.builder()
+                .userName(userRequest.getUserName())
+                .password(userRequest.getPassword())
+                .email(userRequest.getEmail())
+                .userRoleEntities(userRequest.getUserRoleEntities())
+                .build();
+    }
 }
 
 
