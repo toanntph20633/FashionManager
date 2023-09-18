@@ -23,7 +23,7 @@ public class EmployeeListRequest {
 
     private String district;
 
-    private boolean gender;
+    private boolean gender = true ;
 
     private UserResponse userResponse;
 

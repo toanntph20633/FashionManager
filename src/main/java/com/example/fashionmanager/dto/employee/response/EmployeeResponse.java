@@ -29,6 +29,6 @@ public class EmployeeResponse {
 
     private boolean gender;
 
-    private UserResponse userResponse;
+//    private UserResponse userResponse;
 
 }

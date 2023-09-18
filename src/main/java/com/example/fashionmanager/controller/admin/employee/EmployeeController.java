@@ -1,4 +1,4 @@
-package com.example.fashionmanager.controller.employee;
+package com.example.fashionmanager.controller.admin.employee;
 
 
 import com.example.fashionmanager.dto.ListReponseDto;
@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.stream.Collectors;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @RestController
 @RequestMapping("/admin/employee")
@@ -43,7 +43,8 @@ public class EmployeeController {
     private IEmployeeService employeeService;
     @Autowired
     private IUserService userService;
-
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     @GetMapping("list")
     public ListReponseDto<EmployeeResponse> getList(
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -54,7 +55,7 @@ public class EmployeeController {
             @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
             @RequestParam(value = "city", required = false) String city,
             @RequestParam(value = "district", required = false) String district,
-            @RequestParam(value = "gender", required = false) Boolean gender
+            @RequestParam(value = "gender", required = false) boolean gender
     ) {
         EmployeeListRequest request = EmployeeListRequest.builder()
                 .active(active)
@@ -75,20 +76,21 @@ public class EmployeeController {
     public ResponseDto<EmployeeResponse> create(
             @RequestBody @Valid EmployeeUserCreateRequest request, BindingResult bindingResult
     ) {
-        if (bindingResult.hasErrors()) {
+        if(bindingResult.hasErrors()){
 
-            throw new RuntimeException("lỗi");
         }
+        //Mã hoá mk
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
         // Tạo một UserEntity mới
         UserEntity userEntity = UserEntity.builder()
                 .userName(request.getUserName())
-                .password(request.getPassword())
+                .password(encodedPassword)
                 .email(request.getEmail())
                 .build();
 
 
         RoleEntity adminRole = new RoleEntity();
-        adminRole.setId(2L); // ID của quyền "admin"
+        adminRole.setId(1L); // ID của quyền "admin"
 
         UserRoleEntity userRoleEntity = UserRoleEntity.builder()
                 .roleEntity(adminRole)
@@ -121,14 +123,7 @@ public class EmployeeController {
 
     @PutMapping("update/{id}")
     public ResponseDto<EmployeeResponse> update(@PathVariable Long id, @RequestBody @Valid EmployeeUpdateRequest request, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            throw new FashionManagerException(ErrorResponse
-                    .builder()
-                    .status(HttpStatus.BAD_REQUEST)
-                    .message(bindingResult.getAllErrors().stream()
-                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
-                    .build());
-        }
+
         request.setId(id);
         return employeeService.update(request);
     }

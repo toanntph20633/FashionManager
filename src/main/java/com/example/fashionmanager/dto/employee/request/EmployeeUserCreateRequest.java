@@ -35,11 +35,9 @@ public class EmployeeUserCreateRequest {
     @NotBlank(message = "Không để trống ")
     private String district;
     @NotNull(message = "Không để trống ")
-    @NotBlank(message = "Không để trống ")
+
     private boolean gender;
-    @NotNull(message = "Không để trống ")
-    @NotBlank(message = "Không để trống ")
-    private UserEntity userEntity;
+
     @NotNull(message = "Không để trống ")
     @NotBlank(message = "Không để trống ")
 
@@ -52,6 +50,6 @@ public class EmployeeUserCreateRequest {
     @NotBlank(message = "Không để trống ")
     private String email;
     @NotNull(message = "Không để trống ")
-    @NotBlank(message = "Không để trống ")
+
     private Set<UserRoleEntity> userRoleEntities = new HashSet<>();
 }

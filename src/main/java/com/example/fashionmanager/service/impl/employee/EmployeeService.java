@@ -63,7 +63,7 @@ public class EmployeeService implements IEmployeeService {
                 predicates.add(criteriaBuilder.equal(root.get("district"), request.getDistrict()));
             }
             predicates.add(criteriaBuilder.equal(root.get("gender"), request.isGender()));
-            predicates.add(criteriaBuilder.equal(root.get("userResponse"), request.getUserResponse()));
+//            predicates.add(criteriaBuilder.equal(root.get("userResponse"), request.getUserResponse()));
 
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
             predicates.add(criteriaBuilder.equal(root.get("active"), request.isActive()));

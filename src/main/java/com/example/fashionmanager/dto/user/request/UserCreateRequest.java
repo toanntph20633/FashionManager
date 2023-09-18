@@ -24,6 +24,6 @@ public class UserCreateRequest {
     @NotBlank(message = "Không để trống ")
     private String email;
     @NotNull(message = "Không để trống ")
-    @NotBlank(message = "Không để trống ")
+
     private Set<UserRoleEntity> userRoleEntities = new HashSet<>();
 }
