@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin/Category-manager")
+@RequestMapping("/admin/category-manager")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
-    @GetMapping("list-Category")
+    @GetMapping("list-category")
     public ListReponseDto<CategoryReponse> getList(@RequestParam(value = "page", defaultValue = "0") int page,
                                                    @RequestParam(value = "size", defaultValue = "10") int size,
                                                    @RequestParam(value = "active", required = false) Boolean active,
@@ -42,28 +42,28 @@ public class CategoryController {
         return categoryService.getList(request);
 
     }
-    @PostMapping("create-Category")
+    @PostMapping("create-category")
     public ResponseDto<CategoryReponse> create(@RequestBody @Valid CategoryCreateRequest request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             throw new RuntimeException("Thêm thành công");
         }
         return categoryService.save(request);
     }
-    @GetMapping("detail-Category/{id}")
+    @GetMapping("detail-category/{id}")
     public ResponseDto<CategoryReponse> detail(@PathVariable Long id) {
         return categoryService.detail(id);
     }
-    @PutMapping("update-Category/{id}")
+    @PutMapping("update-category/{id}")
     public ResponseDto<CategoryReponse> update(@PathVariable Long id, @RequestBody @Valid CategoryUpdateRequest request, BindingResult bindingResult) {
 
         request.setId(id);
         return categoryService.update(request);
     }
-    @DeleteMapping("delete-Category/{id}")
+    @DeleteMapping("delete-category/{id}")
     public ResponseDto<CategoryReponse> delete(@PathVariable Long id) {
         return categoryService.delete(id);
     }
-    @PutMapping("change-active-Category/{id}")
+    @PutMapping("change-active-category/{id}")
     public ResponseDto<CategoryReponse> changeActive(@PathVariable Long id) {
         return categoryService.changeActive(id);
     }

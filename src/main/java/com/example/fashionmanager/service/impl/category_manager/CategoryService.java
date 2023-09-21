@@ -113,7 +113,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public ResponseDto<CategoryReponse> delete(Long id) {
-        CategoryEntity colorEntity = categoryRepository.findById(id).map(color -> {
+        CategoryEntity categoryEntity = categoryRepository.findById(id).map(color -> {
             color.setDeleted(true);
             return color;
         }).orElseThrow(() -> new FashionManagerException(
@@ -124,7 +124,7 @@ public class CategoryService implements ICategoryService {
                 )
         );
         ResponseDto<CategoryReponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(categoryMapper.getCategoryReponse(categoryRepository.save(colorEntity)));
+        responseDto.setContent(categoryMapper.getCategoryReponse(categoryRepository.save(categoryEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Xóa danh mục thành công");
         return responseDto;
