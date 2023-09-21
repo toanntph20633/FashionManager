@@ -9,4 +9,5 @@ import lombok.Setter;
 public class ColorUpdateRequest extends ColorCreateRequest{
     @NotNull(message = "Không để trống id")
     private Long id;
+    private boolean active;
 }
