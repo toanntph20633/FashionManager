@@ -53,8 +53,11 @@ public class ProductTypeService implements IProductTypeService {
             if (StringUtils.isNotBlank(request.getName())) {
                 predicates.add(criteriaBuilder.like(root.get("productTypeName"), "%" + request.getName() + "%"));
             }
+            if(request.getActive() != null ){
+                predicates.add(criteriaBuilder.equal(root.get("active"), request.getActive()));
+            }
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
-            predicates.add(criteriaBuilder.equal(root.get("active"), request.isActive()));
+//            predicates.add(criteriaBuilder.equal(root.get("active"), request.isActive()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
         Page<ProductTypeEntity> productTypeEntities = productTypeRepository.findAll(productTypeEntitySpecification, pageable);

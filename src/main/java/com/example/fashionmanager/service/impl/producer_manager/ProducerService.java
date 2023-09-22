@@ -51,8 +51,11 @@ public class ProducerService implements IProducerService {
             if (StringUtils.isNotBlank(request.getName())) {
                 predicates.add(criteriaBuilder.like(root.get("producerName"), "%" + request.getName() + "%"));
             }
+            if (request.getActive() != null){
+                predicates.add(criteriaBuilder.equal(root.get("active"), request.getActive()));
+            }
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
-            predicates.add(criteriaBuilder.equal(root.get("active"),request.isActive()));
+//            predicates.add(criteriaBuilder.equal(root.get("active"),request.isActive()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
         Page<ProducerEntity> producerEntities = producerRepository.findAll(producerEntitySpecification,pageable);

@@ -17,5 +17,5 @@ public class ProducerListRequest {
 
     private String name;
 
-    private boolean active = true;
+    private Boolean active = true;
 }

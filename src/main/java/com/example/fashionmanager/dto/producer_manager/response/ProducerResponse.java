@@ -19,4 +19,6 @@ public class ProducerResponse {
     private String producerCode;
 
     private String producerName;
+
+    private Boolean active;
 }

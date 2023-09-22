@@ -18,4 +18,6 @@ public class ProductTypeRespones {
     private String productTypeCode;
 
     private String productTypeName;
+
+    private Boolean active;
 }
