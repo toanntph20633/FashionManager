@@ -1,27 +1,15 @@
-package com.example.fashionmanager.controller.admin.employee;
+package com.example.fashionmanager.controller.admin.employee_manager;
 
 
 import com.example.fashionmanager.dto.ListReponseDto;
 import com.example.fashionmanager.dto.ResponseDto;
-import com.example.fashionmanager.dto.employee.request.EmployeeCreateRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeListRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeUpdateRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeUserCreateRequest;
 import com.example.fashionmanager.dto.employee.response.EmployeeResponse;
-import com.example.fashionmanager.dto.rank_manager.request.RankUpdateRequest;
-import com.example.fashionmanager.dto.rank_manager.response.RankReponse;
-import com.example.fashionmanager.dto.user.request.UserCreateRequest;
-import com.example.fashionmanager.entity.RoleEntity;
-import com.example.fashionmanager.entity.UserEntity;
-import com.example.fashionmanager.entity.UserRoleEntity;
-import com.example.fashionmanager.exception.ErrorResponse;
-import com.example.fashionmanager.exception.FashionManagerException;
 import com.example.fashionmanager.service.IEmployeeService;
-import com.example.fashionmanager.service.IUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,18 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.stream.Collectors;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 @RestController
-@RequestMapping("/admin/employee")
+@RequestMapping("/admin/employee-manager")
 public class EmployeeController {
     @Autowired
     private IEmployeeService employeeService;
-    @Autowired
-    private IUserService userService;
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+
+
     @GetMapping("list")
     public ListReponseDto<EmployeeResponse> getList(
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -79,40 +62,8 @@ public class EmployeeController {
         if(bindingResult.hasErrors()){
 
         }
-        //Mã hoá mk
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
-        // Tạo một UserEntity mới
-        UserEntity userEntity = UserEntity.builder()
-                .userName(request.getUserName())
-                .password(encodedPassword)
-                .email(request.getEmail())
-                .build();
-
-
-        RoleEntity adminRole = new RoleEntity();
-        adminRole.setId(1L); // ID của quyền "admin"
-
-        UserRoleEntity userRoleEntity = UserRoleEntity.builder()
-                .roleEntity(adminRole)
-                .userEntity(userEntity)
-                .build();
-
-        // Lưu UserEntity và UserRoleEntity
-        userService.add(userEntity, userRoleEntity);
-
-        // Tạo một EmployeeEntity và liên kết với UserEntity
-        EmployeeCreateRequest employeeCreateRequest = EmployeeCreateRequest.builder()
-                .employeeName(request.getEmployeeName())
-                .citizenIdentificationCard(request.getCitizenIdentificationCard())
-                .phoneNumber(request.getPhoneNumber())
-                .city(request.getCity())
-                .district(request.getDistrict())
-                .gender(request.isGender())
-                .userEntity(userEntity)
-                .build();
-
         // Lưu EmployeeEntity
-        return employeeService.save(employeeCreateRequest);
+        return employeeService.save(request);
 
 
     }

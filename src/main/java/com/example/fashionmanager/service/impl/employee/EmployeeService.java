@@ -5,14 +5,19 @@ import com.example.fashionmanager.dto.ResponseDto;
 import com.example.fashionmanager.dto.employee.request.EmployeeCreateRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeListRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeUpdateRequest;
+import com.example.fashionmanager.dto.employee.request.EmployeeUserCreateRequest;
 import com.example.fashionmanager.dto.employee.response.EmployeeResponse;
 import com.example.fashionmanager.entity.EmployeeEntity;
+import com.example.fashionmanager.entity.RoleEntity;
+import com.example.fashionmanager.entity.UserEntity;
+import com.example.fashionmanager.entity.UserRoleEntity;
 import com.example.fashionmanager.enums.ResponseStatus;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
 import com.example.fashionmanager.mapping.employee.EmployeeMapper;
 import com.example.fashionmanager.repository.EmployeeRepository;
 import com.example.fashionmanager.service.IEmployeeService;
+import com.example.fashionmanager.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,6 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.criteria.Predicate;
 import java.util.ArrayList;
@@ -34,6 +40,10 @@ public class EmployeeService implements IEmployeeService {
     private EmployeeRepository employeeRepository;
     @Autowired
     private EmployeeMapper employeeMapper;
+    @Autowired
+    private IUserService userService;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
     @Override
     public ListReponseDto<EmployeeResponse> getList(EmployeeListRequest request) {
         Sort sort = Sort.by(
@@ -81,7 +91,7 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    public ResponseDto<EmployeeResponse> save(EmployeeCreateRequest request) {
+    public ResponseDto<EmployeeResponse> save(EmployeeUserCreateRequest request) {
         if(employeeRepository.existsByCitizenIdentificationCardAndDeleted(request.getCitizenIdentificationCard(), false)){
             throw new FashionManagerException(
                     new ErrorResponse(
@@ -90,7 +100,40 @@ public class EmployeeService implements IEmployeeService {
                     )
             );
         }
-        EmployeeEntity employeeEntity = employeeMapper.getEmployeeEntity(request);
+
+        //Mã hoá mk
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+        // Tạo một UserEntity mới
+        UserEntity userEntity = UserEntity.builder()
+                .userName(request.getUserName())
+                .password(encodedPassword)
+                .email(request.getEmail())
+                .build();
+
+
+        RoleEntity adminRole = new RoleEntity();
+        adminRole.setId(1L); // ID của quyền "admin"
+
+        UserRoleEntity userRoleEntity = UserRoleEntity.builder()
+                .roleEntity(adminRole)
+                .userEntity(userEntity)
+                .build();
+
+        // Lưu UserEntity và UserRoleEntity
+        userService.add(userEntity, userRoleEntity);
+
+        // Tạo một EmployeeEntity và liên kết với UserEntity
+        EmployeeCreateRequest employeeCreateRequest = EmployeeCreateRequest.builder()
+                .employeeName(request.getEmployeeName())
+                .citizenIdentificationCard(request.getCitizenIdentificationCard())
+                .phoneNumber(request.getPhoneNumber())
+                .city(request.getCity())
+                .district(request.getDistrict())
+                .gender(request.isGender())
+                .userEntity(userEntity)
+                .build();
+
+        EmployeeEntity employeeEntity = employeeMapper.getEmployeeEntity(employeeCreateRequest);
         ResponseDto<EmployeeResponse> responseDto = new ResponseDto<>();
         responseDto.setContent(employeeMapper.getEmployeeResponse(employeeRepository.save(employeeEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
