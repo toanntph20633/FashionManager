@@ -8,6 +8,9 @@ import lombok.Setter;
 @Setter
 public class SupplierUpdateRequest extends SupplierCreateRequest {
     @NotNull(message = "Không để trống id")
+
     private Long id;
+
+    private Boolean activate;
 
 }

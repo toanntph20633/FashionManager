@@ -13,4 +13,6 @@ public class SupplierResponse {
     private String supplierCode;
 
     private String supplierName;
+
+    private Boolean activate;
 }
