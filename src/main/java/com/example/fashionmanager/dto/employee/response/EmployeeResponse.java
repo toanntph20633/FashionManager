@@ -29,6 +29,13 @@ public class EmployeeResponse {
 
     private boolean gender;
 
+    private Boolean active ;
+
+    private String email;
+
+    private String userName; // Thêm trường userName
+
+    private String password; // Thêm trường password
 //    private UserResponse userResponse;
 
 }

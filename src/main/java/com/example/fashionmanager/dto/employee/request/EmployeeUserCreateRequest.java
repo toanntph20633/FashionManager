@@ -38,6 +38,7 @@ public class EmployeeUserCreateRequest {
     private boolean gender;
     @NotNull(message = "Không để trống ")
     @NotBlank(message = "Không để trống ")
+
     private String userName;
     @NotNull(message = "Không để trống ")
     @NotBlank(message = "Không để trống ")

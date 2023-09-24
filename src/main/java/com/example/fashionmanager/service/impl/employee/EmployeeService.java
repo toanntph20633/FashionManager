@@ -2,7 +2,6 @@ package com.example.fashionmanager.service.impl.employee;
 
 import com.example.fashionmanager.dto.ListReponseDto;
 import com.example.fashionmanager.dto.ResponseDto;
-import com.example.fashionmanager.dto.employee.request.EmployeeCreateRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeListRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeUpdateRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeUserCreateRequest;
@@ -16,8 +15,10 @@ import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
 import com.example.fashionmanager.mapping.employee.EmployeeMapper;
 import com.example.fashionmanager.repository.EmployeeRepository;
+import com.example.fashionmanager.repository.RoleRepository;
+import com.example.fashionmanager.repository.UserRepository;
+import com.example.fashionmanager.repository.UserRoleRepository;
 import com.example.fashionmanager.service.IEmployeeService;
-import com.example.fashionmanager.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,12 +27,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import jakarta.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 @Service
@@ -41,9 +42,13 @@ public class EmployeeService implements IEmployeeService {
     @Autowired
     private EmployeeMapper employeeMapper;
     @Autowired
-    private IUserService userService;
+    UserRepository userRepository;
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    RoleRepository roleRepository;
+    @Autowired
+    UserRoleRepository userRoleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Override
     public ListReponseDto<EmployeeResponse> getList(EmployeeListRequest request) {
         Sort sort = Sort.by(
@@ -91,6 +96,35 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
+    public ListReponseDto<EmployeeResponse> getActiveEmployees(int pageIndex) {
+        int pageSize = 10; // Kích thước trang
+        Pageable pageable = PageRequest.of(pageIndex, pageSize);
+
+        Specification<EmployeeEntity> employeeEntitySpecification = ((root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            predicates.add(criteriaBuilder.isTrue(root.get("active"))); // Điều kiện active = true
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        });
+
+        Page<EmployeeEntity> employeeEntities = employeeRepository.findAll(employeeEntitySpecification, pageable);
+
+        List<EmployeeResponse> employeeResponses = employeeEntities.getContent()
+                .stream()
+                .map(employeeMapper::getEmployeeResponse)
+                .collect(Collectors.toList());
+
+        ListReponseDto<EmployeeResponse> listResponseDto = new ListReponseDto<>();
+        listResponseDto.setItems(employeeResponses);
+        listResponseDto.setHasNextPage(employeeEntities.hasNext());
+        listResponseDto.setHasPreviousPage(employeeEntities.hasPrevious());
+        listResponseDto.setPageCount(employeeEntities.getTotalPages());
+        listResponseDto.setPageSize(pageSize);
+
+        return listResponseDto;
+
+    }
+
+    @Override
     public ResponseDto<EmployeeResponse> save(EmployeeUserCreateRequest request) {
         if(employeeRepository.existsByCitizenIdentificationCardAndDeleted(request.getCitizenIdentificationCard(), false)){
             throw new FashionManagerException(
@@ -120,22 +154,26 @@ public class EmployeeService implements IEmployeeService {
                 .build();
 
         // Lưu UserEntity và UserRoleEntity
-        userService.add(userEntity, userRoleEntity);
+        userRepository.save(userEntity);
+
+        // Lưu UserRoleEntity vào cơ sở dữ liệu
+        userRoleRepository.save(userRoleEntity);
 
         // Tạo một EmployeeEntity và liên kết với UserEntity
-        EmployeeCreateRequest employeeCreateRequest = EmployeeCreateRequest.builder()
+        EmployeeEntity employeeCreateRequest = EmployeeEntity.builder()
                 .employeeName(request.getEmployeeName())
                 .citizenIdentificationCard(request.getCitizenIdentificationCard())
                 .phoneNumber(request.getPhoneNumber())
                 .city(request.getCity())
                 .district(request.getDistrict())
                 .gender(request.isGender())
-                .userEntity(userEntity)
+                .userEntity(userEntity) // Liên kết với UserEntity mới tạo
+                .active(true)
                 .build();
 
-        EmployeeEntity employeeEntity = employeeMapper.getEmployeeEntity(employeeCreateRequest);
+
         ResponseDto<EmployeeResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(employeeMapper.getEmployeeResponse(employeeRepository.save(employeeEntity)));
+        responseDto.setContent(employeeMapper.getEmployeeResponse(employeeRepository.save(employeeCreateRequest)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Tạo nhân viên thành công");
         return responseDto;
@@ -159,7 +197,21 @@ public class EmployeeService implements IEmployeeService {
                     )
             );
         }
+        EmployeeEntity getEmployeeEntity = employeeRepository.findById(request.getId()).orElseThrow(() -> new FashionManagerException(
+                        new ErrorResponse(
+                                HttpStatus.NOT_FOUND
+                                , "Nhân viên có id = " + request.getId() + " không tồn tại"
+                        )
+                )
+        );
+
+        // Cập nhật thông tin email trong UserEntity
+        UserEntity userEntity = getEmployeeEntity.getUserEntity();
+        userEntity.setEmail(request.getEmail());
+        userEntity = userRepository.save(userEntity);
+
         EmployeeEntity employeeEntity = employeeMapper.getEmployeeEntity(request);
+        employeeEntity.setUserEntity(userEntity);
         ResponseDto<EmployeeResponse> responseDto = new ResponseDto<>();
         responseDto.setContent(employeeMapper.getEmployeeResponse(employeeRepository.save(employeeEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);

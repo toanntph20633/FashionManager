@@ -32,6 +32,9 @@ public class EmployeeUpdateRequest  {
     private String district;
     @NotNull(message = "Không để trống ")
     private boolean gender;
+    @NotNull(message = "Không để trống ")
+    @NotBlank(message = "Không để trống ")
+    private String email;
 
 
 }

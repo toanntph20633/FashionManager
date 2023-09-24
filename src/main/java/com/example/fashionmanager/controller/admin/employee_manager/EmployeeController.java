@@ -7,6 +7,7 @@ import com.example.fashionmanager.dto.employee.request.EmployeeListRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeUpdateRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeUserCreateRequest;
 import com.example.fashionmanager.dto.employee.response.EmployeeResponse;
+import com.example.fashionmanager.entity.EmployeeEntity;
 import com.example.fashionmanager.service.IEmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,31 +30,38 @@ public class EmployeeController {
 
 
     @GetMapping("list")
-    public ListReponseDto<EmployeeResponse> getList(
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size,
-            @RequestParam(value = "active", defaultValue = "true") Boolean active,
-            @RequestParam(value = "employeeName", required = false) String name,
-            @RequestParam(value = "citizenIdentificationCard", required = false) String citizenIdentificationCard,
-            @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
-            @RequestParam(value = "city", required = false) String city,
-            @RequestParam(value = "district", required = false) String district,
-            @RequestParam(value = "gender", required = false) boolean gender
-    ) {
-        EmployeeListRequest request = EmployeeListRequest.builder()
-                .active(active)
-                .employeeName(name)
-                .citizenIdentificationCard(citizenIdentificationCard)
-                .phoneNumber(phoneNumber)
-                .city(city)
-                .district(district)
-                .gender(gender)
-                .page(page)
-                .size(size)
-                .build();
+//    public ListReponseDto<EmployeeResponse> getList(
+//            @RequestParam(value = "page", defaultValue = "0") int page,
+//            @RequestParam(value = "size", defaultValue = "10") int size,
+//            @RequestParam(value = "active", defaultValue = "true") Boolean active,
+//            @RequestParam(value = "employeeName", required = false) String name,
+//            @RequestParam(value = "citizenIdentificationCard", required = false) String citizenIdentificationCard,
+//            @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
+//            @RequestParam(value = "city", required = false) String city,
+//            @RequestParam(value = "district", required = false) String district,
+//            @RequestParam(value = "gender", required = false) boolean gender
+//    ) {
+//        EmployeeListRequest request = EmployeeListRequest.builder()
+//                .active(active)
+//                .employeeName(name)
+//                .citizenIdentificationCard(citizenIdentificationCard)
+//                .phoneNumber(phoneNumber)
+//                .city(city)
+//                .district(district)
+//                .gender(gender)
+//                .page(page)
+//                .size(size)
+//                .build();
+//
+//        return employeeService.getList(request);
 
-        return employeeService.getList(request);
+//    }
+    public ListReponseDto<EmployeeResponse> getActiveEmployees(
+            @RequestParam(value = "pageIndex", defaultValue = "0") int pageIndex
+    ) {
+        return employeeService.getActiveEmployees(pageIndex);
     }
+
 
     @PostMapping("create")
     public ResponseDto<EmployeeResponse> create(
@@ -64,7 +72,6 @@ public class EmployeeController {
         }
         // Lưu EmployeeEntity
         return employeeService.save(request);
-
 
     }
     @GetMapping("detail/{id}")
