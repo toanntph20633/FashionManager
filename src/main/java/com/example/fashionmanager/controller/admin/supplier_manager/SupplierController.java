@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/admin/supplier")
+@RequestMapping("/admin/supplier-manganer")
 public class SupplierController {
     @Autowired
     private ISupplierService supplierService;
@@ -57,15 +57,6 @@ public class SupplierController {
 
     @PutMapping("update/{id}")
     ResponseDto<SupplierResponse> update(@PathVariable Long id, @RequestBody @Valid SupplierUpdateRequest request, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            throw new FashionManagerException(
-                    ErrorResponse.builder()
-                            .status(HttpStatus.BAD_REQUEST)
-                            .message(bindingResult.getAllErrors().stream()
-                                    .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
-                            .build()
-            );
-        }
         request.setId(id);
         return supplierService.update(request);
     }
