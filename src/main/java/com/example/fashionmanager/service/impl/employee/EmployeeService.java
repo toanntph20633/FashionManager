@@ -170,6 +170,7 @@ public class EmployeeService implements IEmployeeService {
                 )
         );
 
+
         // Cập nhật thông tin email trong UserEntity
         UserEntity userEntity = getEmployeeEntity.getUserEntity();
         userEntity.setEmail(request.getEmail());
@@ -177,6 +178,7 @@ public class EmployeeService implements IEmployeeService {
 
         EmployeeEntity employeeEntity = employeeMapper.getEmployeeEntity(request);
         employeeEntity.setUserEntity(userEntity);
+        employeeEntity.setActive(request.isActive());
         ResponseDto<EmployeeResponse> responseDto = new ResponseDto<>();
         responseDto.setContent(employeeMapper.getEmployeeResponse(employeeRepository.save(employeeEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
@@ -188,6 +190,7 @@ public class EmployeeService implements IEmployeeService {
     public ResponseDto<EmployeeResponse> delete(Long id) {
         EmployeeEntity employeeEntity = employeeRepository.findById(id).map(employee -> {
             employee.setDeleted(true);
+            employee.setActive(false);
             return employee;
         }).orElseThrow(() -> new FashionManagerException(
                         new ErrorResponse(

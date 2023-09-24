@@ -36,5 +36,7 @@ public class EmployeeUpdateRequest  {
     @NotBlank(message = "Không để trống ")
     private String email;
 
+    private boolean active;
+
 
 }
