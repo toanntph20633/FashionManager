@@ -49,51 +49,7 @@ public class EmployeeService implements IEmployeeService {
     UserRoleRepository userRoleRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Override
-    public ListReponseDto<EmployeeResponse> getList(EmployeeListRequest request) {
-        Sort sort = Sort.by(
-                new Sort.Order(Sort.Direction.DESC,"dateCreate")
-                , new Sort.Order(Sort.Direction.DESC,"id")
-        );
-        Pageable pageable = PageRequest.of(request.getPage(),request.getSize(),sort);
-        Specification<EmployeeEntity> employeeEntitySpecification = ((root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new ArrayList<>();
-            if (StringUtils.isNotBlank(request.getEmployeeName())) {
-                predicates.add(criteriaBuilder.like(root.get("employeeName"), "%" + request.getEmployeeName() + "%"));
-            }
 
-            if (StringUtils.isNotBlank(request.getCitizenIdentificationCard())) {
-                predicates.add(criteriaBuilder.like(root.get("citizenIdentificationCard"), "%" + request.getCitizenIdentificationCard() + "%"));
-            }
-
-            if (StringUtils.isNotBlank(request.getPhoneNumber())) {
-                predicates.add(criteriaBuilder.like(root.get("phoneNumber"), "%" + request.getPhoneNumber() + "%"));
-            }
-
-            if (StringUtils.isNotBlank(request.getCity())) {
-                predicates.add(criteriaBuilder.equal(root.get("city"), request.getCity()));
-            }
-
-            if (StringUtils.isNotBlank(request.getDistrict())) {
-                predicates.add(criteriaBuilder.equal(root.get("district"), request.getDistrict()));
-            }
-            predicates.add(criteriaBuilder.equal(root.get("gender"), request.isGender()));
-//            predicates.add(criteriaBuilder.equal(root.get("userResponse"), request.getUserResponse()));
-
-            predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
-            predicates.add(criteriaBuilder.equal(root.get("active"), request.isActive()));
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        });
-        Page<EmployeeEntity> employeeEntities = employeeRepository.findAll(employeeEntitySpecification, pageable);
-        List<EmployeeResponse> employeeReponses = employeeEntities.stream().map(employee -> employeeMapper.getEmployeeResponse(employee)).toList();
-        ListReponseDto<EmployeeResponse> listReponseDto = new ListReponseDto<EmployeeResponse>();
-        listReponseDto.setItems(employeeReponses);
-        listReponseDto.setHasNextPage(employeeEntities.hasNext());
-        listReponseDto.setHasPreviousPage(employeeEntities.hasPrevious());
-        listReponseDto.setPageCount(employeeEntities.getTotalPages());
-        listReponseDto.setPageSize(employeeEntities.getSize());
-        return listReponseDto;
-    }
 
     @Override
     public ListReponseDto<EmployeeResponse> getActiveEmployees(int pageIndex) {
@@ -110,7 +66,16 @@ public class EmployeeService implements IEmployeeService {
 
         List<EmployeeResponse> employeeResponses = employeeEntities.getContent()
                 .stream()
-                .map(employeeMapper::getEmployeeResponse)
+                .map(o ->{
+                    EmployeeResponse employeeResponse = employeeMapper.getEmployeeResponse(o);
+                    UserEntity userEntity = o.getUserEntity();
+                    if (userEntity != null) {
+                        employeeResponse.setEmail(userEntity.getEmail());
+                        employeeResponse.setPassword(userEntity.getPassword());
+                        employeeResponse.setUserName(userEntity.getUserName());
+                    }
+                    return employeeResponse;
+                })
                 .collect(Collectors.toList());
 
         ListReponseDto<EmployeeResponse> listResponseDto = new ListReponseDto<>();
@@ -185,7 +150,7 @@ public class EmployeeService implements IEmployeeService {
             throw new FashionManagerException(
                     new ErrorResponse(
                             HttpStatus.NOT_FOUND
-                            , "Nhân viên có số căn cước = " + request.getId() + " không tồn tại"
+                            , "Nhân viên có id = " + request.getId() + " không tồn tại"
                     )
             );
         }

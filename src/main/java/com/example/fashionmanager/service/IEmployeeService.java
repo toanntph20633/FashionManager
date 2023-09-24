@@ -8,7 +8,6 @@ import com.example.fashionmanager.dto.employee.request.EmployeeUserCreateRequest
 import com.example.fashionmanager.dto.employee.response.EmployeeResponse;
 
 public interface IEmployeeService {
-    ListReponseDto<EmployeeResponse> getList(EmployeeListRequest request);
 
     ListReponseDto<EmployeeResponse> getActiveEmployees(int pageIndex);
     ResponseDto<EmployeeResponse> save(EmployeeUserCreateRequest request);
