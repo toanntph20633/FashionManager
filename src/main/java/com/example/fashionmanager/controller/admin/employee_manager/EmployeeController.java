@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin/employee-manager")
+@RequestMapping("/super-admin/employee-manager")
 public class EmployeeController {
     @Autowired
     private IEmployeeService employeeService;
