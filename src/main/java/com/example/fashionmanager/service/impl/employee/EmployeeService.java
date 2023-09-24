@@ -52,13 +52,37 @@ public class EmployeeService implements IEmployeeService {
 
 
     @Override
-    public ListReponseDto<EmployeeResponse> getActiveEmployees(int pageIndex) {
+    public ListReponseDto<EmployeeResponse> getActiveEmployees(int pageIndex,String employeeName,
+                                                               String citizenIdentificationCard,
+                                                               String phoneNumber,
+                                                               Long id) {
         int pageSize = 10; // Kích thước trang
         Pageable pageable = PageRequest.of(pageIndex, pageSize);
 
         Specification<EmployeeEntity> employeeEntitySpecification = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             predicates.add(criteriaBuilder.isTrue(root.get("active"))); // Điều kiện active = true
+
+            // Thêm điều kiện tìm kiếm theo tên
+            if (employeeName != null && !employeeName.isEmpty()) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("employeeName")), "%" + employeeName.toLowerCase() + "%"));
+            }
+
+            // Thêm điều kiện tìm kiếm theo căn cước
+            if (citizenIdentificationCard != null && !citizenIdentificationCard.isEmpty()) {
+                predicates.add(criteriaBuilder.equal(root.get("citizenIdentificationCard"), citizenIdentificationCard));
+            }
+
+            // Thêm điều kiện tìm kiếm theo số điện thoại
+            if (phoneNumber != null && !phoneNumber.isEmpty()) {
+                predicates.add(criteriaBuilder.equal(root.get("phoneNumber"), phoneNumber));
+            }
+
+            // Thêm điều kiện tìm kiếm theo id
+            if (id != null) {
+                predicates.add(criteriaBuilder.equal(root.get("id"), id));
+            }
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
 

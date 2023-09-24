@@ -9,7 +9,10 @@ import com.example.fashionmanager.dto.employee.response.EmployeeResponse;
 
 public interface IEmployeeService {
 
-    ListReponseDto<EmployeeResponse> getActiveEmployees(int pageIndex);
+    ListReponseDto<EmployeeResponse> getActiveEmployees(int pageIndex,String employeeName,
+                                                        String citizenIdentificationCard,
+                                                        String phoneNumber,
+                                                        Long id);
     ResponseDto<EmployeeResponse> save(EmployeeUserCreateRequest request);
 
     ResponseDto<EmployeeResponse> update(EmployeeUpdateRequest request);

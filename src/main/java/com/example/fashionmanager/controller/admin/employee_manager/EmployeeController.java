@@ -30,9 +30,13 @@ public class EmployeeController {
     @GetMapping("list")
 
     public ListReponseDto<EmployeeResponse> getActiveEmployees(
-            @RequestParam(value = "pageIndex", defaultValue = "0") int pageIndex
+            @RequestParam(value = "pageIndex", defaultValue = "0") int pageIndex,
+            @RequestParam(value = "employeeName", required = false) String employeeName,
+            @RequestParam(value = "citizenIdentificationCard", required = false) String citizenIdentificationCard,
+            @RequestParam(value = "phoneNumber", required = false) String phoneNumber,
+            @RequestParam(value = "id", required = false) Long id
     ) {
-        return employeeService.getActiveEmployees(pageIndex);
+        return employeeService.getActiveEmployees(pageIndex, employeeName, citizenIdentificationCard, phoneNumber, id);
     }
 
 
