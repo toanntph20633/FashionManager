@@ -69,19 +69,19 @@ public class ProducerController {
     public ResponseDto<ProducerResponse> update(
             @PathVariable Long id, @RequestBody @Valid ProducerUpdateRequest request, BindingResult bindingResult
     ){
-        if(bindingResult.hasErrors()){
-            throw new FashionManagerException(
-                    ErrorResponse
-                            .builder()
-                            .status(HttpStatus.BAD_REQUEST)
-                            .message(
-                                    bindingResult.getAllErrors().stream()
-                                    .map(o -> o.getDefaultMessage())
-                                    .collect(Collectors.toList()).toString()
-                            )
-                            .build()
-            );
-        }
+//        if(bindingResult.hasErrors()){
+//            throw new FashionManagerException(
+//                    ErrorResponse
+//                            .builder()
+//                            .status(HttpStatus.BAD_REQUEST)
+//                            .message(
+//                                    bindingResult.getAllErrors().stream()
+//                                    .map(o -> o.getDefaultMessage())
+//                                    .collect(Collectors.toList()).toString()
+//                            )
+//                            .build()
+//            );
+//        }
         request.setId(id);
         return producerService.update(request);
     }
