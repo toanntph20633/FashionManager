@@ -18,5 +18,5 @@ public class RankReponse {
 
     private String rankName;
 
-    private Boolean active;
+    private Boolean active = true;
 }

@@ -1,4 +1,13 @@
 package com.example.fashionmanager.repository;
 
-public interface EmployeeRepository {
+import com.example.fashionmanager.entity.EmployeeEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface EmployeeRepository extends JpaRepository<EmployeeEntity,Long> , JpaSpecificationExecutor<EmployeeEntity>{
+    boolean existsByCitizenIdentificationCardAndDeleted(String citizenIdentificationCard, Boolean delete);
+
+    boolean existsByCitizenIdentificationCardAndDeletedAndIdNot(String citizenIdentificationCard, Boolean delete, Long id);
 }
