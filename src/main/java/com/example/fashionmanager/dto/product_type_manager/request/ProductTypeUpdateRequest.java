@@ -10,4 +10,6 @@ public class ProductTypeUpdateRequest extends ProductTypeCreateRequest{
 
     @NotNull(message = "Không để trống id")
     private Long id;
+
+    private Boolean active;
 }

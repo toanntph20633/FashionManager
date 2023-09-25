@@ -10,4 +10,6 @@ public class ProducerUpdateRequest extends ProducerCreateRequest{
 
     @NotNull(message = "Không để trống id")
     private Long id;
+
+    private Boolean active;
 }
