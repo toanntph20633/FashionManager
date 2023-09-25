@@ -24,5 +24,5 @@ public class SupplierEntity extends CommonEntity implements Serializable {
     @Column(name = "suppiler_code")
     private String suppilerCode;
     @Column(name = "suppiler_name")
-    private String supplierName;
+    private String suppilerName;
 }
