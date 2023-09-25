@@ -1,4 +1,5 @@
 package com.example.fashionmanager.repository;
 
-public interface ProductTypeRepository {
+
+public interface ProductTypeRepository{
 }
