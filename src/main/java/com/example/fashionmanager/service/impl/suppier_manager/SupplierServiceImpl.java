@@ -49,17 +49,16 @@ public class SupplierServiceImpl implements ISupplierService {
         Specification<SupplierEntity> supplierEntitySpecification = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (StringUtils.isNotBlank(request.getCode())) {
-                predicates.add(criteriaBuilder.like(root.get("supplierCode"), "%" + request.getCode() + "%"));
-
+                predicates.add(criteriaBuilder.like(root.get("suppilerCode"), "%" + request.getCode() + "%"));
             }
             if (StringUtils.isNotBlank(request.getName())) {
-                predicates.add(criteriaBuilder.like(root.get("supplierName"), "%" + request.getName() + "%"));
-
+                predicates.add(criteriaBuilder.like(root.get("suppilerName"), "%" + request.getName() + "%"));
+            }
+            if (request.getActive() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("active"), request.getActive()));
             }
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
-            predicates.add(criteriaBuilder.equal(root.get("active"), request.isActive()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-
         });
 
         Page<SupplierEntity> supplierEntities = supplierRepository.findAll(supplierEntitySpecification, pageable);
@@ -75,7 +74,7 @@ public class SupplierServiceImpl implements ISupplierService {
 
     @Override
     public ResponseDto<SupplierResponse> save(SupplierCreateRequest request) {
-        if (supplierRepository.existsBySuppilerCodeAndDeleted(request.getSupplierCode(), false)) {
+        if (supplierRepository.existsBySuppilerCodeAndDeleted(request.getSuppilerCode(), false)) {
             throw new FashionManagerException(
                     new ErrorResponse(
                             HttpStatus.INTERNAL_SERVER_ERROR, "Mã code đã tồn tại"
@@ -102,7 +101,7 @@ public class SupplierServiceImpl implements ISupplierService {
             );
         }
 
-        if (supplierRepository.existsBySuppilerCodeAndDeletedAndIdNot(request.getSupplierCode(), false, request.getId())) {
+        if (supplierRepository.existsBySuppilerCodeAndDeletedAndIdNot(request.getSuppilerCode(), false, request.getId())) {
             throw new FashionManagerException(
                     new ErrorResponse(
                             HttpStatus.INTERNAL_SERVER_ERROR,
@@ -131,7 +130,7 @@ public class SupplierServiceImpl implements ISupplierService {
                 )
         );
         ResponseDto<SupplierResponse> responseDto = new ResponseDto<>();
-            responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(supplierEntity)));
+        responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(supplierEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Xóa nhà cung cấp thành công!");
         return responseDto;

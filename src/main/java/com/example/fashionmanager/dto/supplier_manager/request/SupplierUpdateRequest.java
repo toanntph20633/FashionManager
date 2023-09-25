@@ -11,6 +11,6 @@ public class SupplierUpdateRequest extends SupplierCreateRequest {
 
     private Long id;
 
-    private Boolean activate;
+    private Boolean active;
 
 }

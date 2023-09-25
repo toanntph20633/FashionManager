@@ -10,9 +10,9 @@ import lombok.Setter;
 public class SupplierCreateRequest {
     @NotNull(message = "Không để trống supplierCode")
     @NotBlank(message = "Không để trống supplierCode")
-    private String supplierCode;
+    private String suppilerCode;
     @NotNull(message = "Không để trống supplierName")
     @NotBlank(message = "Không để trống supplierName")
-    private String supplierName;
+    private String suppilerName;
 
 }

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/admin/supplier-manganer")
+@RequestMapping("/admin/supplier-manager")
 public class SupplierController {
     @Autowired
     private ISupplierService supplierService;
@@ -28,7 +28,7 @@ public class SupplierController {
     public ListReponseDto<SupplierResponse> getList(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
-            @RequestParam(value = "active", defaultValue = "true") Boolean active,
+            @RequestParam(value = "active",required = false) Boolean active,
             @RequestParam(value = "name", required = false ) String name,
             @RequestParam(value = "code", required = false) String code){
 
@@ -45,7 +45,12 @@ public class SupplierController {
     @PostMapping("create")
     public ResponseDto<SupplierResponse> create(@RequestBody @Valid SupplierCreateRequest request, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            throw new RuntimeException("ok");
+            throw new FashionManagerException(ErrorResponse
+                    .builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .message(bindingResult.getAllErrors().stream()
+                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
+                    .build());
         }
         return supplierService.save(request);
     }
@@ -57,6 +62,14 @@ public class SupplierController {
 
     @PutMapping("update/{id}")
     ResponseDto<SupplierResponse> update(@PathVariable Long id, @RequestBody @Valid SupplierUpdateRequest request, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            throw new FashionManagerException(ErrorResponse
+                    .builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .message(bindingResult.getAllErrors().stream()
+                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
+                    .build());
+        }
         request.setId(id);
         return supplierService.update(request);
     }

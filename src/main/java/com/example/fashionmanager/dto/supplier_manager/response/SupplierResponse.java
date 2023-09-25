@@ -10,9 +10,9 @@ import lombok.*;
 public class SupplierResponse {
     private Long id;
 
-    private String supplierCode;
+    private String suppilerCode;
 
-    private String supplierName;
+    private String suppilerName;
 
-    private Boolean activate;
+    private Boolean active;
 }

@@ -43,13 +43,12 @@ public class RankController {
     @PostMapping("create")
     public ResponseDto<RankReponse> create(@RequestBody @Valid RankCreateRequest request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-//            throw new FashionManagerException(ErrorResponse
-//                    .builder()
-//                    .status(HttpStatus.BAD_REQUEST)
-//                    .message(bindingResult.getAllErrors().stream()
-//                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
-//                    .build());
-            throw new RuntimeException("Thêm thành công");
+            throw new FashionManagerException(ErrorResponse
+                    .builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .message(bindingResult.getAllErrors().stream()
+                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
+                    .build());
         }
         return rankService.save(request);
     }

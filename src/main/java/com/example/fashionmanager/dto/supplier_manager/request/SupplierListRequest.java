@@ -17,6 +17,6 @@ public class SupplierListRequest {
 
     private String name;
 
-    private boolean active = true;
+    private Boolean active;
 
 }
