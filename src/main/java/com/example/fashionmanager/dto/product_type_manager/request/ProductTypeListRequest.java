@@ -1,4 +1,4 @@
-package com.example.fashionmanager.dto.producer_manager.request;
+package com.example.fashionmanager.dto.product_type_manager.request;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ProducerListRequest {
+public class ProductTypeListRequest {
 
     private int page;
 

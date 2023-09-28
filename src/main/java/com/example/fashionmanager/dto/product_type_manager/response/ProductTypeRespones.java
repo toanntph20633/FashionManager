@@ -1,24 +1,23 @@
-package com.example.fashionmanager.dto.producer_manager.response;
+package com.example.fashionmanager.dto.product_type_manager.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class ProducerResponse {
+public class ProductTypeRespones {
 
     private Long id;
 
-    private String producerCode;
+    private String productTypeCode;
 
-    private String producerName;
+    private String productTypeName;
 
     private Boolean active;
 }

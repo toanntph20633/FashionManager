@@ -37,7 +37,7 @@ public class ProducerController {
     public ListReponseDto<ProducerResponse> getList(
             @RequestParam(value = "page",defaultValue = "0") int page,
             @RequestParam(value = "size",defaultValue = "10") int size,
-            @RequestParam(value = "active",defaultValue = "true") Boolean active,
+            @RequestParam(value = "active",required = false) Boolean active,
             @RequestParam(value = "name",required = false) String name,
             @RequestParam(value = "code",required = false) String code){
         ProducerListRequest request = ProducerListRequest.builder()
@@ -54,6 +54,14 @@ public class ProducerController {
     public ResponseDto<ProducerResponse> create(
             @RequestBody @Valid ProducerCreateRequest request, BindingResult bindingResult
             ){
+        if(bindingResult.hasErrors()){
+            throw new FashionManagerException(
+                    ErrorResponse.builder()
+                            .status(HttpStatus.BAD_REQUEST)
+                            .message(bindingResult.getAllErrors().stream()
+                                    .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString()).build()
+            );
+        }
         return producerService.save(request);
     }
 
@@ -61,19 +69,19 @@ public class ProducerController {
     public ResponseDto<ProducerResponse> update(
             @PathVariable Long id, @RequestBody @Valid ProducerUpdateRequest request, BindingResult bindingResult
     ){
-        if(bindingResult.hasErrors()){
-            throw new FashionManagerException(
-                    ErrorResponse
-                            .builder()
-                            .status(HttpStatus.BAD_REQUEST)
-                            .message(
-                                    bindingResult.getAllErrors().stream()
-                                    .map(o -> o.getDefaultMessage())
-                                    .collect(Collectors.toList()).toString()
-                            )
-                            .build()
-            );
-        }
+//        if(bindingResult.hasErrors()){
+//            throw new FashionManagerException(
+//                    ErrorResponse
+//                            .builder()
+//                            .status(HttpStatus.BAD_REQUEST)
+//                            .message(
+//                                    bindingResult.getAllErrors().stream()
+//                                    .map(o -> o.getDefaultMessage())
+//                                    .collect(Collectors.toList()).toString()
+//                            )
+//                            .build()
+//            );
+//        }
         request.setId(id);
         return producerService.update(request);
     }

@@ -51,8 +51,11 @@ public class ProducerService implements IProducerService {
             if (StringUtils.isNotBlank(request.getName())) {
                 predicates.add(criteriaBuilder.like(root.get("producerName"), "%" + request.getName() + "%"));
             }
+            if (request.getActive() != null){
+                predicates.add(criteriaBuilder.equal(root.get("active"), request.getActive()));
+            }
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
-            predicates.add(criteriaBuilder.equal(root.get("active"),request.isActive()));
+//            predicates.add(criteriaBuilder.equal(root.get("active"),request.isActive()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
         Page<ProducerEntity> producerEntities = producerRepository.findAll(producerEntitySpecification,pageable);
@@ -81,7 +84,7 @@ public class ProducerService implements IProducerService {
         ResponseDto<ProducerResponse> responseDto = new ResponseDto<>();
         responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(producerEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
-        responseDto.setMessage("tạo thứ nhà sản xuất thành công");
+        responseDto.setMessage("tạo nhà sản xuất thành công");
         return responseDto;
     }
 
@@ -106,7 +109,7 @@ public class ProducerService implements IProducerService {
         ResponseDto<ProducerResponse> responseDto = new ResponseDto<>();
         responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(producerEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
-        responseDto.setMessage("Cập nhập thứ hạng thành công");
+        responseDto.setMessage("Cập nhập nhà sản xuất thành công");
         return responseDto;
     }
 
