@@ -33,6 +33,7 @@ public class CategoryController {
                                                    @RequestParam(value = "code", required = false) String code) {
         CategoryListRequest request = CategoryListRequest.builder()
                 .active(active)
+
                 .code(code)
                 .name(name)
                 .page(page)

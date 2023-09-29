@@ -40,10 +40,12 @@ public class CategoryService implements ICategoryService {
     public ListReponseDto<CategoryReponse> getList(CategoryListRequest request) {
         Sort sort = Sort.by(
                 new Sort.Order(Sort.Direction.DESC, "dateCreate")
-                , new Sort.Order(Sort.Direction.DESC, "id"));
+                , new Sort.Order(Sort.Direction.DESC, "id")
+                , new Sort.Order(Sort.Direction.DESC, "categoryEntities"));
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sort);
         Specification<CategoryEntity> categoryEntitySpecification = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
+
             if (StringUtils.isNotBlank(request.getCode())) {
                 predicates.add(criteriaBuilder.like(root.get("categoryCode"), "%" + request.getCode() + "%"));
             }

@@ -14,6 +14,8 @@ import lombok.Setter;
 public class CategoryReponse {
     private Long id;
 
+    private Long categoryEntities;
+
     private String categoryCode;
 
     private String categoryName;

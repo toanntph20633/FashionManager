@@ -9,5 +9,7 @@ import lombok.Setter;
 public class CategoryUpdateRequest extends CategoryCreateRequest{
     @NotNull(message = "Không để trống id")
     private Long id;
+    private Long categoryEntities;
     private  boolean active;
+
 }

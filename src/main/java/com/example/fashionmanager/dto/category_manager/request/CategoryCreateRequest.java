@@ -8,10 +8,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CategoryCreateRequest {
+
     @NotNull(message = "Không để trống categoryCode")
     @NotBlank(message = "Không để trống categoryCode")
     private String categoryCode;
     @NotNull(message = "Không để trống categoryName")
     @NotBlank(message = "Không để trống categoryName")
     private String categoryName;
+
+
 }
