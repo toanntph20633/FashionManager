@@ -2,11 +2,10 @@ package com.example.fashionmanager.service.impl.employee;
 
 import com.example.fashionmanager.dto.ListReponseDto;
 import com.example.fashionmanager.dto.ResponseDto;
-import com.example.fashionmanager.dto.employee.request.EmployeeListRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeUpdateRequest;
 import com.example.fashionmanager.dto.employee.request.EmployeeUserCreateRequest;
 import com.example.fashionmanager.dto.employee.response.EmployeeResponse;
-import com.example.fashionmanager.entity.EmployeeEntity;
+import com.example.fashionmanager.entity.NhanVienEntity;
 import com.example.fashionmanager.entity.RoleEntity;
 import com.example.fashionmanager.entity.UserEntity;
 import com.example.fashionmanager.entity.UserRoleEntity;
@@ -19,12 +18,10 @@ import com.example.fashionmanager.repository.RoleRepository;
 import com.example.fashionmanager.repository.UserRepository;
 import com.example.fashionmanager.repository.UserRoleRepository;
 import com.example.fashionmanager.service.IEmployeeService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -59,7 +56,7 @@ public class EmployeeService implements IEmployeeService {
         int pageSize = 10; // Kích thước trang
         Pageable pageable = PageRequest.of(pageIndex, pageSize);
 
-        Specification<EmployeeEntity> employeeEntitySpecification = ((root, query, criteriaBuilder) -> {
+        Specification<NhanVienEntity> employeeEntitySpecification = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             predicates.add(criteriaBuilder.isTrue(root.get("active"))); // Điều kiện active = true
 
@@ -86,7 +83,7 @@ public class EmployeeService implements IEmployeeService {
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
 
-        Page<EmployeeEntity> employeeEntities = employeeRepository.findAll(employeeEntitySpecification, pageable);
+        Page<NhanVienEntity> employeeEntities = employeeRepository.findAll(employeeEntitySpecification, pageable);
 
         List<EmployeeResponse> employeeResponses = employeeEntities.getContent()
                 .stream()
@@ -149,7 +146,7 @@ public class EmployeeService implements IEmployeeService {
         userRoleRepository.save(userRoleEntity);
 
         // Tạo một EmployeeEntity và liên kết với UserEntity
-        EmployeeEntity employeeCreateRequest = EmployeeEntity.builder()
+        NhanVienEntity employeeCreateRequest = NhanVienEntity.builder()
                 .employeeName(request.getEmployeeName())
                 .citizenIdentificationCard(request.getCitizenIdentificationCard())
                 .phoneNumber(request.getPhoneNumber())
@@ -186,7 +183,7 @@ public class EmployeeService implements IEmployeeService {
                     )
             );
         }
-        EmployeeEntity getEmployeeEntity = employeeRepository.findById(request.getId()).orElseThrow(() -> new FashionManagerException(
+        NhanVienEntity getEmployeeEntity = employeeRepository.findById(request.getId()).orElseThrow(() -> new FashionManagerException(
                         new ErrorResponse(
                                 HttpStatus.NOT_FOUND
                                 , "Nhân viên có id = " + request.getId() + " không tồn tại"
@@ -200,7 +197,7 @@ public class EmployeeService implements IEmployeeService {
         userEntity.setEmail(request.getEmail());
         userEntity = userRepository.save(userEntity);
 
-        EmployeeEntity employeeEntity = employeeMapper.getEmployeeEntity(request);
+        NhanVienEntity employeeEntity = employeeMapper.getEmployeeEntity(request);
         employeeEntity.setUserEntity(userEntity);
         employeeEntity.setActive(request.isActive());
         ResponseDto<EmployeeResponse> responseDto = new ResponseDto<>();
@@ -212,7 +209,7 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public ResponseDto<EmployeeResponse> delete(Long id) {
-        EmployeeEntity employeeEntity = employeeRepository.findById(id).map(employee -> {
+        NhanVienEntity employeeEntity = employeeRepository.findById(id).map(employee -> {
             employee.setDeleted(true);
             employee.setActive(false);
             return employee;
@@ -232,7 +229,7 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public ResponseDto<EmployeeResponse> detail(Long id) {
-        EmployeeEntity employeeEntity = employeeRepository.findById(id).orElseThrow(() -> new FashionManagerException(
+        NhanVienEntity employeeEntity = employeeRepository.findById(id).orElseThrow(() -> new FashionManagerException(
                         new ErrorResponse(
                                 HttpStatus.NOT_FOUND
                                 , "Nhân viên có id = " + id + " không tồn tại"
@@ -248,7 +245,7 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public ResponseDto<EmployeeResponse> changeActive(Long id) {
-        EmployeeEntity employeeEntity = employeeRepository.findById(id).map(employee -> {
+        NhanVienEntity employeeEntity = employeeRepository.findById(id).map(employee -> {
             employee.setActive(!employee.isActive());
             return employee;
         }).orElseThrow(() -> new FashionManagerException(

@@ -6,7 +6,7 @@ import com.example.fashionmanager.dto.rank_manager.request.RankCreateRequest;
 import com.example.fashionmanager.dto.rank_manager.request.RankListRequest;
 import com.example.fashionmanager.dto.rank_manager.request.RankUpdateRequest;
 import com.example.fashionmanager.dto.rank_manager.response.RankReponse;
-import com.example.fashionmanager.entity.RankEntity;
+import com.example.fashionmanager.entity.HangEntity;
 import com.example.fashionmanager.enums.ResponseStatus;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
@@ -41,7 +41,7 @@ public class RankService implements IRankService {
                 new Sort.Order(Sort.Direction.DESC, "dateCreate")
                 , new Sort.Order(Sort.Direction.DESC, "id"));
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sort);
-        Specification<RankEntity> rankEntitySpecification = ((root, query, criteriaBuilder) -> {
+        Specification<HangEntity> rankEntitySpecification = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (StringUtils.isNotBlank(request.getCode())) {
                 predicates.add(criteriaBuilder.like(root.get("rankCode"), "%" + request.getCode() + "%"));
@@ -55,7 +55,7 @@ public class RankService implements IRankService {
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
-        Page<RankEntity> rankEntities = rankRepository.findAll(rankEntitySpecification, pageable);
+        Page<HangEntity> rankEntities = rankRepository.findAll(rankEntitySpecification, pageable);
         List<RankReponse> rankReponses = rankEntities.stream().map(rank -> rankMapper.getRankReponse(rank)).toList();
         ListReponseDto<RankReponse> listReponseDto = new ListReponseDto<RankReponse>();
         listReponseDto.setItems(rankReponses);
@@ -76,9 +76,9 @@ public class RankService implements IRankService {
                     )
             );
         }
-        RankEntity rankEntity = rankMapper.getRankEntity(request);
+        HangEntity hangEntity = rankMapper.getRankEntity(request);
         ResponseDto<RankReponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(rankMapper.getRankReponse(rankRepository.save(rankEntity)));
+        responseDto.setContent(rankMapper.getRankReponse(rankRepository.save(hangEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Tạo thứ hạng thành công");
         return responseDto;
@@ -102,9 +102,9 @@ public class RankService implements IRankService {
                     )
             );
         }
-        RankEntity rankEntity = rankMapper.getRankEntity(request);
+        HangEntity hangEntity = rankMapper.getRankEntity(request);
         ResponseDto<RankReponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(rankMapper.getRankReponse(rankRepository.save(rankEntity)));
+        responseDto.setContent(rankMapper.getRankReponse(rankRepository.save(hangEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Cập nhật thứ hạng thành công");
         return responseDto;
@@ -113,7 +113,7 @@ public class RankService implements IRankService {
 
     @Override
     public ResponseDto<RankReponse> delete(Long id) {
-        RankEntity rankEntity = rankRepository.findById(id).map(rank -> {
+        HangEntity hangEntity = rankRepository.findById(id).map(rank -> {
             rank.setDeleted(true);
             return rank;
         }).orElseThrow(() -> new FashionManagerException(
@@ -124,7 +124,7 @@ public class RankService implements IRankService {
                 )
         );
         ResponseDto<RankReponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(rankMapper.getRankReponse(rankRepository.save(rankEntity)));
+        responseDto.setContent(rankMapper.getRankReponse(rankRepository.save(hangEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Xóa thứ hạng thành công");
         return responseDto;
@@ -132,7 +132,7 @@ public class RankService implements IRankService {
 
     @Override
     public ResponseDto<RankReponse> detail(Long id) {
-        RankEntity rankEntity = rankRepository.findById(id).orElseThrow(() -> new FashionManagerException(
+        HangEntity hangEntity = rankRepository.findById(id).orElseThrow(() -> new FashionManagerException(
                         new ErrorResponse(
                                 HttpStatus.NOT_FOUND
                                 , "Thứ hạng có id = " + id + " không tồn tại"
@@ -140,7 +140,7 @@ public class RankService implements IRankService {
                 )
         );
         ResponseDto<RankReponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(rankMapper.getRankReponse(rankEntity));
+        responseDto.setContent(rankMapper.getRankReponse(hangEntity));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Hiển thị chi tiết thứ hạng thành công");
         return responseDto;
@@ -148,7 +148,7 @@ public class RankService implements IRankService {
 
     @Override
     public ResponseDto<RankReponse> changeActive(Long id) {
-        RankEntity rankEntity = rankRepository.findById(id).map(rank -> {
+        HangEntity hangEntity = rankRepository.findById(id).map(rank -> {
             rank.setActive(!rank.isActive());
             return rank;
         }).orElseThrow(() -> new FashionManagerException(
@@ -159,7 +159,7 @@ public class RankService implements IRankService {
                 )
         );
         ResponseDto<RankReponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(rankMapper.getRankReponse(rankRepository.save(rankEntity)));
+        responseDto.setContent(rankMapper.getRankReponse(rankRepository.save(hangEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Thay đổi trạng thái hoạt động thứ hạng thành công");
         return responseDto;

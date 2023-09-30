@@ -6,7 +6,7 @@ import com.example.fashionmanager.dto.product_type_manager.request.ProductTypeCr
 import com.example.fashionmanager.dto.product_type_manager.request.ProductTypeListRequest;
 import com.example.fashionmanager.dto.product_type_manager.request.ProductTypeUpdateRequest;
 import com.example.fashionmanager.dto.product_type_manager.response.ProductTypeRespones;
-import com.example.fashionmanager.entity.ProductTypeEntity;
+import com.example.fashionmanager.entity.LoaiSanPhamEntity;
 import com.example.fashionmanager.enums.ResponseStatus;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
@@ -45,7 +45,7 @@ public class ProductTypeService implements IProductTypeService {
                 , new Sort.Order(Sort.Direction.DESC, "id")
         );
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sort);
-        Specification<ProductTypeEntity> productTypeEntitySpecification = ((root, query, criteriaBuilder) -> {
+        Specification<LoaiSanPhamEntity> productTypeEntitySpecification = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (StringUtils.isNotBlank(request.getCode())) {
                 predicates.add(criteriaBuilder.like(root.get("productTypeCode"), "%" + request.getCode() + "%"));
@@ -60,7 +60,7 @@ public class ProductTypeService implements IProductTypeService {
 //            predicates.add(criteriaBuilder.equal(root.get("active"), request.isActive()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
-        Page<ProductTypeEntity> productTypeEntities = productTypeRepository.findAll(productTypeEntitySpecification, pageable);
+        Page<LoaiSanPhamEntity> productTypeEntities = productTypeRepository.findAll(productTypeEntitySpecification, pageable);
         List<ProductTypeRespones> productTypeRespones = productTypeEntities
                 .stream()
                 .map(productType -> productTypeMapper.getProductTypeRespones(productType))
@@ -81,9 +81,9 @@ public class ProductTypeService implements IProductTypeService {
                     new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,"Mã đã tồn tại")
             );
         }
-        ProductTypeEntity productTypeEntity = productTypeMapper.getProductTypeEntityCreate(request);
+        LoaiSanPhamEntity loaiSanPhamEntity = productTypeMapper.getProductTypeEntityCreate(request);
         ResponseDto<ProductTypeRespones> responseDto = new ResponseDto<>();
-        responseDto.setContent(productTypeMapper.getProductTypeRespones(productTypeRepository.save(productTypeEntity)));
+        responseDto.setContent(productTypeMapper.getProductTypeRespones(productTypeRepository.save(loaiSanPhamEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Tạo loại hàng thành công");
         return responseDto;
@@ -106,9 +106,9 @@ public class ProductTypeService implements IProductTypeService {
                     )
             );
         }
-        ProductTypeEntity productTypeEntity = productTypeMapper.getProductTypeUpdateRequest(request);
+        LoaiSanPhamEntity loaiSanPhamEntity = productTypeMapper.getProductTypeUpdateRequest(request);
         ResponseDto<ProductTypeRespones> responseDto = new ResponseDto<>();
-        responseDto.setContent(productTypeMapper.getProductTypeRespones(productTypeRepository.save(productTypeEntity)));
+        responseDto.setContent(productTypeMapper.getProductTypeRespones(productTypeRepository.save(loaiSanPhamEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Cập nhập loại hàng thành công");
         return responseDto;
@@ -116,9 +116,9 @@ public class ProductTypeService implements IProductTypeService {
 
     @Override
     public ResponseDto<ProductTypeRespones> delete(Long id) {
-        ProductTypeEntity productTypeEntity = productTypeRepository.findById(id).map(productTypeEntity1 -> {
-            productTypeEntity1.setDeleted(true);
-            return productTypeEntity1;
+        LoaiSanPhamEntity loaiSanPhamEntity = productTypeRepository.findById(id).map(loaiSanPhamEntity1 -> {
+            loaiSanPhamEntity1.setDeleted(true);
+            return loaiSanPhamEntity1;
         }).orElseThrow(() -> new FashionManagerException(
                 new ErrorResponse(
                         HttpStatus.NOT_FOUND
@@ -126,7 +126,7 @@ public class ProductTypeService implements IProductTypeService {
                 )
         ));
         ResponseDto<ProductTypeRespones> responseDto = new ResponseDto<>();
-        responseDto.setContent(productTypeMapper.getProductTypeRespones(productTypeRepository.save(productTypeEntity)));
+        responseDto.setContent(productTypeMapper.getProductTypeRespones(productTypeRepository.save(loaiSanPhamEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Xoá loại hàng thành công");
         return responseDto;
@@ -134,7 +134,7 @@ public class ProductTypeService implements IProductTypeService {
 
     @Override
     public ResponseDto<ProductTypeRespones> details(Long id) {
-        ProductTypeEntity productTypeEntity = productTypeRepository.findById(id).orElseThrow(
+        LoaiSanPhamEntity loaiSanPhamEntity = productTypeRepository.findById(id).orElseThrow(
                 ()-> new FashionManagerException(
                         new ErrorResponse(
                                 HttpStatus.NOT_FOUND,
@@ -143,7 +143,7 @@ public class ProductTypeService implements IProductTypeService {
                 )
         );
         ResponseDto<ProductTypeRespones> responseDto = new ResponseDto<>();
-        responseDto.setContent(productTypeMapper.getProductTypeRespones(productTypeEntity));
+        responseDto.setContent(productTypeMapper.getProductTypeRespones(loaiSanPhamEntity));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Hiển thị chi tiết loại hàng thành công");
         return responseDto;
@@ -151,7 +151,7 @@ public class ProductTypeService implements IProductTypeService {
 
     @Override
     public ResponseDto<ProductTypeRespones> changeActive(Long id) {
-        ProductTypeEntity productTypeEntity = productTypeRepository.findById(id).map(producer -> {
+        LoaiSanPhamEntity loaiSanPhamEntity = productTypeRepository.findById(id).map(producer -> {
             producer.setActive(!producer.isActive());
             return producer;
         }).orElseThrow(
@@ -163,7 +163,7 @@ public class ProductTypeService implements IProductTypeService {
                 )
         );
         ResponseDto<ProductTypeRespones> responseDto = new ResponseDto<>();
-        responseDto.setContent(productTypeMapper.getProductTypeRespones(productTypeRepository.save(productTypeEntity)));
+        responseDto.setContent(productTypeMapper.getProductTypeRespones(productTypeRepository.save(loaiSanPhamEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Thay đổi trạng thái hoạt động loại hàng thành công");
         return responseDto;

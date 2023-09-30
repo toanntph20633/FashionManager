@@ -5,7 +5,7 @@ import jakarta.persistence.PreUpdate;
 
 import java.time.LocalDate;
 
-public class CommonEmtityListener {
+public class CommonEntityListener {
     @PrePersist
     private void prePersistCreate(CommonEntity entity) {
 

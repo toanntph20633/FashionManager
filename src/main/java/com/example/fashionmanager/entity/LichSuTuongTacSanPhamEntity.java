@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,13 +24,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class ProductHistoryEntity extends CommonEntity implements Serializable {
+public class LichSuTuongTacSanPhamEntity extends CommonEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private ProductEntity productEntity;
+    private SanPhamEntity sanPhamEntity;
     @ManyToOne
     @JoinColumn(name = "employee_id")
-    private EmployeeEntity employeeEntity;
+    private NhanVienEntity employeeEntity;
     @Column(name = "method")
     @Enumerated(EnumType.STRING)
     private HistoryMethod historyMethod;

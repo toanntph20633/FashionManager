@@ -6,7 +6,7 @@ import com.example.fashionmanager.dto.producer_manager.request.ProducerCreateReq
 import com.example.fashionmanager.dto.producer_manager.request.ProducerListRequest;
 import com.example.fashionmanager.dto.producer_manager.request.ProducerUpdateRequest;
 import com.example.fashionmanager.dto.producer_manager.response.ProducerResponse;
-import com.example.fashionmanager.entity.ProducerEntity;
+import com.example.fashionmanager.entity.NhaSanXuatEntity;
 import com.example.fashionmanager.enums.ResponseStatus;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
@@ -43,7 +43,7 @@ public class ProducerService implements IProducerService {
                 new Sort.Order(Sort.Direction.DESC,"dateCreate")
                 , new Sort.Order(Sort.Direction.DESC,"id"));
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sort);
-        Specification<ProducerEntity> producerEntitySpecification = ((root,query,criteriaBuilder)->{
+        Specification<NhaSanXuatEntity> producerEntitySpecification = ((root, query, criteriaBuilder)->{
             List<Predicate> predicates = new ArrayList<>();
             if (StringUtils.isNotBlank(request.getCode())) {
                 predicates.add(criteriaBuilder.like(root.get("producerCode"), "%" + request.getCode() + "%"));
@@ -58,7 +58,7 @@ public class ProducerService implements IProducerService {
 //            predicates.add(criteriaBuilder.equal(root.get("active"),request.isActive()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
-        Page<ProducerEntity> producerEntities = producerRepository.findAll(producerEntitySpecification,pageable);
+        Page<NhaSanXuatEntity> producerEntities = producerRepository.findAll(producerEntitySpecification,pageable);
         List<ProducerResponse> producerResponses = producerEntities
                 .stream()
                 .map(producer -> producerMapper.getProducerResponse(producer))
@@ -80,9 +80,9 @@ public class ProducerService implements IProducerService {
                     new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,"Mã đã tồn tại")
             );
         }
-        ProducerEntity producerEntity = producerMapper.getProducerEntityCreate(request);
+        NhaSanXuatEntity nhaSanXuatEntity = producerMapper.getProducerEntityCreate(request);
         ResponseDto<ProducerResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(producerEntity)));
+        responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(nhaSanXuatEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("tạo nhà sản xuất thành công");
         return responseDto;
@@ -105,9 +105,9 @@ public class ProducerService implements IProducerService {
                     )
             );
         }
-        ProducerEntity producerEntity = producerMapper.getProducerEntityUpdate(request);
+        NhaSanXuatEntity nhaSanXuatEntity = producerMapper.getProducerEntityUpdate(request);
         ResponseDto<ProducerResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(producerEntity)));
+        responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(nhaSanXuatEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Cập nhập nhà sản xuất thành công");
         return responseDto;
@@ -115,7 +115,7 @@ public class ProducerService implements IProducerService {
 
     @Override
     public ResponseDto<ProducerResponse> delete(Long id) {
-        ProducerEntity producerEntity = producerRepository.findById(id).map(producer -> {
+        NhaSanXuatEntity nhaSanXuatEntity = producerRepository.findById(id).map(producer -> {
             producer.setDeleted(true);
             return producer;
         }).orElseThrow(() -> new FashionManagerException(
@@ -125,7 +125,7 @@ public class ProducerService implements IProducerService {
                 )
         ));
         ResponseDto<ProducerResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(producerEntity)));
+        responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(nhaSanXuatEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Xoá nhà sản xuất thành công");
         return responseDto;
@@ -133,7 +133,7 @@ public class ProducerService implements IProducerService {
 
     @Override
     public ResponseDto<ProducerResponse> details(Long id) {
-        ProducerEntity producerEntity = producerRepository.findById(id).orElseThrow(
+        NhaSanXuatEntity nhaSanXuatEntity = producerRepository.findById(id).orElseThrow(
                 ()-> new FashionManagerException(
                         new ErrorResponse(
                                 HttpStatus.NOT_FOUND,
@@ -142,7 +142,7 @@ public class ProducerService implements IProducerService {
                 )
         );
         ResponseDto<ProducerResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(producerMapper.getProducerResponse(producerEntity));
+        responseDto.setContent(producerMapper.getProducerResponse(nhaSanXuatEntity));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Hiển thị chi tiết nhà sản xuất thành công");
         return responseDto;
@@ -150,7 +150,7 @@ public class ProducerService implements IProducerService {
 
     @Override
     public ResponseDto<ProducerResponse> changeActive(Long id) {
-        ProducerEntity producerEntity = producerRepository.findById(id).map(producer -> {
+        NhaSanXuatEntity nhaSanXuatEntity = producerRepository.findById(id).map(producer -> {
             producer.setActive(!producer.isActive());
             return producer;
         }).orElseThrow(
@@ -162,7 +162,7 @@ public class ProducerService implements IProducerService {
                 )
         );
         ResponseDto<ProducerResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(producerEntity)));
+        responseDto.setContent(producerMapper.getProducerResponse(producerRepository.save(nhaSanXuatEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Thay đổi trạng thái hoạt động nhà sản xuất thành công");
         return responseDto;

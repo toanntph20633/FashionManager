@@ -6,7 +6,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,18 +14,18 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "product_color_entity")
+@Table(name = "product_favorite_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class ProductColorEntity extends CommonEntity implements Serializable {
+public class SanPhamYeuThichEntity extends CommonEntity implements Serializable {
     @ManyToOne
-    @JoinColumn(name = "color_id")
-    private ColorEntity colorEntity;
+    @JoinColumn(name = "customer_id")
+    private KhachHangEntity customerEntity;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private ProductEntity productEntity;
+    private SanPhamEntity sanPhamEntity;
 }

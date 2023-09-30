@@ -12,7 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,7 +28,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class OrderEntity extends CommonEntity implements Serializable {
+public class HoaDonEntity extends CommonEntity implements Serializable {
     @Column(name = "order_code")
     private String orderCode;
     @Column(name = "order_date")
@@ -55,9 +54,9 @@ public class OrderEntity extends CommonEntity implements Serializable {
     private OrderStatus orderStatus;
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private CustomerEntity customerEntity;
+    private KhachHangEntity customerEntity;
     @ManyToOne
     @JoinColumn(name = "employee_id")
-    private EmployeeEntity employeeEntity;
+    private NhanVienEntity employeeEntity;
 
 }

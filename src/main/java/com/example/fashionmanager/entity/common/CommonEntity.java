@@ -13,7 +13,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -21,7 +20,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @MappedSuperclass
 @SuperBuilder
-@EntityListeners(CommonEmtityListener.class)
+@EntityListeners(CommonEntityListener.class)
 public class CommonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

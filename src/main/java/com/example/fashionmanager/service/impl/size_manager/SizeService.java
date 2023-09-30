@@ -6,7 +6,7 @@ import com.example.fashionmanager.dto.size_manager.request.SizeCreateRequest;
 import com.example.fashionmanager.dto.size_manager.request.SizeListRequest;
 import com.example.fashionmanager.dto.size_manager.request.SizeUpdateRequest;
 import com.example.fashionmanager.dto.size_manager.response.SizeResponse;
-import com.example.fashionmanager.entity.SizeEntity;
+import com.example.fashionmanager.entity.KichThuocEntity;
 import com.example.fashionmanager.enums.ResponseStatus;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
@@ -41,7 +41,7 @@ public class SizeService implements ISizeService {
                 new Sort.Order(Sort.Direction.DESC,"dateCreate"),
                 new Sort.Order(Sort.Direction.DESC, "id"));
         Pageable pageable = PageRequest.of(request.getPage(), request.getSizePage(), sort);
-        Specification<SizeEntity> sizeEntitySpecification = (((root, query, criteriaBuilder) -> {
+        Specification<KichThuocEntity> sizeEntitySpecification = (((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if(StringUtils.isNotBlank(request.getSizeCode())){
                 predicates.add(criteriaBuilder.like(root.get("sizeCode"), "%" + request.getSizeCode() + "%"));
@@ -53,7 +53,7 @@ public class SizeService implements ISizeService {
             predicates.add(criteriaBuilder.equal(root.get("active"), request.getActive()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         }));
-        Page<SizeEntity> sizeEntities = repository.findAll(sizeEntitySpecification, pageable);
+        Page<KichThuocEntity> sizeEntities = repository.findAll(sizeEntitySpecification, pageable);
         List<SizeResponse> sizeResponses = sizeEntities.stream().map(size -> sizeMapper.getSizeResponse(size)).toList();
         ListReponseDto<SizeResponse> listReponseDto = new ListReponseDto<SizeResponse>();
         listReponseDto.setItems(sizeResponses);
@@ -73,9 +73,9 @@ public class SizeService implements ISizeService {
                     )
             );
         }
-        SizeEntity sizeEntity = sizeMapper.getSizeEntity(request);
+        KichThuocEntity kichThuocEntity = sizeMapper.getSizeEntity(request);
         ResponseDto<SizeResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(sizeMapper.getSizeResponse(repository.save(sizeEntity)));
+        responseDto.setContent(sizeMapper.getSizeResponse(repository.save(kichThuocEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Tạo size thành công");
         return responseDto;
@@ -97,9 +97,9 @@ public class SizeService implements ISizeService {
                     )
             );
         }
-        SizeEntity sizeEntity = sizeMapper.getSizeEntity(request);
+        KichThuocEntity kichThuocEntity = sizeMapper.getSizeEntity(request);
         ResponseDto<SizeResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(sizeMapper.getSizeResponse(repository.save(sizeEntity)));
+        responseDto.setContent(sizeMapper.getSizeResponse(repository.save(kichThuocEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Cập nhật size thành công");
         return responseDto;
@@ -107,7 +107,7 @@ public class SizeService implements ISizeService {
 
     @Override
     public ResponseDto<SizeResponse> delete(Long id) {
-        SizeEntity sizeEntity = repository.findById(id).map(size -> {
+        KichThuocEntity kichThuocEntity = repository.findById(id).map(size -> {
             size.setDeleted(true);
             return size;
         }).orElseThrow(() -> new FashionManagerException(
@@ -116,7 +116,7 @@ public class SizeService implements ISizeService {
                 )
         ));
         ResponseDto<SizeResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(sizeMapper.getSizeResponse(repository.save(sizeEntity)));
+        responseDto.setContent(sizeMapper.getSizeResponse(repository.save(kichThuocEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Xóa size thành công");
         return responseDto;
@@ -124,13 +124,13 @@ public class SizeService implements ISizeService {
 
     @Override
     public ResponseDto<SizeResponse> detail(Long id) {
-        SizeEntity sizeEntity = repository.findById(id).orElseThrow(() -> new FashionManagerException(
+        KichThuocEntity kichThuocEntity = repository.findById(id).orElseThrow(() -> new FashionManagerException(
                 new ErrorResponse(
                         HttpStatus.NOT_FOUND, "Size có id = " + id + "không tồn tại"
                 )
         ));
         ResponseDto<SizeResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(sizeMapper.getSizeResponse(sizeEntity));
+        responseDto.setContent(sizeMapper.getSizeResponse(kichThuocEntity));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Hiển thị chi tiết size thành công");
         return responseDto;
@@ -138,7 +138,7 @@ public class SizeService implements ISizeService {
 
     @Override
     public ResponseDto<SizeResponse> changeActive(Long id) {
-        SizeEntity sizeEntity = repository.findById(id).map(size -> {
+        KichThuocEntity kichThuocEntity = repository.findById(id).map(size -> {
             size.setActive(!size.isActive());
             return size;
         }).orElseThrow(() -> new FashionManagerException(
@@ -147,7 +147,7 @@ public class SizeService implements ISizeService {
                 )
         ));
         ResponseDto<SizeResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(sizeMapper.getSizeResponse(sizeEntity));
+        responseDto.setContent(sizeMapper.getSizeResponse(kichThuocEntity));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Thay đổi trạng thái hoạt động size thành công");
         return responseDto;

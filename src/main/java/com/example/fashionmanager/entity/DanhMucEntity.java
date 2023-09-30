@@ -10,7 +10,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +26,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class CategoryEntity extends CommonEntity implements Serializable {
+public class DanhMucEntity extends CommonEntity implements Serializable {
     @Column(name = "category_code")
     private String categoryCode;
     @Column(name = "category_name")
@@ -35,8 +34,8 @@ public class CategoryEntity extends CommonEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private CategoryEntity categoryEntity;
+    private DanhMucEntity categoryEntity;
 
     @OneToMany(mappedBy = "categoryEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<CategoryEntity> categoryEntities = new HashSet<>();
+    private Set<DanhMucEntity> categoryEntities = new HashSet<>();
 }

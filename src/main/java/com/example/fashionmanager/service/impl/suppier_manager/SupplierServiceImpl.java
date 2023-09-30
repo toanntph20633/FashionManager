@@ -7,7 +7,7 @@ import com.example.fashionmanager.dto.supplier_manager.request.SupplierCreateReq
 import com.example.fashionmanager.dto.supplier_manager.request.SupplierListRequest;
 import com.example.fashionmanager.dto.supplier_manager.request.SupplierUpdateRequest;
 import com.example.fashionmanager.dto.supplier_manager.response.SupplierResponse;
-import com.example.fashionmanager.entity.SupplierEntity;
+import com.example.fashionmanager.entity.NhaCungCapEntity;
 import com.example.fashionmanager.enums.ResponseStatus;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
@@ -46,7 +46,7 @@ public class SupplierServiceImpl implements ISupplierService {
                 new Sort.Order(Sort.Direction.DESC, "dateCreate")
                 , new Sort.Order(Sort.Direction.DESC, "id"));
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sort);
-        Specification<SupplierEntity> supplierEntitySpecification = ((root, query, criteriaBuilder) -> {
+        Specification<NhaCungCapEntity> supplierEntitySpecification = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (StringUtils.isNotBlank(request.getCode())) {
                 predicates.add(criteriaBuilder.like(root.get("suppilerCode"), "%" + request.getCode() + "%"));
@@ -61,7 +61,7 @@ public class SupplierServiceImpl implements ISupplierService {
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
 
-        Page<SupplierEntity> supplierEntities = supplierRepository.findAll(supplierEntitySpecification, pageable);
+        Page<NhaCungCapEntity> supplierEntities = supplierRepository.findAll(supplierEntitySpecification, pageable);
         List<SupplierResponse> supplierResponses = supplierEntities.stream().map(sup -> supplierMapper.getSupplierResponse(sup)).toList();
         ListReponseDto<SupplierResponse> listReponseDto = new ListReponseDto<>();
         listReponseDto.setItems(supplierResponses);
@@ -82,9 +82,9 @@ public class SupplierServiceImpl implements ISupplierService {
             );
         }
 
-        SupplierEntity supplierEntity = supplierMapper.getSupplierEntity(request);
+        NhaCungCapEntity nhaCungCapEntity = supplierMapper.getSupplierEntity(request);
         ResponseDto<SupplierResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(supplierEntity)));
+        responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(nhaCungCapEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Tạo nhà cung cấp thành công!");
         return responseDto;
@@ -109,9 +109,9 @@ public class SupplierServiceImpl implements ISupplierService {
                     )
             );
         }
-        SupplierEntity supplierEntity = supplierMapper.getSupplierEntity(request);
+        NhaCungCapEntity nhaCungCapEntity = supplierMapper.getSupplierEntity(request);
         ResponseDto<SupplierResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(supplierEntity)));
+        responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(nhaCungCapEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Cập nhật nhà cung cấp thành công!");
         return responseDto;
@@ -119,7 +119,7 @@ public class SupplierServiceImpl implements ISupplierService {
 
     @Override
     public ResponseDto<SupplierResponse> delete(Long id) {
-        SupplierEntity supplierEntity = supplierRepository.findById(id).map(sup -> {
+        NhaCungCapEntity nhaCungCapEntity = supplierRepository.findById(id).map(sup -> {
             sup.setDeleted(true);
             return sup;
         }).orElseThrow(() -> new FashionManagerException(
@@ -130,7 +130,7 @@ public class SupplierServiceImpl implements ISupplierService {
                 )
         );
         ResponseDto<SupplierResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(supplierEntity)));
+        responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(nhaCungCapEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Xóa nhà cung cấp thành công!");
         return responseDto;
@@ -138,7 +138,7 @@ public class SupplierServiceImpl implements ISupplierService {
 
     @Override
     public ResponseDto<SupplierResponse> detail(Long id) {
-        SupplierEntity supplierEntity = supplierRepository.findById(id).orElseThrow(() -> new FashionManagerException(
+        NhaCungCapEntity nhaCungCapEntity = supplierRepository.findById(id).orElseThrow(() -> new FashionManagerException(
                         new ErrorResponse(
                                 HttpStatus.NOT_FOUND,
                                 "Nhà cung cấp có id = " + id + "không tồn tại"
@@ -146,7 +146,7 @@ public class SupplierServiceImpl implements ISupplierService {
                 )
         );
         ResponseDto<SupplierResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(supplierEntity)));
+        responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(nhaCungCapEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Hiển thị nhà cung cấp thành công!");
         return responseDto;
@@ -154,7 +154,7 @@ public class SupplierServiceImpl implements ISupplierService {
 
     @Override
     public ResponseDto<SupplierResponse> changeActive(Long id) {
-        SupplierEntity supplierEntity = supplierRepository.findById(id).map(sup -> {
+        NhaCungCapEntity nhaCungCapEntity = supplierRepository.findById(id).map(sup -> {
             sup.setActive(!sup.isActive());
             return sup;
         }).orElseThrow(() -> new FashionManagerException(
@@ -165,7 +165,7 @@ public class SupplierServiceImpl implements ISupplierService {
                 )
         );
         ResponseDto<SupplierResponse> responseDto = new ResponseDto<>();
-        responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(supplierEntity)));
+        responseDto.setContent(supplierMapper.getSupplierResponse(supplierRepository.save(nhaCungCapEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
         responseDto.setMessage("Thay đổi trạng thái hoạt động nhà cung cấp thành công!");
         return responseDto;
