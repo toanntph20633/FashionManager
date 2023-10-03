@@ -3,6 +3,8 @@ package com.example.fashionmanager.entity;
 import com.example.fashionmanager.entity.common.CommonEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,6 +42,14 @@ public class VoucherEntity extends CommonEntity {
     private BigDecimal soTienYeuCau;
 
     @Column(name = "hinh_thuc_khuyen_mai")
-    private
+    private String hinhThuckhuyenmai;
 
+    @Column(name = "hinh_thuc_ap_dung")
+    private String hinhThucApDung;
+
+    @Column(name = "gia_tri_duoc_giam")
+    private int giaTriDuocGiam;
+    @ManyToOne
+    @JoinColumn(name = "hang_id")
+    private HangEntity hangEntity;
 }

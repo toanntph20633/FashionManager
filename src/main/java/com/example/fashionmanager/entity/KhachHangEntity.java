@@ -25,6 +25,8 @@ import java.time.LocalDate;
 public class KhachHangEntity extends CommonEntity implements Serializable {
     @Column(name = "ten_khach_hang")
     private String tenKhachHang;
+    @Column(name = "ho_khach_hang")
+    private String hoKhachHang;
     @Column(name = "so_dien_thoai")
     private String soDienThoai;
     @Column(name = "thanh_pho")
