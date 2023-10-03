@@ -25,6 +25,6 @@ public class HinhAnhEntity extends CommonEntity implements Serializable {
     @Column(name = "url")
     private String url;
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "san_pham_id")
     private SanPhamEntity sanPhamEntity;
 }

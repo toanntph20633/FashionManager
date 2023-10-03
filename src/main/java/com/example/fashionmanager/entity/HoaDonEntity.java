@@ -22,41 +22,41 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "order_entity")
+@Table(name = "hoa_don_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
 public class HoaDonEntity extends CommonEntity implements Serializable {
-    @Column(name = "order_code")
-    private String orderCode;
-    @Column(name = "order_date")
-    private LocalDate orderDate;
-    @Column(name = "original_total")
-    private BigDecimal originalTotal;
-    @Column(name = "discount_total")
-    private BigDecimal dicountTotal;
-    @Column(name = "shipping_price")
-    private BigDecimal shippingPrice;
-    @Column(name = "final_total")
-    private BigDecimal finalTotal;
-    @Column(name = "note", columnDefinition = "LONGTEXT")
-    private String note;
-    @Column(name = "buying_method")
+    @Column(name = "ma_hoa_don")
+    private String maHoaDon;
+    @Column(name = "ngay_lap")
+    private LocalDate ngayLap;
+    @Column(name = "tong_tien_tam_tinh")
+    private BigDecimal tongTienTamTinh;
+    @Column(name = "tong_tien_duoc_giam")
+    private BigDecimal tongTienDuocGiam;
+    @Column(name = "phi_phip")
+    private BigDecimal phiShip;
+    @Column(name = "tong_tien_thanh_toan")
+    private BigDecimal tongTienThanhToan;
+    @Column(name = "ghi_chu", columnDefinition = "LONGTEXT")
+    private String ghiChu;
+    @Column(name = "hinh_thuc_mua_hang")
     @Enumerated(EnumType.STRING)
-    private BuyingMethod buyingMethod;
-    @Column(name = "payment_method")
+    private BuyingMethod hinhThucMuaHang;
+    @Column(name = "hinh_thuc_thanh_toan")
     @Enumerated(EnumType.STRING)
-    private PaymentMethod paymentMethod;
-    @Column(name = "order_satus")
+    private PaymentMethod hinhThucThanhToan;
+    @Column(name = "trang_thai_hoa_don")
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
+    private OrderStatus trangThaiHoaDon;
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private KhachHangEntity customerEntity;
+    @JoinColumn(name = "khach_hang_id")
+    private KhachHangEntity khachHangEntity;
     @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private NhanVienEntity employeeEntity;
+    @JoinColumn(name = "nhan_vien_id")
+    private NhanVienEntity nhanVienEntity;
 
 }

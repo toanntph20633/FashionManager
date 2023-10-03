@@ -16,31 +16,31 @@ import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "customer_entity")
+@Table(name = "khach_hang_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
 public class KhachHangEntity extends CommonEntity implements Serializable {
-    @Column(name = "customer_name")
-    private String customerName;
-    @Column(name = "phone_number")
-    private String phoneNumber;
-    @Column(name = "city")
-    private String city;
-    @Column(name = "district")
-    private String district;
-    @Column(name = "detail_address")
-    private String detailAddress;
+    @Column(name = "ten_khach_hang")
+    private String tenKhachHang;
+    @Column(name = "so_dien_thoai")
+    private String soDienThoai;
+    @Column(name = "thanh_pho")
+    private String thanhPho;
+    @Column(name = "quan_huyen")
+    private String quanHuyen;
+    @Column(name = "dia_chi_chi_tiet")
+    private String diaChiChiTiet;
     @Column(name = "email")
     private String email;
-    @Column(name = "customer_date")
-    private LocalDate date;
-    @Column(name = "point_accumulated")
-    private Long pointAccumulated;
+    @Column(name = "ngay_sinh")
+    private LocalDate ngaySinh;
+    @Column(name = "diem_tich_luy")
+    private Long diemTichLuy;
     @ManyToOne
-    @JoinColumn(name = "rank_id")
+    @JoinColumn(name = "hang_id")
     private HangEntity hangEntity;
     @ManyToOne
     @JoinColumn(name = "user_id")

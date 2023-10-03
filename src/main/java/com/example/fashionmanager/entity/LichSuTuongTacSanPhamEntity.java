@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "product_history_entity")
+@Table(name = "lich_su_tuong_tac_san_pham_entity")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -26,12 +26,13 @@ import java.io.Serializable;
 @SuperBuilder
 public class LichSuTuongTacSanPhamEntity extends CommonEntity implements Serializable {
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "san_pham_id")
     private SanPhamEntity sanPhamEntity;
     @ManyToOne
-    @JoinColumn(name = "employee_id")
-    private NhanVienEntity employeeEntity;
-    @Column(name = "method")
+    @JoinColumn(name = "nhan_vien_id")
+    private NhanVienEntity nhanVienEntity;
+
+    @Column(name = "thao_tac")
     @Enumerated(EnumType.STRING)
-    private HistoryMethod historyMethod;
+    private HistoryMethod thaoTac;
 }

@@ -22,10 +22,10 @@ import java.io.Serializable;
 @SuperBuilder
 public class SanPhamYeuThichEntity extends CommonEntity implements Serializable {
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private KhachHangEntity customerEntity;
+    @JoinColumn(name = "khach_hang_id")
+    private KhachHangEntity khachHangEntity;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "san_pham_id")
     private SanPhamEntity sanPhamEntity;
 }

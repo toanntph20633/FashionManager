@@ -13,15 +13,15 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "rank_entity")
+@Table(name = "hang_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
 public class HangEntity extends CommonEntity implements Serializable {
-    @Column(name = "rank_code")
-    private String rankCode;
-    @Column(name = "rank_name")
-    private String rankName;
+    @Column(name = "ma_hang")
+    private String maHang;
+    @Column(name = "ten_hang")
+    private String tenHang;
 }

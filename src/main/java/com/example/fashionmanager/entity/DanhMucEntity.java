@@ -20,22 +20,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "category_entity")
+@Table(name = "danh_muc_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
 public class DanhMucEntity extends CommonEntity implements Serializable {
-    @Column(name = "category_code")
-    private String categoryCode;
-    @Column(name = "category_name")
-    private String categoryName;
+    @Column(name = "ma_danh_muc")
+    private String maDanhMuc;
+    @Column(name = "ten_danh_muc")
+    private String tenDanhMuc;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private DanhMucEntity categoryEntity;
+    @JoinColumn(name = "danh_muc_id")
+    private DanhMucEntity danhMucEntity;
 
-    @OneToMany(mappedBy = "categoryEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<DanhMucEntity> categoryEntities = new HashSet<>();
+    @OneToMany(mappedBy = "danhMucEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<DanhMucEntity> danhMucEntities = new HashSet<>();
 }

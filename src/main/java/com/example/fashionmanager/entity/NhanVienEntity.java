@@ -15,25 +15,23 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "employee_entity")
+@Table(name = "nhan_vien_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
 public class NhanVienEntity extends CommonEntity implements Serializable {
-    @Column(name = "employee_name")
+    @Column(name = "ten_nhan_vien")
     private String employeeName;
-    @Column(name = "citizen_identification_card")
-    private String citizenIdentificationCard;
-    @Column(name = "phone_number")
-    private String phoneNumber;
-    @Column(name = "city")
-    private String city;
-    @Column(name = "district")
-    private String district;
-    @Column(name = "gender")
-    private boolean gender;
+    @Column(name = "cccd")
+    private String cccd;
+    @Column(name = "so_dien_thoai")
+    private String soDienThoai;
+    @Column(name = "dia_chi")
+    private String diaChi;
+    @Column(name = "gioi_tinh")
+    private boolean gioiTinh;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;

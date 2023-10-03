@@ -13,15 +13,15 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "product_type_entity")
+@Table(name = "loai_san_pham_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
 public class LoaiSanPhamEntity extends CommonEntity implements Serializable {
-    @Column(name = "product_type_code")
-    private String productTypeCode;
-    @Column(name = "product_type_name")
-    private String productTypeName;
+    @Column(name = "ma_loai")
+    private String maLoai;
+    @Column(name = "ten_loai")
+    private String tenLoai;
 }

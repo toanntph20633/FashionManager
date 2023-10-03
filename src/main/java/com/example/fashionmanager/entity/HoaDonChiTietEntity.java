@@ -27,25 +27,25 @@ import java.math.BigDecimal;
 @SuperBuilder
 public class HoaDonChiTietEntity extends CommonEntity implements Serializable {
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "san_pham_id")
     private SanPhamEntity sanPhamEntity;
 
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "hoa_don_id")
     private HoaDonEntity hoaDonEntity;
 
-    @Column(name = "price")
-    private BigDecimal price;
+    @Column(name = "gia_ban")
+    private BigDecimal giaBan;
 
-    @Column(name = "quantity")
-    private Integer quantity;
+    @Column(name = "so_luong")
+    private Integer soLuong;
 
-    @Column(name = "total")
-    private BigDecimal total;
+    @Column(name = "tong_tien")
+    private BigDecimal tongTien;
 
-    @Column(name = "order_product_status")
+    @Column(name = "trang_thai")
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private OrderStatus trangThai;
 
 
 }

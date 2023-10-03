@@ -13,15 +13,15 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "producer_entity")
+@Table(name = "nha_san_xuat_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
 public class NhaSanXuatEntity extends CommonEntity implements Serializable {
-    @Column(name = "producer_code")
-    private String producerCode;
-    @Column(name = "producer_name")
-    private String producerName;
+    @Column(name = "ma_nha_san_xuat")
+    private String maNhaSanXuat;
+    @Column(name = "ten_nha_san_xuat")
+    private String tenNhaSanXuat;
 }

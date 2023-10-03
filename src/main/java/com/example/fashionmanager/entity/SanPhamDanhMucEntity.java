@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "product_category_entity")
+@Table(name = "san_pham_danh_muc_entity")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,10 +22,10 @@ import java.io.Serializable;
 @SuperBuilder
 public class SanPhamDanhMucEntity extends CommonEntity implements Serializable {
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private DanhMucEntity categoryEntity;
+    @JoinColumn(name = "danh_muc_id")
+    private DanhMucEntity danhMucEntity;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "san_pham_id")
     private SanPhamEntity sanPhamEntity;
 }
