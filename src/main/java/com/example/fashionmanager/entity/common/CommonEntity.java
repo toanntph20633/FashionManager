@@ -10,24 +10,27 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-@EntityListeners(CommonEmtityListener.class)
+@SuperBuilder
+@EntityListeners(CommonEntityListener.class)
 public class CommonEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-    @Column(name = "status_live")
-    private int statusLive;
-    @Column(name = "status_action")
-    private int statusAction;
+    @Column(name = "active")
+    private boolean active;
+
+    @Column(name = "deleted")
+    private boolean deleted;
     @Column(name = "create_date")
     private LocalDate dateCreate;
     @Column(name = "update_date")
