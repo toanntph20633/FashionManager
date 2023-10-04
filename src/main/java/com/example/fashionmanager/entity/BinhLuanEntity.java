@@ -1,7 +1,7 @@
 package com.example.fashionmanager.entity;
 
 import com.example.fashionmanager.entity.common.CommonEntity;
-import com.example.fashionmanager.enums.DiemDanhGiaEnum;
+import com.example.fashionmanager.enums.TrangThaiBinhLuanEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,17 +18,14 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "danh_gia_entity")
+@Table(name = "binh_luan_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class DanhGiaEntity extends CommonEntity implements Serializable {
-    @Column(name = "diem_danh_gia")
-    @Enumerated(EnumType.STRING)
-    private DiemDanhGiaEnum diemDanhGiaEnum;
-    @Column(name = "ten_nguoi_danh_gia")
+public class BinhLuanEntity extends CommonEntity implements Serializable {
+    @Column(name = "ten_nguoi_binh_luan")
     private String tenNguoiDanhGia;
 
     @Column(name = "so_diem_thoai")
@@ -39,6 +36,10 @@ public class DanhGiaEntity extends CommonEntity implements Serializable {
 
     @Column(name = "noi_dung", columnDefinition = "LONGTEXT")
     private String noiDung;
+
+    @Column(name = "trang_thai_binh_luan")
+    @Enumerated(EnumType.STRING)
+    private TrangThaiBinhLuanEnum trangThaiBinhLuan;
     @ManyToOne
     @JoinColumn(name = "san_pham_id")
     private SanPhamEntity sanPhamEntity;

@@ -1,12 +1,9 @@
 package com.example.fashionmanager.entity;
 
 import com.example.fashionmanager.entity.common.CommonEntity;
-import com.example.fashionmanager.enums.DiscountType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -19,7 +16,6 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,21 +31,7 @@ public class SanPhamEntity extends CommonEntity implements Serializable {
     private String maSanPham;
     @Column(name = "tan_san_pham")
     private String teSanPham;
-    @Column(name = "so_luong_ban")
-    private Integer soLuongBan;
-    @Column(name = "so_luong_tang")
-    private Integer soLuongTang;
 
-    @Column(name = "gia_ban_khoi_diem")
-    private BigDecimal giaBanKhoiDiem; // giá bán khởi điểm
-    @Column(name = "hinh_thuc_giam_gia")
-    @Enumerated(EnumType.STRING)
-    private DiscountType hinhThucGiamGia; // Hình thức giảm giá
-    @Column(name = "gia_tri_duoc_giam")
-    private BigDecimal giaTriDuocGiam;// Giá trị được giảm
-
-    @Column(name = "gia_ban_cuoi_cung")
-    private BigDecimal giaBanCuoiCung; //Giá cuối cùng
 
     @Column(name = "cau_truc_khuy", columnDefinition = "LONGTEXT")
     private String cauTrucKhuy;
@@ -65,10 +47,7 @@ public class SanPhamEntity extends CommonEntity implements Serializable {
     @Column(name = "kieu_det", columnDefinition = "LONGTEXT")
     private String kieuDet;
 
-    @Column(name = "so_mi_phu_hop", columnDefinition = "LONGTEXT")
-    private String soMiPhuHop;
-    @Column(name = "giay_phu_hop", columnDefinition = "LONGTEXT")
-    private String giayPhuHop;
+
 
 
     @Column(name = "mo_ta_chi_tiet", columnDefinition = "LONGTEXT")
@@ -90,16 +69,11 @@ public class SanPhamEntity extends CommonEntity implements Serializable {
     private Set<SanPhamDanhMucEntity> sanPhamDanhMucEntities = new HashSet<>();
 
     @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<SanPhamMauSacEntity> sanPhamMauSacEntities = new HashSet<>();
-
-    @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<SanPhamKichThuocEntity> sanPhamKichThuocEntities = new HashSet<>();
-
-    @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<HinhAnhEntity> hinhAnhEntities = new HashSet<>();
 
     @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<DanhGiaEntity> danhGiaEntities = new HashSet<>();
-
+    private Set<BinhLuanEntity> danhGiaEntities = new HashSet<>();
+    @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<ChiTietSanPhamEntity> chiTietSanPhamEntities = new HashSet<>();
 
 }
