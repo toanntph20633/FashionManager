@@ -19,40 +19,50 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
-@Table(name = "hoa_don_entity")
+@Table(name = "hoa_don_voucher_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class HoaDonEntity extends CommonEntity implements Serializable {
+public class HoaDonVoucherEntity extends CommonEntity implements Serializable {
+    @ManyToOne
+    @JoinColumn(name = "voucher_id")
+    private VoucherEntity voucherEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "hoa_don_id")
+    private HoaDonEntity hoaDonEntity;
+
     @Column(name = "ma_hoa_don")
     private String maHoaDon;
+
     @Column(name = "ngay_lap")
-    private LocalDate ngayLap;
+    private Date ngayLap;
+
     @Column(name = "tong_tien_tam_tinh")
     private BigDecimal tongTienTamTinh;
+
     @Column(name = "tong_tien_duoc_giam")
     private BigDecimal tongTienDuocGiam;
+
     @Column(name = "tong_tien_thanh_toan")
     private BigDecimal tongTienThanhToan;
+
     @Column(name = "hinh_thuc_mua_hang")
     @Enumerated(EnumType.STRING)
     private BuyingMethod hinhThucMuaHang;
+
     @Column(name = "hinh_thuc_thanh_toan")
     @Enumerated(EnumType.STRING)
     private PaymentMethod hinhThucThanhToan;
-    @Column(name = "trang_thai_hoa_don")
+
+    @Column(name = "trang_thai_don_hang")
     @Enumerated(EnumType.STRING)
-    private OrderStatus trangThaiHoaDon;
-    @ManyToOne
-    @JoinColumn(name = "khach_hang_id")
-    private KhachHangEntity khachHangEntity;
-    @ManyToOne
-    @JoinColumn(name = "nhan_vien_id")
-    private NhanVienEntity nhanVienEntity;
+    private OrderStatus trangThaiDonHang;
+
 
 }

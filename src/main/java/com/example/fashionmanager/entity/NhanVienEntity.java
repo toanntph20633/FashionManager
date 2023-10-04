@@ -23,7 +23,7 @@ import java.io.Serializable;
 @SuperBuilder
 public class NhanVienEntity extends CommonEntity implements Serializable {
     @Column(name = "ten_nhan_vien")
-    private String employeeName;
+    private String tenNhanVien;
     @Column(name = "cccd")
     private String cccd;
     @Column(name = "so_dien_thoai")

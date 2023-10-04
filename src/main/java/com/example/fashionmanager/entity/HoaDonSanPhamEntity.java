@@ -19,26 +19,35 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "order_product_entity")
+@Table(name = "hoa_don_san_pham_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class HoaDonChiTietEntity extends CommonEntity implements Serializable {
-    @ManyToOne
-    @JoinColumn(name = "san_pham_id")
-    private SanPhamEntity sanPhamEntity;
-
+public class HoaDonSanPhamEntity extends CommonEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "hoa_don_id")
     private HoaDonEntity hoaDonEntity;
 
-    @Column(name = "gia_ban")
-    private BigDecimal giaBan;
+//    @ManyToOne
+//    @JoinColumn(name = "chi_tiet_san_pham_id")
+//    private ChiTietSanPhamEntity chiTietSanPhamEntity;
+    @ManyToOne
+    @JoinColumn(name = "dat_may_id")
+    private DatMayEntity datMayEntity;
+
+    @Column(name = "gia_ban_dau")
+    private BigDecimal giaBanDau;
+
+    @Column(name = "gia_duoc_giam")
+    private BigDecimal giaDuocGiam;
+
+    @Column(name = "gia_cuoi_cung")
+    private BigDecimal giaCuoiCung;
 
     @Column(name = "so_luong")
-    private Integer soLuong;
+    private BigDecimal soLuong;
 
     @Column(name = "tong_tien")
     private BigDecimal tongTien;
@@ -47,5 +56,7 @@ public class HoaDonChiTietEntity extends CommonEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private OrderStatus trangThai;
 
+    @Column(name = "hang_dat_may")
+    private Boolean hangDatMay;
 
 }
