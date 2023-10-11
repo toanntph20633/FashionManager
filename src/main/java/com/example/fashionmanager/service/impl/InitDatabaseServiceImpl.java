@@ -31,8 +31,8 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
         if (count > 0) {
             return;
         }
-        RoleEntity roleEntityAdmin = RoleEntity.builder().roleName("ROLE_ADMIN").build();
-        RoleEntity roleEntitySuperAdmin = RoleEntity.builder().roleName("ROLE_SUPER_ADMIN").build();
+        RoleEntity roleEntityAdmin = RoleEntity.builder().roleName("ROLE_ADMIN").build();//nhan vien
+        RoleEntity roleEntitySuperAdmin = RoleEntity.builder().roleName("ROLE_SUPER_ADMIN").build();// quan ly,chu cua hang
         RoleEntity roleEntityUser = RoleEntity.builder().roleName("ROLE_USER").build();
         roleRepository.save(roleEntityAdmin);
         roleRepository.save(roleEntitySuperAdmin);
