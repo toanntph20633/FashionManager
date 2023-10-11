@@ -3,7 +3,6 @@ package com.example.fashionmanager.mapping.supplier_manager;
 import com.example.fashionmanager.dto.supplier_manager.request.SupplierCreateRequest;
 import com.example.fashionmanager.dto.supplier_manager.request.SupplierUpdateRequest;
 import com.example.fashionmanager.dto.supplier_manager.response.SupplierResponse;
-import com.example.fashionmanager.entity.NhaCungCapEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

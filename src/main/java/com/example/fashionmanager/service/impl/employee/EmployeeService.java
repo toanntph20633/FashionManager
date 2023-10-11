@@ -148,8 +148,8 @@ public class EmployeeService implements IEmployeeService {
         // Tạo một EmployeeEntity và liên kết với UserEntity
         NhanVienEntity employeeCreateRequest = NhanVienEntity.builder()
                 .employeeName(request.getEmployeeName())
-                .citizenIdentificationCard(request.getCitizenIdentificationCard())
-                .phoneNumber(request.getPhoneNumber())
+                .cccd(request.getCitizenIdentificationCard())
+                .soDienThoai(request.getPhoneNumber())
                 .city(request.getCity())
                 .district(request.getDistrict())
                 .gender(request.isGender())

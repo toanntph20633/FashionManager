@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @SuperBuilder
-public class VoucherEntity extends CommonEntity {
+public class MaGiamGiaEntity extends CommonEntity {
     @Column(name = "ma_voucher")
     private String maVoucher;
 
@@ -39,7 +39,5 @@ public class VoucherEntity extends CommonEntity {
     @Column(name = "so_tien_yeu_cau")
     private BigDecimal soTienYeuCau;
 
-    @Column(name = "hinh_thuc_khuyen_mai")
-    private
 
 }

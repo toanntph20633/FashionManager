@@ -7,7 +7,6 @@ import com.example.fashionmanager.dto.supplier_manager.request.SupplierCreateReq
 import com.example.fashionmanager.dto.supplier_manager.request.SupplierListRequest;
 import com.example.fashionmanager.dto.supplier_manager.request.SupplierUpdateRequest;
 import com.example.fashionmanager.dto.supplier_manager.response.SupplierResponse;
-import com.example.fashionmanager.entity.NhaCungCapEntity;
 import com.example.fashionmanager.enums.ResponseStatus;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;

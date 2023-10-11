@@ -6,7 +6,6 @@ import com.example.fashionmanager.dto.producer_manager.request.ProducerCreateReq
 import com.example.fashionmanager.dto.producer_manager.request.ProducerListRequest;
 import com.example.fashionmanager.dto.producer_manager.request.ProducerUpdateRequest;
 import com.example.fashionmanager.dto.producer_manager.response.ProducerResponse;
-import com.example.fashionmanager.entity.NhaSanXuatEntity;
 import com.example.fashionmanager.enums.ResponseStatus;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
