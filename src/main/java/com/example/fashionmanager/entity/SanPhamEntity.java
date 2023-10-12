@@ -57,13 +57,6 @@ public class SanPhamEntity extends CommonEntity implements Serializable {
     @JoinColumn(name = "loai_san_pham_id")
     private LoaiSanPhamEntity loaiSanPhamEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "nha_san_xuat_id")
-    private NhaSanXuatEntity nhaSanXuatEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "nha_cung_cap_id")
-    private NhaCungCapEntity nhaCungCapEntity;
 
     @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<SanPhamDanhMucEntity> sanPhamDanhMucEntities = new HashSet<>();
