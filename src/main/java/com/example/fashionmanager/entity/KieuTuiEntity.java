@@ -22,6 +22,6 @@ import java.io.Serializable;
 public class KieuTuiEntity  extends CommonEntity implements Serializable {
     @Column(name = "ten_kieu_tui")
     private String tenKieuTui;
-    @Column(name = "mo_ta")
+    @Column(name = "mo_ta", columnDefinition = "LONGTEXT")
     private String moTa;
 }

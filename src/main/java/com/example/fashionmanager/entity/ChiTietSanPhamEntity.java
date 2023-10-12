@@ -31,8 +31,6 @@ public class ChiTietSanPhamEntity extends CommonEntity {
     @Column(name = "so_luong_tang")
     private Integer soLuongTang;
 
-    @Column(name = "gia_ban_khoi_diem")
-    private BigDecimal giaBanKhoiDiem; // giá bán khởi điểm
     @Column(name = "hinh_thuc_giam_gia")
     @Enumerated(EnumType.STRING)
     private DiscountType hinhThucGiamGia; // Hình thức giảm giá( nếu có)

@@ -25,11 +25,11 @@ import java.io.Serializable;
 @NoArgsConstructor
 @SuperBuilder
 public class BinhLuanEntity extends CommonEntity implements Serializable {
-    @Column(name = "ten_nguoi_binh_luan")
-    private String tenNguoiDanhGia;
+    @Column(name = "ho_ten")
+    private String hoTen;
 
-    @Column(name = "so_diem_thoai")
-    private String soDienThoai;
+    @Column(name = "SDT")
+    private String sdt;
 
     @Column(name = "email")
     private String email;
