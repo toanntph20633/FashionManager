@@ -30,28 +30,21 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public class KhachHangEntity extends CommonEntity implements Serializable {
-
     @Column(name = "ten_khach_hang")
     private String tenKhachHang;
-
     @Column(name = "so_dien_thoai")
     private String soDienThoai;
-
     @Column(name = "email")
     private String email;
-
     @Column(name = "ngay_sinh")
     private LocalDate ngaySinh;
-
     @Column(name = "diem_tich_luy")
     private Long diemTichLuy;
-
     @OneToMany( fetch = FetchType.EAGER,mappedBy = "khachHang", cascade = CascadeType.ALL)
     @JsonIgnore
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private List<DiaChiEntity> listDiaChi ;
-
 
     @ManyToOne
     @JoinColumn(name = "hang_id")

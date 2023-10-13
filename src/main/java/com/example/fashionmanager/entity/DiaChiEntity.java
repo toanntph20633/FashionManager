@@ -25,25 +25,18 @@ public class DiaChiEntity extends CommonEntity implements Serializable {
 
     @Column(name = "id_tinh_thanh")
     private Integer idTinhThanh;
-
     @Column(name = "id_quan_huyen")
     private Integer idQuanHuyen;
-
     @Column(name = "id_phuong_xa")
     private String idPhuongXa;
-
     @Column(name = "dia_chi")
     private String diaChi;
-
     @Column(name = "ma_buu_chinh")
     private Integer maBuuChinh;
-
     @Column(name = "so_dien_thoai")
     private String soDienThoai;
-
     @Column(name = "ghi_chu")
     private String ghiChu;
-
 
     @JsonIgnore
     @ManyToOne
