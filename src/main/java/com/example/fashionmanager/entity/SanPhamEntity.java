@@ -29,35 +29,49 @@ import java.util.Set;
 public class SanPhamEntity extends CommonEntity implements Serializable {
     @Column(name = "ma_san_pham")
     private String maSanPham;
-    @Column(name = "tan_san_pham")
-    private String teSanPham;
+    @Column(name = "ten_san_pham")
+    private String tenSanPham;
+    @ManyToOne
+    @JoinColumn(name = "chat_lieu_id")
+    private ChatLieuEntity chatLieuEntity;
 
+    @ManyToOne
+    @JoinColumn(name = "cau_truc_khuy_id")
+    private CauTrucKhuyEntity cauTrucKhuyEntity;
+    @ManyToOne
+    @JoinColumn(name = "hoa_tiet_id")
+    private HoaTietEntity hoaTietEntity;
 
-    @Column(name = "cau_truc_khuy", columnDefinition = "LONGTEXT")
-    private String cauTrucKhuy;
+    @ManyToOne
+    @JoinColumn(name = "kieu_dang_id")
+    private KieuDangEntity kieuDangEntity;
 
-    @Column(name = "kieu_dang", columnDefinition = "LONGTEXT")
-    private String kieuDang;
+    @ManyToOne
+    @JoinColumn(name = "kieu_det_id")
+    private KieuDetEntity kieuDetEntity;
 
-    @Column(name = "hoa_tiet", columnDefinition = "LONGTEXT")
-    private String hoaTiet;
-    @Column(name = "chat_lieu", columnDefinition = "LONGTEXT")
-    private String chatLieu;
+    @ManyToOne
+    @JoinColumn(name = "kieu_tui_id")
+    private KieuTuiEntity kieuTuiEntity;
 
-    @Column(name = "kieu_det", columnDefinition = "LONGTEXT")
-    private String kieuDet;
+    @ManyToOne
+    @JoinColumn(name = "lop_lot_id")
+    private LopLotEntity lopLotEntity;
 
+    @ManyToOne
+    @JoinColumn(name = "ve_ao_id")
+    private VeAoEntity veAoEntity;
 
-
-
-    @Column(name = "mo_ta_chi_tiet", columnDefinition = "LONGTEXT")
-    private String  moTaChiTiet;
+    @ManyToOne
+    @JoinColumn(name = "xe_ta_id")
+    private XetaEntity xetaEntity;
 
     @ManyToOne
     @JoinColumn(name = "loai_san_pham_id")
     private LoaiSanPhamEntity loaiSanPhamEntity;
 
-
+    @Column(name = "mo_ta_chi_tiet", columnDefinition = "LONGTEXT")
+    private String moTaChiTiet;
     @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<SanPhamDanhMucEntity> sanPhamDanhMucEntities = new HashSet<>();
 
@@ -65,7 +79,7 @@ public class SanPhamEntity extends CommonEntity implements Serializable {
     private Set<HinhAnhEntity> hinhAnhEntities = new HashSet<>();
 
     @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<BinhLuanEntity> danhGiaEntities = new HashSet<>();
+    private Set<BinhLuanEntity> binhLuanEntities = new HashSet<>();
     @OneToMany(mappedBy = "sanPhamEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ChiTietSanPhamEntity> chiTietSanPhamEntities = new HashSet<>();
 

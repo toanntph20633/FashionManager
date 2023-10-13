@@ -23,6 +23,6 @@ public class HoaTietEntity extends CommonEntity implements Serializable {
 
     @Column(name = "ten_hoa_tiet")
     private String tenHoaTiet;
-    @Column(name = "mo_ta")
+    @Column(name = "mo_ta", columnDefinition = "LONGTEXT")
     private String moTa;
 }
