@@ -1,5 +1,5 @@
-package com.example.fashionmanager.enums;
-
-public enum VoucherTypeEnum {
-    VOUCHER_TYPE_PERCENT,VOUCHER_TYPE_PERCENT,VOUCHER_TYPE_GIFT
-}
+//package com.example.fashionmanager.enums;
+//
+//public enum VoucherTypeEnum {
+//    VOUCHER_TYPE_PERCENT,VOUCHER_TYPE_PERCENT,VOUCHER_TYPE_GIFT
+//}

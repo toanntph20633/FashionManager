@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductTypeRepository extends JpaRepository<LoaiSanPhamEntity,Long>, JpaSpecificationExecutor<LoaiSanPhamEntity> {
-    boolean existsByProductTypeCodeAndDeleted(String code, Boolean deleted);
-
-    boolean existsByProductTypeCodeAndDeletedAndIdNot(String code, Boolean deleted, Long id);
+//    boolean existsByProductTypeCodeAndDeleted(String code, Boolean deleted);
+//
+//    boolean existsByProductTypeCodeAndDeletedAndIdNot(String code, Boolean deleted, Long id);
 }

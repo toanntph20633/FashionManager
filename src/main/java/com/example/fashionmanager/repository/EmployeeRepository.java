@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<NhanVienEntity,Long> , JpaSpecificationExecutor<NhanVienEntity>{
-    boolean existsByCitizenIdentificationCardAndDeleted(String citizenIdentificationCard, Boolean delete);
-
-    boolean existsByCitizenIdentificationCardAndDeletedAndIdNot(String citizenIdentificationCard, Boolean delete, Long id);
+//    boolean existsByCitizenIdentificationCardAndDeleted(String citizenIdentificationCard, Boolean delete);
+//
+//    boolean existsByCitizenIdentificationCardAndDeletedAndIdNot(String citizenIdentificationCard, Boolean delete, Long id);
 }
