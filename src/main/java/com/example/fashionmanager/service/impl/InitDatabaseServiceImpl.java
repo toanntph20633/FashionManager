@@ -53,4 +53,48 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
         userRepository.save(userEntity);
 
     }
+
+    private void initKieuDang(){
+
+    }
+    private void initXeTa(){
+
+    }
+    private void initKieuDet(){
+
+    }
+    private void initKieuTui(){
+
+    }
+    private void initDanhMuc(){
+
+    }
+
+    private void initChatLieu(){
+
+    }
+    private void initSanPham(){
+
+    }
+    private void initMauSac(){
+
+    }
+    private void initKichThuoc(){
+
+    }
+    private void initCauTrucKhuy(){
+
+    }
+    private void  initBinhLuan(){
+
+    }
+    private void initLopLot(){
+
+    }
+    private void initHoaTiet(){
+
+    }
+    private void initVeAo(){
+
+    }
 }
