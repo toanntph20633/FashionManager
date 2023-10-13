@@ -3,7 +3,7 @@ package com.example.fashionmanager.service;
 import com.example.fashionmanager.dto.ListReponseDto;
 import org.springframework.http.ResponseEntity;
 
-public interface CRUDSerivce<Entity, CreateRequest, UpdateRequest, ListRequest, Response, ResponseDetail> {
+public interface CRUDService<Entity, CreateRequest, UpdateRequest, ListRequest, Response, ResponseDetail> {
     ResponseEntity<ListReponseDto<Response>> getList(ListRequest listRequest);
 
     ResponseEntity<ResponseDetail> getById(Long id);
