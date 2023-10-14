@@ -1,4 +1,4 @@
-package com.example.fashionmanager.entity;
-
-public class DotGiamGiaEntity {
-}
+//package com.example.fashionmanager.entity;
+//
+//public class DotGiamGiaEntity {
+//}
