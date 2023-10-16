@@ -6,9 +6,9 @@ import com.example.fashionmanager.dto.sanpham.quanlykieudang.request.UpdateKieuD
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangDetailResponse;
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangResponse;
 import com.example.fashionmanager.entity.KieuDangEntity;
-import com.example.fashionmanager.service.CRUDSerivce;
+import com.example.fashionmanager.service.CRUDService;
 
-public interface KieuDangService extends CRUDSerivce<KieuDangEntity, CreateKieuDangRequest, UpdateKieuDangRequest
+public interface KieuDangService extends CRUDService<KieuDangEntity, CreateKieuDangRequest, UpdateKieuDangRequest
         , ListKieuDangRequest, KieuDangResponse, KieuDangDetailResponse>{
     
 }

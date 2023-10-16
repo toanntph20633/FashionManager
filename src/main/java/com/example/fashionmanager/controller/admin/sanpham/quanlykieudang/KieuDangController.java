@@ -6,7 +6,6 @@ import com.example.fashionmanager.dto.sanpham.quanlykieudang.request.ListKieuDan
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.request.UpdateKieuDangRequest;
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangDetailResponse;
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangResponse;
-import com.example.fashionmanager.service.CRUDSerivce;
 import com.example.fashionmanager.service.impl.module_san_pham.kieudang.KieuDangService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
