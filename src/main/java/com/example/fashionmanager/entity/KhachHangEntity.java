@@ -40,7 +40,7 @@ public class KhachHangEntity extends CommonEntity implements Serializable {
     private LocalDate ngaySinh;
     @Column(name = "diem_tich_luy")
     private Long diemTichLuy;
-    @OneToMany( fetch = FetchType.EAGER,mappedBy = "khachHang", cascade = CascadeType.ALL)
+    @OneToMany( fetch = FetchType.LAZY,mappedBy = "khachHang", cascade = CascadeType.ALL)
     @JsonIgnore
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
