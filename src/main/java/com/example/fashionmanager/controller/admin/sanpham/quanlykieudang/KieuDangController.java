@@ -30,7 +30,7 @@ public class KieuDangController {
     public ResponseEntity<ListReponseDto<KieuDangResponse>> getList(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
-            @RequestParam(name = "ten", defaultValue = "") String ten) {
+            @RequestParam(name = "ten", required = false) String ten) {
         return kieuDangService.getList(ListKieuDangRequest.builder().tenKieuDang(ten).size(size).page(page).build());
     }
 
