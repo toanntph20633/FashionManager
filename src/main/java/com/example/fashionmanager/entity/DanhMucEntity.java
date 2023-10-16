@@ -5,6 +5,8 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -12,30 +14,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "user_entity")
+@Table(name = "danh_muc_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class UserEntity extends CommonEntity implements Serializable{
-    @Column(name = "user_name")
-    private String userName;
+public class DanhMucEntity extends CommonEntity implements Serializable {
+    @Column(name = "ma_danh_muc")
+    private String maDanhMuc;
+    @Column(name = "ten_danh_muc")
+    private String tenDanhMuc;
 
-    @Column(name = "password")
-    private String password;
-    @Column(name = "email")
-    private String email;
-    @OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private Set<UserRoleEntity> userRoleEntities = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "danh_muc_id")
+    private DanhMucEntity danhMucEntity;
 
+    @OneToMany(mappedBy = "danhMucEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<DanhMucEntity> danhMucEntities = new HashSet<>();
 }

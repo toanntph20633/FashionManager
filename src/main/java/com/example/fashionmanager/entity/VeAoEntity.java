@@ -11,16 +11,16 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
-
 @Entity
-@Table(name = "role_entity")
+@Table(name = "ve_ao_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class RoleEntity extends CommonEntity implements Serializable {
-    @Column(name = "role_name")
-    private String roleName;
-
+public class VeAoEntity extends CommonEntity implements Serializable {
+    @Column(name = "ten_ve_ao")
+    private String tenVeAo;
+    @Column(name = "mo_ta", columnDefinition = "LONGTEXT")
+    private String moTa;
 }

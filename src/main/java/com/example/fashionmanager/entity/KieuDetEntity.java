@@ -13,14 +13,15 @@ import lombok.experimental.SuperBuilder;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "role_entity")
+@Table(name = "kieu_det_entity")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class RoleEntity extends CommonEntity implements Serializable {
-    @Column(name = "role_name")
-    private String roleName;
-
+public class KieuDetEntity extends CommonEntity implements Serializable {
+    @Column(name = "ten_kieu_det")
+    private String tenKieuDet;
+    @Column(name = "mo_ta", columnDefinition = "LONGTEXT")
+    private String moTa;
 }
