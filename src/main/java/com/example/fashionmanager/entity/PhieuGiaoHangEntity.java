@@ -27,8 +27,8 @@ public class PhieuGiaoHangEntity extends CommonEntity implements Serializable {
     @Column(name = "ten_nguoi_nhan")
     private String tenNguoiNhan;
 
-    @Column(name = "so_dien_thoai")
-    private String soDienThoai;
+    @Column(name = "sdt_nguoi_nhan")
+    private String sdtnguoiNhan;
 
     @Column(name = "dia_chi_chi_tiet")
     private String diaChiChiTiet;
@@ -38,6 +38,9 @@ public class PhieuGiaoHangEntity extends CommonEntity implements Serializable {
 
     @Column(name = "ten_nguoi_giao")
     private String tenNguoiGiao;
+
+    @Column(name = "sdt_nguoi_giao")
+    private String sdtNguoiGiao;
 
     @Column(name = "ngay_giao")
     private Date ngayGiao;
