@@ -15,4 +15,10 @@ public interface CRUDService<Entity, CreateRequest, UpdateRequest, ListRequest, 
     ResponseEntity<Response> delete(Long id);
 
     ResponseEntity<Response> changeActive(Long id);
+
+    Entity mappingByCreateRequest(CreateRequest createRequest);
+    Entity mappingByUpdateRequest(UpdateRequest updateRequest);
+
+    Response mappingByResponse(Entity entity);
+    ResponseDetail mappingResponseDetail(Entity entity);
 }
