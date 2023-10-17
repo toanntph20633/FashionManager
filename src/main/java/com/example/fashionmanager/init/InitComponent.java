@@ -1,6 +1,7 @@
 package com.example.fashionmanager.init;
 
 import com.example.fashionmanager.repository.KieuDangRepository;
+import com.example.fashionmanager.repository.KieuDetResponsitory;
 import com.example.fashionmanager.repository.UserRepository;
 import com.example.fashionmanager.service.InitDatabaseService;
 import jakarta.annotation.PostConstruct;
@@ -15,6 +16,7 @@ public class InitComponent {
     private boolean isInitDatabase;
     private final UserRepository userRepository;
     private final KieuDangRepository kieuDangRepository;
+    private final KieuDetResponsitory kieuDetResponsitory;
 
     private final InitDatabaseService initDatabaseService;
 
@@ -28,6 +30,9 @@ public class InitComponent {
         }
         if (kieuDangRepository.count() == 0) {
             initDatabaseService.initKieuDang();
+        }
+        if (kieuDetResponsitory.count() == 0) {
+            initDatabaseService.initKieuDet();
         }
 
     }
