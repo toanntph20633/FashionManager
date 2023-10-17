@@ -28,19 +28,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LopLotServiceImpl implements LopLotService{
+public class LopLotServiceImpl implements LopLotService {
     @Autowired
     private LopLotRepository lopLotRepository;
+
     @Override
     public ResponseEntity<ListReponseDto<LopLotResponse>> getList(ListLopLotRequest listLopLotRequest) {
         Sort sort = Sort.by(new Sort.Order(Sort.Direction.DESC, "dateCreate"), new Sort.Order(Sort.Direction.DESC, "id"));
-        Pageable pageable = PageRequest.of(listLopLotRequest.getPage(), listLopLotRequest.getSize(),sort);
+        Pageable pageable = PageRequest.of(listLopLotRequest.getPage(), listLopLotRequest.getSize(), sort);
         Specification<LopLotEntity> lopLotEntitySpecification = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if (StringUtils.isNotBlank(listLopLotRequest.getTenLopLot())){
-                predicates.add(criteriaBuilder.like(root.get("tenLopLot"),"%"+listLopLotRequest.getTenLopLot()+"%"));
+            if (StringUtils.isNotBlank(listLopLotRequest.getTenLopLot())) {
+                predicates.add(criteriaBuilder.like(root.get("tenLopLot"), "%" + listLopLotRequest.getTenLopLot() + "%"));
             }
-     predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
+            predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
         Page<LopLotEntity> lopLotEntities = lopLotRepository.findAll(lopLotEntitySpecification, pageable);
@@ -57,7 +58,7 @@ public class LopLotServiceImpl implements LopLotService{
 
     @Override
     public ResponseEntity<?> getById(Long id) {
-        LopLotEntity lopLotEntity = lopLotRepository.findById(id).orElseThrow(() -> new FashionManagerException(new ErrorResponse(HttpStatus.NOT_FOUND,"Không tìm thấy thực thể")));
+        LopLotEntity lopLotEntity = lopLotRepository.findById(id).orElseThrow(() -> new FashionManagerException(new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thực thể")));
         return ResponseEntity.ok(mappingResponseDetail(lopLotEntity));
     }
 
@@ -70,8 +71,8 @@ public class LopLotServiceImpl implements LopLotService{
 
     @Override
     public ResponseEntity<?> update(UpdateLopLotRequest updateLopLotRequest) {
-        if (!lopLotRepository.existsById(updateLopLotRequest.getId())){
-            throw new FashionManagerException(new ErrorResponse(HttpStatus.NOT_FOUND,"Không tìm thấy thực thể"));
+        if (!lopLotRepository.existsById(updateLopLotRequest.getId())) {
+            throw new FashionManagerException(new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thực thể"));
         }
         lopLotRepository.save(mappingByUpdateRequest(updateLopLotRequest));
         return ResponseEntity.ok("UPDATED");
@@ -79,11 +80,10 @@ public class LopLotServiceImpl implements LopLotService{
 
     @Override
     public ResponseEntity<?> delete(Long id) {
-        if (!lopLotRepository.existsById(id)){
-            throw new FashionManagerException(new ErrorResponse(HttpStatus.NOT_FOUND,"Không tìm thấy thực thể"));
-        }
-        lopLotRepository.
-        return ResponseEntity.ok("UPDATED");
+        LopLotEntity lopLotEntity = lopLotRepository.findById(id).orElseThrow(() -> new FashionManagerException(new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thực thể")));
+        lopLotEntity.setDeleted(true);
+        lopLotRepository.save(lopLotEntity);
+        return ResponseEntity.ok("DELETED");
     }
 
     @Override
@@ -93,21 +93,38 @@ public class LopLotServiceImpl implements LopLotService{
 
     @Override
     public LopLotEntity mappingByCreateRequest(CreateLopLotRequest createLopLotRequest) {
-        return null;
+
+        return LopLotEntity.builder()
+                .tenLopLot(createLopLotRequest.getTenLopLot())
+                .moTa(createLopLotRequest.getMota())
+                .build();
     }
 
     @Override
     public LopLotEntity mappingByUpdateRequest(UpdateLopLotRequest updateLopLotRequest) {
-        return null;
+
+        return LopLotEntity.builder()
+                .tenLopLot(updateLopLotRequest.getTenLopLot())
+                .moTa(updateLopLotRequest.getMota())
+                .id(updateLopLotRequest.getId())
+                .build();
+
     }
 
     @Override
     public LopLotResponse mappingByResponse(LopLotEntity lopLotEntity) {
-        return null;
+        return LopLotResponse.builder()
+                .id(lopLotEntity.getId())
+                .tenLopLot(lopLotEntity.getTenLopLot())
+                .build();
     }
 
     @Override
     public LopLotDetailResponse mappingResponseDetail(LopLotEntity lopLotEntity) {
-        return null;
+        return LopLotDetailResponse.builder()
+                .id(lopLotEntity.getId())
+                .tenLopLot(lopLotEntity.getTenLopLot())
+                .moTa(lopLotEntity.getMoTa())
+                .build();
     }
 }
