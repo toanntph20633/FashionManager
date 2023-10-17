@@ -9,7 +9,7 @@ import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangDe
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangResponse;
 import com.example.fashionmanager.entity.KieuDangEntity;
 import com.example.fashionmanager.repository.KieuDangRepository;
-import com.example.fashionmanager.service.CRUDSerivce;
+import com.example.fashionmanager.service.CRUDService;
 import jakarta.persistence.criteria.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class KieuDangServiceImpl implements CRUDSerivce<KieuDangEntity, CreateKieuDangRequest, UpdateKieuDangRequest
+public class KieuDangServiceImpl implements CRUDService<KieuDangEntity, CreateKieuDangRequest, UpdateKieuDangRequest
         , ListKieuDangRequest, KieuDangResponse, KieuDangDetailResponse> {
     @Autowired
     private KieuDangRepository kieuDangRepository;
