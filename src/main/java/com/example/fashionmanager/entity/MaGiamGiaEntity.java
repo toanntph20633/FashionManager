@@ -45,9 +45,9 @@ public class MaGiamGiaEntity extends CommonEntity {
     private String hinhThucApDung;
 
     @Column(name = "gia_tri_duoc_giam")
-    private int giaTriDuocGiam;
+    private Integer giaTriDuocGiam;
     @Column(name = "so_luong_ma_giam_gia")
-    private  int soLuongMaGianGia;
+    private  Integer soLuongMaGianGia;
     @ManyToOne
     @JoinColumn(name = "hang_id")
     private HangEntity hangEntity;

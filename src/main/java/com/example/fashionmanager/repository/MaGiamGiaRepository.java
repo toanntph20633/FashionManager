@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MaGiamGiaRepository extends JpaRepository<MaGiamGiaEntity,Long>, JpaSpecificationExecutor<MaGiamGiaEntity> {
+    boolean existsByMaVoucherAndDeleted(String maVoucher, Boolean delete);
+
+    boolean existsByMaVoucherAndDeletedAndIdNot(String maVoucher, Boolean delete, Long id);
 }

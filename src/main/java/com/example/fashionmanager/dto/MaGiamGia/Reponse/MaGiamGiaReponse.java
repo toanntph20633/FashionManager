@@ -26,5 +26,6 @@ public class MaGiamGiaReponse {
     String hinhThucApDung;
     int giaTriDuocGiam;
     int soLuongMaGianGia;
+    private Boolean active = true;
 //    HangEntity hangEntity;
 }
