@@ -29,11 +29,11 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 @RestController
-//@RequestMapping("/admin/ma-giam-gia-manager")
+@RequestMapping("/admin/ma-giam-gia-manager")
 public class MaGiamGiaController {
     @Autowired
     MaGiamGiaServiceImpl maGiamGiaService;
-    @GetMapping("/list/ma-giam-gia")
+    @GetMapping("list/ma-giam-gia")
     public ListReponseDto<MaGiamGiaReponse> getList(
                                                     @RequestParam(value = "active", required = false) Boolean active,
                                                     @RequestParam(value = "maVoucher", required = false) String maVoucher,

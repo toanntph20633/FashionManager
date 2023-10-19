@@ -24,7 +24,7 @@ public class MaGiamGiaDetailReponse {
     BigDecimal soTienYeuCau;
     String hinhThuckhuyenmai;
     String hinhThucApDung;
-    int giaTriDuocGiam;
-    int soLuongMaGianGia;
+    Integer giaTriDuocGiam;
+    Integer soLuongMaGianGia;
 //    HangEntity hangEntity;
 }
