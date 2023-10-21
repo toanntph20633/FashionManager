@@ -8,8 +8,9 @@ import com.example.fashionmanager.dto.sanpham.quanlykieudang.request.UpdateKieuD
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangDetailResponse;
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangResponse;
 import com.example.fashionmanager.entity.KieuDangEntity;
+import com.example.fashionmanager.exception.ErrorResponse;
+import com.example.fashionmanager.exception.FashionManagerException;
 import com.example.fashionmanager.repository.KieuDangRepository;
-import com.example.fashionmanager.service.CRUDService;
 import jakarta.persistence.criteria.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class KieuDangServiceImpl implements CRUDService<KieuDangEntity, CreateKieuDangRequest, UpdateKieuDangRequest
-        , ListKieuDangRequest, KieuDangResponse, KieuDangDetailResponse> {
+public class KieuDangServiceImpl implements KieuDangService {
     @Autowired
     private KieuDangRepository kieuDangRepository;
 
@@ -45,12 +46,7 @@ public class KieuDangServiceImpl implements CRUDService<KieuDangEntity, CreateKi
             return criteriaBuilder.and(predicates.toArray(predicates.toArray(new Predicate[0])));
         };
         Page<KieuDangEntity> kieuDangEntities = kieuDangRepository.findAll(kieuDangEntitySpecification, pageable);
-        List<KieuDangResponse> kieuDangResponses = kieuDangEntities.stream().map(kieuDangEntity -> KieuDangResponse
-                .builder()
-                .tenKieuDang(kieuDangEntity.getTenKieuDang())
-                .id(kieuDangEntity.getId())
-                .moTa(kieuDangEntity.getMoTa())
-                .build()).toList();
+        List<KieuDangResponse> kieuDangResponses = kieuDangEntities.stream().map(kieuDangEntity -> mappingByResponse(kieuDangEntity)).toList();
         ListReponseDto<KieuDangResponse> listReponseDto = new ListReponseDto<KieuDangResponse>();
         listReponseDto.setItems(kieuDangResponses);
         listReponseDto.setHasNextPage(kieuDangEntities.hasNext());
@@ -63,26 +59,58 @@ public class KieuDangServiceImpl implements CRUDService<KieuDangEntity, CreateKi
 
     @Override
     public ResponseEntity<KieuDangDetailResponse> getById(Long id) {
-        return null;
+        KieuDangEntity kieuDangEntity = kieuDangRepository.findById(id).orElseThrow(() -> new FashionManagerException(new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thực thể")));
+        return ResponseEntity.ok(mappingResponseDetail(kieuDangEntity));
     }
 
     @Override
     public ResponseEntity<KieuDangResponse> create(CreateKieuDangRequest createKieuDangRequest) {
-        return null;
+        KieuDangEntity kieuDangEntity = mappingByCreateRequest(createKieuDangRequest);
+        kieuDangRepository.save(kieuDangEntity);
+        return ResponseEntity.ok(mappingByResponse(kieuDangEntity));
     }
 
     @Override
     public ResponseEntity<KieuDangResponse> update(UpdateKieuDangRequest updateKieuDangRequest) {
-        return null;
+        if (!kieuDangRepository.existsById(updateKieuDangRequest.getId())) {
+            throw new FashionManagerException(new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thực thể"));
+        }
+        KieuDangEntity entity = mappingByUpdateRequest(updateKieuDangRequest);
+        kieuDangRepository.save(entity);
+        return ResponseEntity.ok(mappingByResponse(entity));
     }
 
     @Override
     public ResponseEntity<KieuDangResponse> delete(Long id) {
-        return null;
+        KieuDangEntity kieuDangEntity = kieuDangRepository.findById(id).orElseThrow(() -> new FashionManagerException(new ErrorResponse(HttpStatus.NOT_FOUND, "Không tìm thấy thực thể")));
+        kieuDangEntity.setDeleted(true);
+        kieuDangRepository.save(kieuDangEntity);
+        return ResponseEntity.ok(mappingByResponse(kieuDangEntity));
     }
 
     @Override
     public ResponseEntity<KieuDangResponse> changeActive(Long id) {
         return null;
+    }
+
+    @Override
+    public KieuDangEntity mappingByCreateRequest(CreateKieuDangRequest createKieuDangRequest) {
+
+        return KieuDangEntity.builder().tenKieuDang(createKieuDangRequest.getTenKieuDang()).moTa(createKieuDangRequest.getMoTa()).build();
+    }
+
+    @Override
+    public KieuDangEntity mappingByUpdateRequest(UpdateKieuDangRequest updateKieuDangRequest) {
+        return KieuDangEntity.builder().tenKieuDang(updateKieuDangRequest.getTenKieuDang()).moTa(updateKieuDangRequest.getMoTa()).id(updateKieuDangRequest.getId()).build();
+    }
+
+    @Override
+    public KieuDangResponse mappingByResponse(KieuDangEntity kieuDangEntity) {
+        return KieuDangResponse.builder().tenKieuDang(kieuDangEntity.getTenKieuDang()).id(kieuDangEntity.getId()).moTa(kieuDangEntity.getMoTa()).build();
+    }
+
+    @Override
+    public KieuDangDetailResponse mappingResponseDetail(KieuDangEntity kieuDangEntity) {
+        return KieuDangDetailResponse.builder().tenKieuDang(kieuDangEntity.getTenKieuDang()).id(kieuDangEntity.getId()).moTa(kieuDangEntity.getMoTa()).build();
     }
 }

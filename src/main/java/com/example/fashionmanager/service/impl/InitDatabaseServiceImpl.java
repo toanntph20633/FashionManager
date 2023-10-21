@@ -1,8 +1,10 @@
 package com.example.fashionmanager.service.impl;
 
+import com.example.fashionmanager.entity.KieuDangEntity;
 import com.example.fashionmanager.entity.RoleEntity;
 import com.example.fashionmanager.entity.UserEntity;
 import com.example.fashionmanager.entity.UserRoleEntity;
+import com.example.fashionmanager.repository.KieuDangRepository;
 import com.example.fashionmanager.repository.RoleRepository;
 import com.example.fashionmanager.repository.UserRepository;
 import com.example.fashionmanager.repository.UserRoleRepository;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +26,7 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
     private final RoleRepository roleRepository;
 
     private final PasswordEncoder passwordEncoder;
+    private final KieuDangRepository kieuDangRepository;
 
     @Override
     @Transactional
@@ -54,47 +58,115 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     }
 
-    private void initKieuDang(){
+    @Override
+    @Transactional
+    public void initKieuDang() {
+        Set<KieuDangEntity> kieuDangEntities = new HashSet<>();
+        kieuDangEntities.add(KieuDangEntity.builder()
+                .tenKieuDang("2-button Single-Breasted")
+                .moTa("""
+                        Đây là kiểu dáng phổ biến, với 2 nút phía trước.
+                         Nó thích hợp cho hầu hết các dịp và vóc dáng.
+                        """)
+                .build());
+        kieuDangEntities.add(KieuDangEntity.builder()
+                .tenKieuDang("3-button Single-Breasted")
+                .moTa("""
+                        Áo suit 3 nút thường tạo điểm tập trung cao hơn
+                         và thích hợp cho người cao vóc.
+                        """)
+                .build());
+        kieuDangEntities.add(KieuDangEntity.builder()
+                .tenKieuDang("Double-Breasted Suit")
+                .moTa("""
+                        Áo suit cổ điển này có hai hàng nút hoặc nhiều hơn.
+                         Nó thường mang lại vẻ lịch lãm và thường được mặc
+                          trong các tình huống thương mại hoặc quý phái.
+                        """)
+                .build());
+        kieuDangEntities.add(KieuDangEntity.builder()
+                .tenKieuDang("Slim Fit Suit")
+                .moTa("""
+                        Áo suit slim fit có kiểu dáng gọn gàng, ôm sát cơ thể. 
+                        Thích hợp cho những người có vóc dáng mảnh mai
+                         hoặc muốn tạo ấn tượng thời trang.
+                         """)
+                .build());
+        kieuDangEntities.add(KieuDangEntity.builder()
+                .tenKieuDang("Classic Fit Suit")
+                .moTa("""
+                        Kiểu dáng classic fit thoải mái, không quá ôm sát,
+                         và thường dành cho người muốn cảm giác thoải mái
+                          và truyền thống.
+                         """)
+                .build());
+        kieuDangRepository.saveAll(kieuDangEntities);
+    }
+
+    @Override
+    public void initXeTa() {
 
     }
-    private void initXeTa(){
 
-    }
-    private void initKieuDet(){
-
-    }
-    private void initKieuTui(){
-
-    }
-    private void initDanhMuc(){
+    @Override
+    public void initKieuDet() {
 
     }
 
-    private void initChatLieu(){
+    @Override
+    public void initKieuTui() {
 
     }
-    private void initSanPham(){
+
+    @Override
+    public void initDanhMuc() {
 
     }
-    private void initMauSac(){
+
+    @Override
+    public void initChatLieu() {
 
     }
-    private void initKichThuoc(){
+
+    @Override
+    public void initSanPham() {
 
     }
-    private void initCauTrucKhuy(){
+
+    @Override
+    public void initMauSac() {
 
     }
-    private void  initBinhLuan(){
+
+    @Override
+    public void initKichThuoc() {
 
     }
-    private void initLopLot(){
+
+    @Override
+    public void initCauTrucKhuy() {
 
     }
-    private void initHoaTiet(){
+
+    @Override
+    public void initBinhLuan() {
 
     }
-    private void initVeAo(){
+
+    @Override
+    public void initLopLot() {
 
     }
+
+    @Override
+    public void initHoaTiet() {
+
+    }
+
+    @Override
+    public void initVeAo() {
+
+    }
+
+
 }
