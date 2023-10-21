@@ -20,7 +20,7 @@ public class ListMaGiamGiaRequest extends ListRequestDto {
     BigDecimal soTienYeuCau;
     String hinhThuckhuyenmai;
     String hinhThucApDung;
-    Integer giaTriDuocGiam;
+    BigDecimal giaTriDuocGiam;
     Integer soLuongMaGianGia;
     private Boolean active = true;
 //    HangEntity hangEntity;

@@ -22,7 +22,7 @@ public class MaGiamGiaReponse {
     LocalDate ngayKetThuc;
     String mota;
     BigDecimal soTienYeuCau;
-    String hinhThuckhuyenmai;
+    String hinhThuckhuyenMai;
     String hinhThucApDung;
     Integer giaTriDuocGiam;
     Integer soLuongMaGianGia;

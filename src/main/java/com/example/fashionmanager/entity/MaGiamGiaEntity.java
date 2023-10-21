@@ -45,7 +45,7 @@ public class MaGiamGiaEntity extends CommonEntity {
     private String hinhThucApDung;
 
     @Column(name = "gia_tri_duoc_giam")
-    private Integer giaTriDuocGiam;
+    private BigDecimal giaTriDuocGiam;
     @Column(name = "so_luong_ma_giam_gia")
     private  Integer soLuongMaGianGia;
     @ManyToOne

@@ -7,7 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+
 public class UpdateMaGiamGiaRequest extends CreateMaGiamGiaRequest {
     @NotNull(message = "Không để trống id")
     Long id;

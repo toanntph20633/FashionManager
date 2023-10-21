@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public class MaGiamGiaController {
     @Autowired
     MaGiamGiaServiceImpl maGiamGiaService;
-    @GetMapping("list/ma-giam-gia")
+    @GetMapping("list")
     public ListReponseDto<MaGiamGiaReponse> getList(
                                                     @RequestParam(value = "active", required = false) Boolean active,
                                                     @RequestParam(value = "maVoucher", required = false) String maVoucher,
@@ -56,6 +56,8 @@ public class MaGiamGiaController {
                 .hinhThucApDung(hinhThucApDung)
                 .giaTriDuocGiam(giaTriDuocGiam)
                 .soLuongMaGianGia(soLuongMaGianGia)
+                .size(size)
+                .page(page)
                 .build();
 
         return maGiamGiaService.getList(request);

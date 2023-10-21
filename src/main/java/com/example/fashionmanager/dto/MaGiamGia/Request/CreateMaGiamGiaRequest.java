@@ -12,31 +12,31 @@ import java.time.LocalDate;
 
 @Setter
 @Getter
-@SuperBuilder
+
 public class CreateMaGiamGiaRequest {
-    @NotNull(message = "Không để trống rankName")
-    @NotBlank(message = "Không để trống rankName")
+//    @NotNull(message = "Không để trống rankName")
+//    @NotBlank(message = "Không để trống rankName")
     String maVoucher;
 
     LocalDate ngayBatDau;
     LocalDate ngayKetThuc;
-    @NotNull(message = "Không để trống mô tả")
-    @NotBlank(message = "Không để trống Mô tả")
+//    @NotNull(message = "Không để trống mô tả")
+//    @NotBlank(message = "Không để trống Mô tả")
     String mota;
-    @NotNull(message = "Không để trống số tiền yêu cầu")
-    @NotBlank(message = "Không để trống số tiền yêu cầu")
+//    @NotNull(message = "Không để trống số tiền yêu cầu")
+//    @NotBlank(message = "Không để trống số tiền yêu cầu")
     BigDecimal soTienYeuCau;
-    @NotNull(message = "Không để trống hình thức khuyến mại")
-    @NotBlank(message = "Không để trống hình thức khuyến mại")
+//    @NotNull(message = "Không để trống hình thức khuyến mại")
+//    @NotBlank(message = "Không để trống hình thức khuyến mại")
     String hinhThuckhuyenmai;
-    @NotNull(message = "Không để trống hình thức khuyến mại")
-    @NotBlank(message = "Không để trống hình thức khuyến mại")
+//    @NotNull(message = "Không để trống hình thức khuyến mại")
+//    @NotBlank(message = "Không để trống hình thức khuyến mại")
     String hinhThucApDung;
-    @NotNull(message = "Không để trống giá trị được giảm")
-    @NotBlank(message = "Không để trống giá trị được giảm")
-    Integer giaTriDuocGiam;
-    @NotNull(message = "Không để trống số lượng mã giảm giá")
-    @NotBlank(message = "Không để trống số lượng mã giảm giá")
+//    @NotNull(message = "Không để trống giá trị được giảm")
+//    @NotBlank(message = "Không để trống giá trị được giảm")
+BigDecimal giaTriDuocGiam;
+//    @NotNull(message = "Không để trống số lượng mã giảm giá")
+//    @NotBlank(message = "Không để trống số lượng mã giảm giá")
     Integer soLuongMaGianGia;
 //    HangEntity hangEntity;
 }
