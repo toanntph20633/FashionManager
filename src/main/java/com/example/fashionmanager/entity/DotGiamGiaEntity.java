@@ -53,6 +53,6 @@ public class DotGiamGiaEntity extends CommonEntity implements Serializable {
     private DotGiamGiaStatus dotGiamGiaStatus;
 
     @OneToMany(mappedBy = "dotGiamGiaEntity",fetch = FetchType.LAZY)
-    private Set<SanPhamApDungDGG> sanPhamApDungDGGS = new HashSet<>();
+    private Set<SanPhamApDungDGGEntity> sanPhamApDungDGGEntities = new HashSet<>();
 
 }

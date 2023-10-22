@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "san_pham_ap_dung_ddg_entity")
-public class SanPhamApDungDGG extends CommonEntity implements Serializable {
+public class SanPhamApDungDGGEntity extends CommonEntity implements Serializable {
     @ManyToOne
     @JoinColumn(name = "san_pham_id")
     private SanPhamEntity sanPhamEntity;
