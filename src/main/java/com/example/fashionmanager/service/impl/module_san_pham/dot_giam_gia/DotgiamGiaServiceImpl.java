@@ -21,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -149,13 +150,72 @@ public class DotgiamGiaServiceImpl implements DotGiamGiaService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<?> update(DotGiamGiaUpdateRequest dotGiamGiaUpdateRequest) {
-        return null;
+        DotGiamGiaEntity dotGiamGiaEntity = dotGiamGiaRepository.findById(dotGiamGiaUpdateRequest.getId())
+                .orElseThrow(() -> new FashionManagerException(
+                        new ErrorResponse(
+                                HttpStatus.NOT_FOUND, "Không tìm thấy đợt giảm giá có id = " + dotGiamGiaUpdateRequest.getId()
+                        )
+                ));
+        if (dotGiamGiaEntity.getNgayBatDau().isBefore(LocalDate.now())) {
+            if (dotGiamGiaUpdateRequest.getNgayKetThuc().isBefore(LocalDate.now())) {
+                throw new FashionManagerException(
+                        new ErrorResponse(
+                                HttpStatus.INTERNAL_SERVER_ERROR, "Không được sửa ngày kết thúc trước ngày hôm nay"
+                        )
+                );
+            }
+            dotGiamGiaEntity.setNgayKetThuc(dotGiamGiaUpdateRequest.getNgayKetThuc());
+            dotGiamGiaRepository.save(dotGiamGiaEntity);
+            return ResponseEntity.ok("UPDATED");
+        } else {
+            dotGiamGiaEntity.setTenDotGiamGia(dotGiamGiaUpdateRequest.getTenDotGiamGia());
+            if (dotGiamGiaUpdateRequest.getNgayBatDau().isBefore(LocalDate.now())) {
+                throw new FashionManagerException(
+                        new ErrorResponse(
+                                HttpStatus.BAD_REQUEST, "Ngày bắt đầu không được trước ngày hôm nay"
+                        )
+                );
+            }
+            if (dotGiamGiaUpdateRequest.getNgayBatDau().isAfter(dotGiamGiaUpdateRequest.getNgayKetThuc())) {
+                throw new FashionManagerException(
+                        new ErrorResponse(
+                                HttpStatus.BAD_REQUEST, "Ngày bắt đầu không được sau ngày kết thúc"
+                        )
+                );
+            }
+            dotGiamGiaEntity.setNgayBatDau(dotGiamGiaUpdateRequest.getNgayBatDau());
+            dotGiamGiaEntity.setNgayKetThuc(dotGiamGiaUpdateRequest.getNgayKetThuc());
+            dotGiamGiaEntity.setLoaiUuDaiDDG(dotGiamGiaUpdateRequest.getLoaiUuDaiDDG());
+            switch (dotGiamGiaEntity.getLoaiUuDaiDDG()) {
+                case SAN_PHAM -> {
+                    sanPhamApDungDDGRepository.deleteAllByDotGiamGiaEntity(dotGiamGiaEntity);
+                    dotGiamGiaEntity = loaiUuDaiSanPham(dotGiamGiaEntity, dotGiamGiaUpdateRequest);
+                    break;
+                }
+                case HOA_DON -> {
+                    dotGiamGiaEntity = loaiUuDaiHoaDon(dotGiamGiaEntity, dotGiamGiaUpdateRequest);
+                    break;
+                }
+            }
+            dotGiamGiaRepository.save(dotGiamGiaEntity);
+            return ResponseEntity.ok("UPDATED");
+        }
     }
 
     @Override
+    @Transactional
     public ResponseEntity<?> delete(Long id) {
-        return null;
+        DotGiamGiaEntity dotGiamGiaEntity = dotGiamGiaRepository.findById(id)
+                .orElseThrow(() -> new FashionManagerException(
+                        new ErrorResponse(
+                                HttpStatus.NOT_FOUND, "Không tìm thấy đợt giảm giá có id = " + id
+                        )
+                ));
+        dotGiamGiaEntity.setDeleted(true);
+        dotGiamGiaRepository.save(dotGiamGiaEntity);
+        return ResponseEntity.ok("DELETED");
     }
 
     @Override
