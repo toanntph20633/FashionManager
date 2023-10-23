@@ -27,7 +27,7 @@ public class KieuDangController {
     private KieuDangService kieuDangService;
 
     @GetMapping("/list")
-    public ResponseEntity<ListReponseDto<KieuDangResponse>> getList(
+    public ResponseEntity<?> getList(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "ten", required = false) String ten) {
@@ -35,26 +35,26 @@ public class KieuDangController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<KieuDangResponse> create(@RequestBody @Valid CreateKieuDangRequest request) {
+    public ResponseEntity<?> create(@RequestBody @Valid CreateKieuDangRequest request) {
         //validation
 
         return kieuDangService.create(request);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<KieuDangResponse> update(@RequestBody @Valid UpdateKieuDangRequest request) {
+    public ResponseEntity<?> update(@RequestBody @Valid UpdateKieuDangRequest request) {
         //validation
 
         return kieuDangService.update(request);
     }
 
     @GetMapping("detail/{id}")
-    public ResponseEntity<KieuDangDetailResponse> getOne(@PathVariable Long id) {
+    public ResponseEntity<?> getOne(@PathVariable Long id) {
         return kieuDangService.getById(id);
     }
 
     @DeleteMapping("delete/{id}")
-    public ResponseEntity<KieuDangResponse> delete(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
         return kieuDangService.delete(id);
     }
 }

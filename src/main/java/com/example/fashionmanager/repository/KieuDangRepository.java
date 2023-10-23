@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface KieuDangRepository extends JpaRepository<KieuDangEntity,Long>, JpaSpecificationExecutor<KieuDangEntity> {
+    @Override
+    long count();
 }
