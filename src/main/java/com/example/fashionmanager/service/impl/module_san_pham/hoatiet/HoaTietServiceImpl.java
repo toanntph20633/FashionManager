@@ -6,9 +6,7 @@ import com.example.fashionmanager.dto.sanpham.quanlyhoatiet.request.ListHoaTietR
 import com.example.fashionmanager.dto.sanpham.quanlyhoatiet.request.UpdateHoaTietRequest;
 import com.example.fashionmanager.dto.sanpham.quanlyhoatiet.response.HoaTietDetailResponse;
 import com.example.fashionmanager.dto.sanpham.quanlyhoatiet.response.HoaTietResponse;
-import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangResponse;
 import com.example.fashionmanager.entity.HoaTietEntity;
-import com.example.fashionmanager.entity.KieuDangEntity;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
 import com.example.fashionmanager.repository.HoaTietRepository;
@@ -54,7 +52,7 @@ public class HoaTietServiceImpl implements HoaTietService{
         listReponseDto.setHasPreviousPage(hoaTietEntities.hasPrevious());
         listReponseDto.setPageCount(hoaTietEntities.getTotalPages());
         listReponseDto.setPageSize(hoaTietEntities.getSize());
-
+        listReponseDto.setTotalItemCount(hoaTietEntities.getTotalElements());
         return ResponseEntity.ok(listReponseDto);
     }
 
@@ -96,7 +94,10 @@ public class HoaTietServiceImpl implements HoaTietService{
 
     @Override
     public HoaTietEntity mappingByCreateRequest(CreateHoaTietRequest createHoaTietRequest) {
-        return HoaTietEntity.builder().tenHoaTiet(createHoaTietRequest.getTenHoaTiet()).moTa(createHoaTietRequest.getMoTa()).build();
+        return HoaTietEntity.builder()
+                .tenHoaTiet(createHoaTietRequest.getTenHoaTiet())
+                .moTa(createHoaTietRequest.getMoTa())
+                .build();
     }
 
     @Override
