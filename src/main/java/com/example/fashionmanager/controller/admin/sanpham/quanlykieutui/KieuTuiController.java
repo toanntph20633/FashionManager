@@ -24,16 +24,17 @@ public class KieuTuiController {
             @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "tenKieuTui", required = false) String tenKieuTui
     ){
-        return kieuTuiService.getList(ListKieuTuiRequest.builder().tenKieuTui(tenKieuTui).build());
+        return kieuTuiService.getList(ListKieuTuiRequest.builder().tenKieuTui(tenKieuTui)
+                .page(page).size(size).build());
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody @Valid CreateKieuTuiRequest request){
+    public ResponseEntity<?> create(@RequestBody CreateKieuTuiRequest request){
         return kieuTuiService.create(request);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody @Valid UpdateKieuTuiRequest request){
+    public ResponseEntity<?> update(@RequestBody UpdateKieuTuiRequest request){
         return kieuTuiService.update(request);
     }
 

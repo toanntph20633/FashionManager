@@ -50,7 +50,7 @@ public class KieuTuiServiceImpl implements KieuTuiService{
         listReponseDto.setHasPreviousPage(kieuTuiEntities.hasPrevious());
         listReponseDto.setPageCount(kieuTuiEntities.getTotalPages());
         listReponseDto.setPageSize(kieuTuiEntities.getSize());
-
+        listReponseDto.setTotalItemCount(kieuTuiEntities.getTotalElements());
         return ResponseEntity.ok(listReponseDto);
     }
 

@@ -1,13 +1,8 @@
 package com.example.fashionmanager.service.impl;
 
-import com.example.fashionmanager.entity.KieuDangEntity;
-import com.example.fashionmanager.entity.RoleEntity;
-import com.example.fashionmanager.entity.UserEntity;
-import com.example.fashionmanager.entity.UserRoleEntity;
-import com.example.fashionmanager.repository.KieuDangRepository;
-import com.example.fashionmanager.repository.RoleRepository;
-import com.example.fashionmanager.repository.UserRepository;
-import com.example.fashionmanager.repository.UserRoleRepository;
+import com.example.fashionmanager.controller.admin.sanpham.quanlykieutui.KieuTuiController;
+import com.example.fashionmanager.entity.*;
+import com.example.fashionmanager.repository.*;
 import com.example.fashionmanager.service.InitDatabaseService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +22,7 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     private final PasswordEncoder passwordEncoder;
     private final KieuDangRepository kieuDangRepository;
-
+    private final KieuTuiRepository kieuTuiRepository;
     @Override
     @Transactional
     public void initData() {
@@ -115,7 +110,46 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initKieuTui() {
-
+        Set<KieuTuiEntity> kieuTuiEntities = new HashSet<>();
+        kieuTuiEntities.add(KieuTuiEntity.builder()
+                .tenKieuTui("Flap Pockets (Túi nắp)")
+                .moTa("""
+                        Đây là kiểu túi phổ biến nhất trên suit jacket. Chúng có nắp hoặc nắp che đi một phần hoặc toàn 
+                        bộ túi. Tùy theo phong cách, túi có thể được may vào áo ở bên ngoài (flap pockets nằm ở bên 
+                        ngoài) hoặc bên trong (flap pockets nằm ẩn bên trong).
+                        """)
+                .build());
+        kieuTuiEntities.add(KieuTuiEntity.builder()
+                .tenKieuTui("Welt Pockets (Túi mắt cáo)")
+                .moTa("""
+                       Đây là kiểu túi dạng rãnh được may bên trong suit jacket. Chúng thường không có nắp và tạo ra một
+                        vẻ gọn gàng và thanh lịch.
+                        """)
+                .build());
+        kieuTuiEntities.add(KieuTuiEntity.builder()
+                .tenKieuTui("Ticket Pocket (Túi vé)")
+                .moTa("""
+                        Túi vé là một túi nhỏ, thường được đặt bên trên một trong túi flap hoặc welt pockets. Ban đầu, 
+                        chúng được sử dụng để đựng vé máy bay hoặc vé tàu, nhưng ngày nay chúng thường chỉ mang tính 
+                        chất thẩm mỹ.
+                        """)
+                .build());
+        kieuTuiEntities.add(KieuTuiEntity.builder()
+                .tenKieuTui("Patch Pockets (Túi gắn ngoài)")
+                .moTa("""
+                        Đây là túi nằm ở bên ngoài suit jacket và được gắn thường bằng việc may thêm một lớp vải trên 
+                        bề mặt áo. Chúng tạo ra một vẻ phóng khoáng và thường xuất hiện trên các suit jacket không phải 
+                        dự tiệc hoặc không phải suit cổ điển.
+                        """)
+                .build());
+        kieuTuiEntities.add(KieuTuiEntity.builder()
+                .tenKieuTui("Interior Pockets (Túi bên trong)")
+                .moTa("""
+                        Suit jacket cũng có thể đi kèm với các túi bên trong được thiết kế để đựng điện thoại di động, 
+                        ví, bút và các vật dụng cá nhân khác.
+                        """)
+                .build());
+        kieuTuiRepository.saveAll(kieuTuiEntities);
     }
 
     @Override
