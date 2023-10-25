@@ -52,6 +52,7 @@ public class ChatLieuServiceImpl implements ChatLieuService{
         listReponseDto.setHasPreviousPage(chatLieuEntities.hasPrevious());
         listReponseDto.setPageCount(chatLieuEntities.getTotalPages());
         listReponseDto.setPageSize(chatLieuEntities.getSize());
+        listReponseDto.setTotalItemCount(chatLieuEntities.getTotalElements());
         return ResponseEntity.ok(listReponseDto);
     };
 
