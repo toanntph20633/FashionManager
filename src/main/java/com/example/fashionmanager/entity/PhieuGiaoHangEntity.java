@@ -20,7 +20,6 @@ import java.sql.Date;
 @NoArgsConstructor
 @SuperBuilder
 public class PhieuGiaoHangEntity extends CommonEntity implements Serializable {
-
     @Column(name = "ma_phieu_giao")
     private String maPhieuGiao;
 
@@ -49,17 +48,17 @@ public class PhieuGiaoHangEntity extends CommonEntity implements Serializable {
     private Date ngayNhan;
 
     @Column(name = "trang_thai")
-    private String maPhieuGiao;
+    private String trangThai;
 
     @Column(name = "ghi_chu")
-    private String maPhieuGiao;
+    private String ghiChu;
 
     @ManyToOne
-    @JoinColumn("khach_hang_id")
+    @JoinColumn(name= "khach_hang_id")
     private KhachHangEntity khachHangEntity;
 
     @ManyToOne
-    @JoinColumn("hoa_don_id")
+    @JoinColumn(name = "hoa_don_id")
     private HoaDonEntity hoaDonEntity;
 
 }
