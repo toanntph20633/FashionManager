@@ -21,7 +21,8 @@ public class LopLotController {
             @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "tenLopLot", required = false) String tenLopLot
     ){
-        return lopLotService.getList(ListLopLotRequest.builder().tenLopLot(tenLopLot).build());
+        return lopLotService.getList(ListLopLotRequest.builder().tenLopLot(tenLopLot)
+                .page(page).size(size).build());
     }
 
     @PostMapping("/create")

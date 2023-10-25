@@ -24,7 +24,9 @@ public class CauTrucKhuyController {
             @RequestParam(name = "size", defaultValue = "10") int size,
             @RequestParam(name = "tenCauTrucKhuy", required = false) String tenCauTrucKhuy
     ){
-        return cauTrucKhuyService.getList(ListCauTrucKhuyRequest.builder().tenCauTrucKhuy(tenCauTrucKhuy).build());
+        return cauTrucKhuyService.getList(ListCauTrucKhuyRequest.builder()
+                .tenCauTrucKhuy(tenCauTrucKhuy)
+                .page(page).size(size).build());
     }
 
     @PostMapping("/create")

@@ -6,9 +6,7 @@ import com.example.fashionmanager.dto.sanpham.quanlycautruckhuy.request.ListCauT
 import com.example.fashionmanager.dto.sanpham.quanlycautruckhuy.request.UpdateCauTrucKhuyRequest;
 import com.example.fashionmanager.dto.sanpham.quanlycautruckhuy.response.CauTrucKhuyDetailResponse;
 import com.example.fashionmanager.dto.sanpham.quanlycautruckhuy.response.CauTrucKhuyResponse;
-import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangResponse;
 import com.example.fashionmanager.entity.CauTrucKhuyEntity;
-import com.example.fashionmanager.entity.KieuDangEntity;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
 import com.example.fashionmanager.repository.CauTrucKhuyRepository;
@@ -52,7 +50,7 @@ public class CauTrucKhuyServiceImpl implements CauTrucKhuyService{
         listReponseDto.setHasPreviousPage(cauTrucKhuyEntities.hasPrevious());
         listReponseDto.setPageCount(cauTrucKhuyEntities.getTotalPages());
         listReponseDto.setPageSize(cauTrucKhuyEntities.getSize());
-
+        listReponseDto.setTotalItemCount(cauTrucKhuyEntities.getTotalElements());
         return ResponseEntity.ok(listReponseDto);
     }
 
