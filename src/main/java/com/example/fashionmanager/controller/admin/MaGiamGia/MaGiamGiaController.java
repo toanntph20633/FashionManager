@@ -29,7 +29,7 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/admin/ma-giam-gia-manager")
+@RequestMapping("/admin/ma-giam-gia")
 public class MaGiamGiaController {
     @Autowired
     MaGiamGiaServiceImpl maGiamGiaService;
@@ -40,10 +40,12 @@ public class MaGiamGiaController {
                                                     @RequestParam(value = "ngayBatDau", required = false) LocalDate ngayBatDau,
                                                     @RequestParam(value = "ngayKetThuc", required = false) LocalDate ngayKetThuc,
                                                     @RequestParam(value = "mota", required = false) String mota,
+                                                    @RequestParam(value = "size", required = false) Integer size,
+                                                    @RequestParam(value = "page", required = false) Integer page,
                                                     @RequestParam(value = "soTienYeuCau", required = false) BigDecimal soTienYeuCau,
                                                     @RequestParam(value = "hinhThuckhuyenmai", required = false) String hinhThuckhuyenmai,
                                                     @RequestParam(value = "hinhThucApDung", required = false) String hinhThucApDung,
-                                                    @RequestParam(value = "giaTriDuocGiam", required = false) Integer giaTriDuocGiam,
+                                                    @RequestParam(value = "giaTriDuocGiam", required = false) BigDecimal giaTriDuocGiam,
                                                     @RequestParam(value = "soLuongMaGianGia", required = false) Integer soLuongMaGianGia) {
         ListMaGiamGiaRequest request = ListMaGiamGiaRequest.builder()
                 .active(active)
