@@ -28,12 +28,12 @@ public class CauTrucKhuyController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody @Valid CreateCauTrucKhuyRequest request){
+    public ResponseEntity<?> create(@RequestBody CreateCauTrucKhuyRequest request){
         return cauTrucKhuyService.create(request);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody @Valid UpdateCauTrucKhuyRequest request){
+    public ResponseEntity<?> update(@RequestBody UpdateCauTrucKhuyRequest request){
         return cauTrucKhuyService.update(request);
     }
 
