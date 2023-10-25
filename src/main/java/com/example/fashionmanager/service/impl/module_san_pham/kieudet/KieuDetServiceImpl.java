@@ -52,7 +52,7 @@ public class KieuDetServiceImpl implements KieuDetService{
         listReponseDto.setHasPreviousPage(kieuDetEntities.hasPrevious());
         listReponseDto.setPageCount(kieuDetEntities.getTotalPages());
         listReponseDto.setPageSize(kieuDetEntities.getSize());
-
+        listReponseDto.setTotalItemCount(kieuDetEntities.getTotalElements());
         return ResponseEntity.ok(listReponseDto);
     }
 
