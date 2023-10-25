@@ -52,7 +52,7 @@ public class LopLotServiceImpl implements LopLotService {
         listReponseDto.setHasPreviousPage(lopLotEntities.hasPrevious());
         listReponseDto.setPageCount(lopLotEntities.getTotalPages());
         listReponseDto.setPageSize(lopLotEntities.getSize());
-
+        listReponseDto.setTotalItemCount(lopLotEntities.getTotalElements());
         return ResponseEntity.ok(listReponseDto);
     }
 

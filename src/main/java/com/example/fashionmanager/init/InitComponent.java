@@ -1,5 +1,6 @@
 package com.example.fashionmanager.init;
 
+import com.example.fashionmanager.repository.LopLotRepository;
 import com.example.fashionmanager.repository.UserRepository;
 import com.example.fashionmanager.service.InitDatabaseService;
 import jakarta.annotation.PostConstruct;
@@ -13,7 +14,7 @@ public class InitComponent {
     @Value("${fashion.app.init.database}")
     private boolean isInitDatabase;
     private final UserRepository userRepository;
-
+    private final LopLotRepository lopLotRepository;
     private final InitDatabaseService initDatabaseService;
     @PostConstruct
     private void initDatabase() {
@@ -28,5 +29,6 @@ public class InitComponent {
         }
 
         initDatabaseService.initData();
+
     }
 }
