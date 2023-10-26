@@ -48,12 +48,6 @@ MaGiamGiaMapper mapper;
             if (StringUtils.isNotBlank(request.getMaVoucher())) {
                 predicates.add(criteriaBuilder.like(root.get("maVoucher"), "%" + request.getMaVoucher() + "%"));
             }
-//            if (StringUtils.isBlank(request.getNgayBatDau())) {
-//                predicates.add(criteriaBuilder.like(root.get("rankName"), "%" + request.getNgayBatDau() + "%"));
-//            }
-            if (request.getHinhThuckhuyenmai() != null) {
-                predicates.add(criteriaBuilder.equal(root.get("hinhThuckhuyenmai"), request.getHinhThuckhuyenmai()));
-            }
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
