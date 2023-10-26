@@ -20,6 +20,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @SuperBuilder
 public class HangEntity extends CommonEntity implements Serializable {
+
     @Column(name = "ma_hang")
     private String maHang;
     @Column(name = "ten_hang")

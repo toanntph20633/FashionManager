@@ -15,4 +15,5 @@ public class HangResponse {
     private Long id;
     private String maHang;
     private String tenHang;
+    private Boolean active;
 }

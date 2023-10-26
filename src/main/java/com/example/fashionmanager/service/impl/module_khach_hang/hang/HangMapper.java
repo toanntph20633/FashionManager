@@ -8,7 +8,11 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface HangMapper {
-HangEntity getHangEntity(HangCreateResquest createResquest);
-HangEntity getHangEntity(HangUpdateRequest updateRequest);
-HangResponse getHangReponse(HangEntity hangEntity);
+//    HangEntity getHangEntity1(HangCreateResquest createResquest);
+//    HangEntity getHangEntity1(HangUpdateRequest updateRequest);
+//    HangResponse getHangReponse1(HangEntity hangEntity);
+
+    HangEntity getHangEntity(HangCreateResquest createResquest);
+    HangEntity getHangEntity(HangUpdateRequest updateRequest);
+    HangResponse getHangReponse(HangEntity hangEntity);
 }

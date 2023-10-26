@@ -12,5 +12,5 @@ public class HangListRequest {
     private Integer size;
     private String code;
     private String name;
-    private Boolean active = true;
+    private boolean active = true;
 }

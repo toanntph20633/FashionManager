@@ -30,12 +30,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/admin/rank-manager")
 @CrossOrigin(origins = "*", maxAge = -1)
 public class HangController {
-
     @Autowired
     private HangService hangService;
     @GetMapping("list")
     public ListReponseDto<HangResponse> getList(@RequestParam(value = "page", defaultValue = "0") int page,
-                                               @RequestParam(value = "size", defaultValue = "10") int size,
+                                               @RequestParam(value = "size", defaultValue = "2") int size,
                                                @RequestParam(value = "active", defaultValue = "true") Boolean active,
                                                @RequestParam(value = "name", required = false) String name,
                                                @RequestParam(value = "code", required = false) String code) {
@@ -46,21 +45,19 @@ public class HangController {
                 .page(page)
                 .size(size)
                 .build();
-
         return hangService.getList(request);
     }
 
     @PostMapping("create")
-    public ResponseDto<HangResponse> create(@RequestBody @Valid HangCreateResquest request, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            throw new FashionManagerException(ErrorResponse
-//                    .builder()
-//                    .status(HttpStatus.BAD_REQUEST)
-//                    .message(bindingResult.getAllErrors().stream()
-//                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
-//                    .build());
-//            throw new RuntimeException("Thêm thành công");
-//        }
+    public ResponseDto<HangResponse> create(@RequestBody @Valid HangCreateResquest request, BindingResult bindingResult)  {
+        if (bindingResult.hasErrors()) {
+            throw new FashionManagerException(ErrorResponse
+                    .builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .message(bindingResult.getAllErrors().stream()
+                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
+                    .build());
+        }
         return hangService.create(request);
     }
 
@@ -79,14 +76,14 @@ public class HangController {
 
     @PutMapping("update/{id}")
     public ResponseDto<HangResponse> update(@PathVariable Long id, @RequestBody @Valid HangUpdateRequest request, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            throw new FashionManagerException(ErrorResponse
-//                    .builder()
-//                    .status(HttpStatus.BAD_REQUEST)
-//                    .message(bindingResult.getAllErrors().stream()
-//                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
-//                    .build());
-//        }
+        if (bindingResult.hasErrors()) {
+            throw new FashionManagerException(ErrorResponse
+                    .builder()
+                    .status(HttpStatus.BAD_REQUEST)
+                    .message(bindingResult.getAllErrors().stream()
+                            .map(o -> o.getDefaultMessage()).collect(Collectors.toList()).toString())
+                    .build());
+        }
         request.setId(id);
         return hangService.update(request);
     }

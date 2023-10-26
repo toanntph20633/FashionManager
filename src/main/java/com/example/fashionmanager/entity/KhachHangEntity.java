@@ -30,6 +30,9 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public class KhachHangEntity extends CommonEntity implements Serializable {
+
+    @Column(name = "ma_khach_hang")
+    private String maKhachHang;
     @Column(name = "ten_khach_hang")
     private String tenKhachHang;
     @Column(name = "so_dien_thoai")
@@ -50,7 +53,7 @@ public class KhachHangEntity extends CommonEntity implements Serializable {
     @JoinColumn(name = "hang_id")
     private HangEntity hangEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private UserEntity userEntity;
 }

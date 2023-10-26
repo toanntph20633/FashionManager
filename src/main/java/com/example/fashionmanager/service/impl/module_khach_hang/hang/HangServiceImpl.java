@@ -49,7 +49,7 @@ public class HangServiceImpl implements HangService {
                 predicates.add(criteriaBuilder.like(root.get("ten"), "%" + request.getName() + "%"));
             }
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
-            predicates.add(criteriaBuilder.equal(root.get("active"), request.getActive()));
+//            predicates.add(criteriaBuilder.equal(root.get("active"), request.isActive()));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         });
         Page<HangEntity> rankEntities = repository.findAll(rankEntitySpecification, pageable);
@@ -60,6 +60,7 @@ public class HangServiceImpl implements HangService {
         listReponseDto.setHasPreviousPage(rankEntities.hasPrevious());
         listReponseDto.setPageCount(rankEntities.getTotalPages());
         listReponseDto.setPageSize(rankEntities.getSize());
+        listReponseDto.setTotalItemCount(rankEntities.getTotalElements());
         return listReponseDto;
     }
 
