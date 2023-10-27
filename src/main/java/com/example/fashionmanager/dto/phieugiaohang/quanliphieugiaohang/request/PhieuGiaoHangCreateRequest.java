@@ -12,6 +12,12 @@ import java.sql.Date;
 @Setter
 @Builder
 public class PhieuGiaoHangCreateRequest {
+
+    @NotNull(message = "Không để trống ")
+    @NotBlank(message = "Không để trống ")
+    private String maPhieuGiao;
+
+
     @NotNull(message = "Không để trống ")
     @NotBlank(message = "Không để trống ")
     private String tenNguoiNhan;
@@ -27,9 +33,7 @@ public class PhieuGiaoHangCreateRequest {
     private String diaChiChiTiet;
 
     @NotNull(message = "Không để trống ")
-    @NotBlank(message = "Không để trống ")
     @Positive(message = "Số tiền phải lớn hơn 0")
-    @Pattern(regexp = "^[0-9]+(\\.[0-9]{1,2})?$", message = "Số tiền không hợp lệ")
     private BigDecimal soTienThanhToan;
 
     @NotNull(message = "Không để trống ")
@@ -43,11 +47,10 @@ public class PhieuGiaoHangCreateRequest {
     private String sdtNguoiGiao;
 
     @NotNull(message = "Không để trống ")
-    @NotBlank(message = "Không để trống ")
+    @Future(message = "Ngày giao phải ở tương lai")
     private Date ngayGiao;
 
     @NotNull(message = "Không để trống ")
-    @NotBlank(message = "Không để trống ")
     private Date ngayNhan;
 
 

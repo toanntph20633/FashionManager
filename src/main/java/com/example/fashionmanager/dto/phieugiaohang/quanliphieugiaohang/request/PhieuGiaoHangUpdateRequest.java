@@ -17,6 +17,11 @@ public class PhieuGiaoHangUpdateRequest {
 
     @NotNull(message = "Không để trống ")
     @NotBlank(message = "Không để trống ")
+    private String maPhieuGiao;
+
+
+    @NotNull(message = "Không để trống ")
+    @NotBlank(message = "Không để trống ")
     private String tenNguoiNhan;
 
     @NotNull(message = "Không để trống ")
@@ -30,9 +35,7 @@ public class PhieuGiaoHangUpdateRequest {
     private String diaChiChiTiet;
 
     @NotNull(message = "Không để trống ")
-    @NotBlank(message = "Không để trống ")
     @Positive(message = "Số tiền phải lớn hơn 0")
-    @Pattern(regexp = "^[0-9]+(\\.[0-9]{1,2})?$", message = "Số tiền không hợp lệ")
     private BigDecimal soTienThanhToan;
 
     @NotNull(message = "Không để trống ")
@@ -46,11 +49,9 @@ public class PhieuGiaoHangUpdateRequest {
     private String sdtNguoiGiao;
 
     @NotNull(message = "Không để trống ")
-    @NotBlank(message = "Không để trống ")
     private Date ngayGiao;
 
     @NotNull(message = "Không để trống ")
-    @NotBlank(message = "Không để trống ")
     private Date ngayNhan;
 
 

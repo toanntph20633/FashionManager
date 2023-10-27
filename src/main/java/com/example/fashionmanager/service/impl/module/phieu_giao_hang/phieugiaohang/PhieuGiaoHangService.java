@@ -8,7 +8,7 @@ import com.example.fashionmanager.dto.phieugiaohang.quanliphieugiaohang.request.
 import com.example.fashionmanager.dto.phieugiaohang.quanliphieugiaohang.respones.PhieuGiaoHangRespones;
 
 public interface PhieuGiaoHangService {
-    ListReponseDto<PhieuGiaoHangRespones> getAll(int pageIndex,
+    ListReponseDto<PhieuGiaoHangRespones> getAll(
                                                  PhieuGiaoHangListRequest phieuGiaoHangListRequest);
 
     ResponseDto<PhieuGiaoHangRespones> save(PhieuGiaoHangCreateRequest request);
