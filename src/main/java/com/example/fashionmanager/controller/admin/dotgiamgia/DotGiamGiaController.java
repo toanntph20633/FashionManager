@@ -31,8 +31,11 @@ public class DotGiamGiaController {
                         .dotGiamGiaStatus(status)
                         .ngayKetThuc(ngayKetThuc)
                         .ngayBatDau(ngayBatDau)
+                        .page(page)
+                        .size(size)
+                        .tenDotGiamGia(tenDotGiamGia)
                         .build();
-
+        return dotGiamGiaService.getList(dotGiamGiaListRequest);
 
     }
 

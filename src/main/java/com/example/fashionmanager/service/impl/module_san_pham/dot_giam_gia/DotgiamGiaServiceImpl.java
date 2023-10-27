@@ -7,6 +7,8 @@ import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.request.DotGia
 import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.request.SanPhamApDungDGGRequest;
 import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.response.DotGiamGiaReponse;
 import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.response.DotGiamGiaResponseDetail;
+import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.response.SanPhamApDungResponse;
+import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.response.SanPhamResponse;
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangResponse;
 import com.example.fashionmanager.entity.DotGiamGiaEntity;
 import com.example.fashionmanager.entity.KieuDangEntity;
@@ -70,14 +72,15 @@ public class DotgiamGiaServiceImpl implements DotGiamGiaService {
 return criteriaBuilder.and(predicates.toArray(predicates.toArray(new Predicate[0])));
         };
         Page<DotGiamGiaEntity> dotGiamGiaEntities = dotGiamGiaRepository.findAll(dotGiamGiaEntitySpecification,pageable);
-        List<DotGiamGiaReponse> dotGiamGiaReponses = dotGiamGiaEntities.stream().map(dotGiamGiaEntity ->mappingByResponse(dotGiamGiaEntities)).toList();
+        List<DotGiamGiaReponse> dotGiamGiaReponses = dotGiamGiaEntities.stream().map(dotGiamGiaEntity ->mappingByResponse(dotGiamGiaEntity)).toList();
 
         ListReponseDto<DotGiamGiaReponse> listReponseDto = new ListReponseDto<DotGiamGiaReponse>();
-        listReponseDto.setItems(kieuDangResponses);
-        listReponseDto.setHasNextPage(kieuDangEntities.hasNext());
-        listReponseDto.setHasPreviousPage(kieuDangEntities.hasPrevious());
-        listReponseDto.setPageCount(kieuDangEntities.getTotalPages());
-        listReponseDto.setPageSize(kieuDangEntities.getSize());
+        listReponseDto.setItems(dotGiamGiaReponses);
+        listReponseDto.setHasNextPage(dotGiamGiaEntities.hasNext());
+        listReponseDto.setHasPreviousPage(dotGiamGiaEntities.hasPrevious());
+        listReponseDto.setPageCount(dotGiamGiaEntities.getTotalPages());
+        listReponseDto.setPageSize(dotGiamGiaEntities.getSize());
+        listReponseDto.setTotalItemCount(dotGiamGiaEntities.getTotalElements());
 
         return null;
     }
@@ -295,14 +298,31 @@ return criteriaBuilder.and(predicates.toArray(predicates.toArray(new Predicate[0
 
     @Override
     public DotGiamGiaReponse mappingByResponse(DotGiamGiaEntity dotGiamGiaEntity) {
-        return DotGiamGiaReponse.builder()
-                .id(dotGiamGiaEntity.getId())
-                .tenDotgiamGia(dotGiamGiaEntity.getTenDotGiamGia())
-                .ngayBatDau(dotGiamGiaEntity.getNgayBatDau())
-                .ngayKetThuc(dotGiamGiaEntity.getNgayKetThuc())
-                .loaiUuDaiDDG(dotGiamGiaEntity.getLoaiUuDaiDDG())
-                .dotGiamGiaStatus(dotGiamGiaEntity.getDotGiamGiaStatus())
-                .build();
+       DotGiamGiaReponse dotGiamGiaReponse = DotGiamGiaReponse.builder()
+               .id(dotGiamGiaEntity.getId())
+               .tenDotgiamGia(dotGiamGiaEntity.getTenDotGiamGia())
+               .ngayBatDau(dotGiamGiaEntity.getNgayBatDau())
+               .ngayKetThuc(dotGiamGiaEntity.getNgayKetThuc())
+               .loaiUuDaiDDG(dotGiamGiaEntity.getLoaiUuDaiDDG())
+               .dotGiamGiaStatus(dotGiamGiaEntity.getDotGiamGiaStatus())
+               .build();
+       switch (dotGiamGiaEntity.getLoaiUuDaiDDG()){
+           case SAN_PHAM -> {
+               Set<SanPhamApDungDGGEntity> sanPhamApDungDGGEntities = dotGiamGiaEntity.getSanPhamApDungDGGEntities();
+               List<SanPhamApDungResponse> sanPhamApDungResponses = sanPhamApDungDGGEntities.stream().map(sanPhamApDungDGGEntity -> {
+                   SanPhamApDungResponse sanPhamApDungResponse = SanPhamApDungResponse.builder()
+                           .sanPhamResponse(SanPhamResponse.builder().tenSanPham().build())
+                           .build();
+               })
+               break;
+
+           }
+           case HOA_DON -> {
+               break;
+
+           }
+       }
+        return dotGiamGiaReponse;
     }
 
     @Override
