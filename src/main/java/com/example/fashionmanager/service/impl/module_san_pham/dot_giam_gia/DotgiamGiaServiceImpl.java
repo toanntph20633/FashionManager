@@ -1,27 +1,38 @@
 package com.example.fashionmanager.service.impl.module_san_pham.dot_giam_gia;
 
+import com.example.fashionmanager.dto.ListReponseDto;
 import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.request.DotGiamGiaCreateRequest;
 import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.request.DotGiamGiaListRequest;
 import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.request.DotGiamGiaUpdateRequest;
 import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.request.SanPhamApDungDGGRequest;
 import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.response.DotGiamGiaReponse;
 import com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.response.DotGiamGiaResponseDetail;
+import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangResponse;
 import com.example.fashionmanager.entity.DotGiamGiaEntity;
+import com.example.fashionmanager.entity.KieuDangEntity;
 import com.example.fashionmanager.entity.SanPhamApDungDGGEntity;
 import com.example.fashionmanager.entity.SanPhamEntity;
+import com.example.fashionmanager.enums.DotGiamGiaStatus;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;
 import com.example.fashionmanager.repository.DotGiamGiaRepository;
 import com.example.fashionmanager.repository.SanPhamApDungDDGRepository;
 import com.example.fashionmanager.repository.SanPhamRepository;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,6 +48,37 @@ public class DotgiamGiaServiceImpl implements DotGiamGiaService {
 
     @Override
     public ResponseEntity<?> getList(DotGiamGiaListRequest dotGiamGiaListRequest) {
+        Sort sort = Sort.by(new Sort.Order(Sort.Direction.DESC,"dateCreate")
+                ,new Sort.Order(Sort.Direction.DESC,"id"));
+        Pageable pageable = PageRequest.of(dotGiamGiaListRequest.getPage(), dotGiamGiaListRequest.getSize(), sort);
+        Specification<DotGiamGiaEntity > dotGiamGiaEntitySpecification =  (root, query, criteriaBuilder) -> {
+            List<Predicate> predicates = new ArrayList<>();
+            if(StringUtils.isNotBlank(dotGiamGiaListRequest.getTenDotGiamGia())){
+                predicates.add(criteriaBuilder.like(root.get("tenDotGiamGia"), "%" + dotGiamGiaListRequest.getTenDotGiamGia() + "%"));
+            }
+            if(dotGiamGiaListRequest.getDotGiamGiaStatus() != null){
+                predicates.add(criteriaBuilder.equal(root.get("dotGiamGiaStatus"), dotGiamGiaListRequest.getDotGiamGiaStatus()));
+            }
+            if(dotGiamGiaListRequest.getNgayBatDau() != null && dotGiamGiaListRequest.getNgayKetThuc() != null){
+                predicates.add(criteriaBuilder.between(root.get("ngayBatDau"),dotGiamGiaListRequest.getNgayBatDau(),dotGiamGiaListRequest.getNgayKetThuc()));
+                predicates.add(criteriaBuilder.between(root.get("ngayKetThuc"),dotGiamGiaListRequest.getNgayBatDau(),dotGiamGiaListRequest.getNgayKetThuc()));
+            }
+            if(dotGiamGiaListRequest.getLoaiUuDaiDDG() != null ){
+                predicates.add(criteriaBuilder.equal(root.get("loaiUuDaiDDG"),dotGiamGiaListRequest.getLoaiUuDaiDDG()));
+            }
+            predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
+return criteriaBuilder.and(predicates.toArray(predicates.toArray(new Predicate[0])));
+        };
+        Page<DotGiamGiaEntity> dotGiamGiaEntities = dotGiamGiaRepository.findAll(dotGiamGiaEntitySpecification,pageable);
+        List<DotGiamGiaReponse> dotGiamGiaReponses = dotGiamGiaEntities.stream().map(dotGiamGiaEntity ->mappingByResponse(dotGiamGiaEntities)).toList();
+
+        ListReponseDto<DotGiamGiaReponse> listReponseDto = new ListReponseDto<DotGiamGiaReponse>();
+        listReponseDto.setItems(kieuDangResponses);
+        listReponseDto.setHasNextPage(kieuDangEntities.hasNext());
+        listReponseDto.setHasPreviousPage(kieuDangEntities.hasPrevious());
+        listReponseDto.setPageCount(kieuDangEntities.getTotalPages());
+        listReponseDto.setPageSize(kieuDangEntities.getSize());
+
         return null;
     }
 
@@ -48,6 +90,15 @@ public class DotgiamGiaServiceImpl implements DotGiamGiaService {
     @Override
     @Transactional
     public ResponseEntity<?> create(DotGiamGiaCreateRequest dotGiamGiaCreateRequest) {
+        if (dotGiamGiaRepository.existsByDotGiamGiaDangHoatDong(DotGiamGiaStatus.HOAT_DONG, dotGiamGiaCreateRequest.getNgayKetThuc(), null) ||
+                dotGiamGiaRepository.existsByDotGiamGiaDangHoatDong(DotGiamGiaStatus.HOAT_DONG, dotGiamGiaCreateRequest.getNgayKetThuc(), null)
+        ) {
+            throw new FashionManagerException(
+                    new ErrorResponse(
+                            HttpStatus.BAD_REQUEST, "Ngày bắt đầu hoặc ngày kết thúc đang nằm trong chuỗi ngày hoạt động của 1 sự kiện khác"
+                    )
+            );
+        }
         DotGiamGiaEntity dotGiamGiaEntity = new DotGiamGiaEntity();
         dotGiamGiaEntity.setTenDotGiamGia(dotGiamGiaCreateRequest.getTenDotGiamGia());
         if (dotGiamGiaCreateRequest.getNgayBatDau().isAfter(dotGiamGiaCreateRequest.getNgayKetThuc())) {
@@ -152,6 +203,15 @@ public class DotgiamGiaServiceImpl implements DotGiamGiaService {
     @Override
     @Transactional
     public ResponseEntity<?> update(DotGiamGiaUpdateRequest dotGiamGiaUpdateRequest) {
+        if (dotGiamGiaRepository.existsByDotGiamGiaDangHoatDong(DotGiamGiaStatus.HOAT_DONG, dotGiamGiaUpdateRequest.getNgayKetThuc(), dotGiamGiaUpdateRequest.getId()) ||
+                dotGiamGiaRepository.existsByDotGiamGiaDangHoatDong(DotGiamGiaStatus.HOAT_DONG, dotGiamGiaUpdateRequest.getNgayKetThuc(), dotGiamGiaUpdateRequest.getId())
+        ) {
+            throw new FashionManagerException(
+                    new ErrorResponse(
+                            HttpStatus.BAD_REQUEST, "Ngày bắt đầu hoặc ngày kết thúc đang nằm trong chuỗi ngày hoạt động của 1 sự kiện khác"
+                    )
+            );
+        }
         DotGiamGiaEntity dotGiamGiaEntity = dotGiamGiaRepository.findById(dotGiamGiaUpdateRequest.getId())
                 .orElseThrow(() -> new FashionManagerException(
                         new ErrorResponse(
@@ -235,7 +295,14 @@ public class DotgiamGiaServiceImpl implements DotGiamGiaService {
 
     @Override
     public DotGiamGiaReponse mappingByResponse(DotGiamGiaEntity dotGiamGiaEntity) {
-        return null;
+        return DotGiamGiaReponse.builder()
+                .id(dotGiamGiaEntity.getId())
+                .tenDotgiamGia(dotGiamGiaEntity.getTenDotGiamGia())
+                .ngayBatDau(dotGiamGiaEntity.getNgayBatDau())
+                .ngayKetThuc(dotGiamGiaEntity.getNgayKetThuc())
+                .loaiUuDaiDDG(dotGiamGiaEntity.getLoaiUuDaiDDG())
+                .dotGiamGiaStatus(dotGiamGiaEntity.getDotGiamGiaStatus())
+                .build();
     }
 
     @Override

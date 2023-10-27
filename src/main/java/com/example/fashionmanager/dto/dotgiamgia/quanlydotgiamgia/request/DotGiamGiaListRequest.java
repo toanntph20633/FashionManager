@@ -1,21 +1,23 @@
 package com.example.fashionmanager.dto.dotgiamgia.quanlydotgiamgia.request;
 
+import com.example.fashionmanager.dto.ListRequestDto;
 import com.example.fashionmanager.enums.DotGiamGiaStatus;
 import com.example.fashionmanager.enums.LoaiUuDaiDDG;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 @Setter
 @Getter
-@Builder
-public class DotGiamGiaListRequest {
+@SuperBuilder
+public class DotGiamGiaListRequest extends ListRequestDto {
     private String tenDotGiamGia;
 
     private LocalDate ngayBatDau;
 
-    private LocalDate ngayKetthuc;
+    private LocalDate ngayKetThuc;
 
     private LoaiUuDaiDDG loaiUuDaiDDG;
 
