@@ -50,29 +50,29 @@ public class DotgiamGiaServiceImpl implements DotGiamGiaService {
 
     @Override
     public ResponseEntity<?> getList(DotGiamGiaListRequest dotGiamGiaListRequest) {
-        Sort sort = Sort.by(new Sort.Order(Sort.Direction.DESC,"dateCreate")
-                ,new Sort.Order(Sort.Direction.DESC,"id"));
+        Sort sort = Sort.by(new Sort.Order(Sort.Direction.DESC, "dateCreate")
+                , new Sort.Order(Sort.Direction.DESC, "id"));
         Pageable pageable = PageRequest.of(dotGiamGiaListRequest.getPage(), dotGiamGiaListRequest.getSize(), sort);
-        Specification<DotGiamGiaEntity > dotGiamGiaEntitySpecification =  (root, query, criteriaBuilder) -> {
+        Specification<DotGiamGiaEntity> dotGiamGiaEntitySpecification = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            if(StringUtils.isNotBlank(dotGiamGiaListRequest.getTenDotGiamGia())){
+            if (StringUtils.isNotBlank(dotGiamGiaListRequest.getTenDotGiamGia())) {
                 predicates.add(criteriaBuilder.like(root.get("tenDotGiamGia"), "%" + dotGiamGiaListRequest.getTenDotGiamGia() + "%"));
             }
-            if(dotGiamGiaListRequest.getDotGiamGiaStatus() != null){
+            if (dotGiamGiaListRequest.getDotGiamGiaStatus() != null) {
                 predicates.add(criteriaBuilder.equal(root.get("dotGiamGiaStatus"), dotGiamGiaListRequest.getDotGiamGiaStatus()));
             }
-            if(dotGiamGiaListRequest.getNgayBatDau() != null && dotGiamGiaListRequest.getNgayKetThuc() != null){
-                predicates.add(criteriaBuilder.between(root.get("ngayBatDau"),dotGiamGiaListRequest.getNgayBatDau(),dotGiamGiaListRequest.getNgayKetThuc()));
-                predicates.add(criteriaBuilder.between(root.get("ngayKetThuc"),dotGiamGiaListRequest.getNgayBatDau(),dotGiamGiaListRequest.getNgayKetThuc()));
+            if (dotGiamGiaListRequest.getNgayBatDau() != null && dotGiamGiaListRequest.getNgayKetThuc() != null) {
+                predicates.add(criteriaBuilder.between(root.get("ngayBatDau"), dotGiamGiaListRequest.getNgayBatDau(), dotGiamGiaListRequest.getNgayKetThuc()));
+                predicates.add(criteriaBuilder.between(root.get("ngayKetThuc"), dotGiamGiaListRequest.getNgayBatDau(), dotGiamGiaListRequest.getNgayKetThuc()));
             }
-            if(dotGiamGiaListRequest.getLoaiUuDaiDDG() != null ){
-                predicates.add(criteriaBuilder.equal(root.get("loaiUuDaiDDG"),dotGiamGiaListRequest.getLoaiUuDaiDDG()));
+            if (dotGiamGiaListRequest.getLoaiUuDaiDDG() != null) {
+                predicates.add(criteriaBuilder.equal(root.get("loaiUuDaiDDG"), dotGiamGiaListRequest.getLoaiUuDaiDDG()));
             }
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
-return criteriaBuilder.and(predicates.toArray(predicates.toArray(new Predicate[0])));
+            return criteriaBuilder.and(predicates.toArray(predicates.toArray(new Predicate[0])));
         };
-        Page<DotGiamGiaEntity> dotGiamGiaEntities = dotGiamGiaRepository.findAll(dotGiamGiaEntitySpecification,pageable);
-        List<DotGiamGiaReponse> dotGiamGiaReponses = dotGiamGiaEntities.stream().map(dotGiamGiaEntity ->mappingByResponse(dotGiamGiaEntity)).toList();
+        Page<DotGiamGiaEntity> dotGiamGiaEntities = dotGiamGiaRepository.findAll(dotGiamGiaEntitySpecification, pageable);
+        List<DotGiamGiaReponse> dotGiamGiaReponses = dotGiamGiaEntities.stream().map(dotGiamGiaEntity -> mappingByResponse(dotGiamGiaEntity)).toList();
 
         ListReponseDto<DotGiamGiaReponse> listReponseDto = new ListReponseDto<DotGiamGiaReponse>();
         listReponseDto.setItems(dotGiamGiaReponses);
@@ -82,12 +82,17 @@ return criteriaBuilder.and(predicates.toArray(predicates.toArray(new Predicate[0
         listReponseDto.setPageSize(dotGiamGiaEntities.getSize());
         listReponseDto.setTotalItemCount(dotGiamGiaEntities.getTotalElements());
 
-        return null;
+        return ResponseEntity.ok(listReponseDto);
     }
 
     @Override
     public ResponseEntity<?> getById(Long id) {
-        return null;
+        DotGiamGiaEntity dotGiamGiaEntity = dotGiamGiaRepository.findById(id).orElseThrow(() -> new FashionManagerException(
+                new ErrorResponse(
+                        HttpStatus.NOT_FOUND, "không tìm thấy đợt giảm giá có id = " + id
+                )
+        ));
+        return ResponseEntity.ok(mappingResponseDetail(dotGiamGiaEntity));
     }
 
     @Override
@@ -298,35 +303,50 @@ return criteriaBuilder.and(predicates.toArray(predicates.toArray(new Predicate[0
 
     @Override
     public DotGiamGiaReponse mappingByResponse(DotGiamGiaEntity dotGiamGiaEntity) {
-       DotGiamGiaReponse dotGiamGiaReponse = DotGiamGiaReponse.builder()
-               .id(dotGiamGiaEntity.getId())
-               .tenDotgiamGia(dotGiamGiaEntity.getTenDotGiamGia())
-               .ngayBatDau(dotGiamGiaEntity.getNgayBatDau())
-               .ngayKetThuc(dotGiamGiaEntity.getNgayKetThuc())
-               .loaiUuDaiDDG(dotGiamGiaEntity.getLoaiUuDaiDDG())
-               .dotGiamGiaStatus(dotGiamGiaEntity.getDotGiamGiaStatus())
-               .build();
-       switch (dotGiamGiaEntity.getLoaiUuDaiDDG()){
-           case SAN_PHAM -> {
-               Set<SanPhamApDungDGGEntity> sanPhamApDungDGGEntities = dotGiamGiaEntity.getSanPhamApDungDGGEntities();
-               List<SanPhamApDungResponse> sanPhamApDungResponses = sanPhamApDungDGGEntities.stream().map(sanPhamApDungDGGEntity -> {
-                   SanPhamApDungResponse sanPhamApDungResponse = SanPhamApDungResponse.builder()
-                           .sanPhamResponse(SanPhamResponse.builder().tenSanPham().build())
-                           .build();
-               })
-               break;
-
-           }
-           case HOA_DON -> {
-               break;
-
-           }
-       }
+        DotGiamGiaReponse dotGiamGiaReponse = DotGiamGiaReponse.builder()
+                .id(dotGiamGiaEntity.getId())
+                .tenDotgiamGia(dotGiamGiaEntity.getTenDotGiamGia())
+                .ngayBatDau(dotGiamGiaEntity.getNgayBatDau())
+                .ngayKetThuc(dotGiamGiaEntity.getNgayKetThuc())
+                .loaiUuDaiDDG(dotGiamGiaEntity.getLoaiUuDaiDDG())
+                .dotGiamGiaStatus(dotGiamGiaEntity.getDotGiamGiaStatus())
+                .build();
         return dotGiamGiaReponse;
     }
 
     @Override
     public DotGiamGiaResponseDetail mappingResponseDetail(DotGiamGiaEntity dotGiamGiaEntity) {
-        return null;
+        DotGiamGiaResponseDetail dotGiamGiaResponseDetail = DotGiamGiaResponseDetail.builder()
+                .id(dotGiamGiaEntity.getId())
+                .dotGiamGiaStatus(dotGiamGiaEntity.getDotGiamGiaStatus())
+                .tenDotGiamGia(dotGiamGiaEntity.getTenDotGiamGia())
+                .ngayBatDau(dotGiamGiaEntity.getNgayBatDau())
+                .ngayKetThuc(dotGiamGiaEntity.getNgayKetThuc())
+                .loaiUuDaiDDG(dotGiamGiaEntity.getLoaiUuDaiDDG())
+                .build();
+        switch (dotGiamGiaEntity.getLoaiUuDaiDDG()) {
+            case SAN_PHAM -> {
+                List<SanPhamApDungResponse> sanPhamApDungResponses = dotGiamGiaEntity.getSanPhamApDungDGGEntities()
+                        .stream()
+                        .map(sanPhamApDungDGGEntity -> {
+                            SanPhamApDungResponse sanPhamApDungResponse = new SanPhamApDungResponse();
+                            sanPhamApDungResponse.setSanPhamResponse(SanPhamResponse.builder()
+                                    .id(sanPhamApDungDGGEntity.getSanPhamEntity().getId())
+                                    .tenSanPham(sanPhamApDungDGGEntity.getSanPhamEntity().getTenSanPham())
+                                    .build());
+                            sanPhamApDungResponse.setGiaTriDuocGiam(sanPhamApDungDGGEntity.getGiaTriDuocGiam());
+                            sanPhamApDungResponse.setLoaiUuDai(sanPhamApDungDGGEntity.getLoaiUuDai());
+                            return sanPhamApDungResponse;
+                        }).toList();
+                dotGiamGiaResponseDetail.setSanPhamApDungResponses(sanPhamApDungResponses);
+                break;
+            }
+            case HOA_DON -> {
+                dotGiamGiaResponseDetail.setLoaiGiamGiaHD(dotGiamGiaEntity.getLoaiGiamGiaHD());
+                dotGiamGiaResponseDetail.setGiaTriGiamHD(dotGiamGiaEntity.getGiaTriGiamHD());
+                break;
+            }
+        }
+        return dotGiamGiaResponseDetail;
     }
 }

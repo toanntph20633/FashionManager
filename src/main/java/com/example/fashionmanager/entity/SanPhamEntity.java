@@ -21,7 +21,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "san_pham_entity")
-
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
