@@ -1,9 +1,12 @@
 package com.example.fashionmanager.init;
 
+import com.example.fashionmanager.repository.ChatLieuRepository;
 import com.example.fashionmanager.repository.HoaTietRepository;
 import com.example.fashionmanager.repository.KieuDangRepository;
 import com.example.fashionmanager.repository.KieuDetResponsitory;
+import com.example.fashionmanager.repository.MauSacRepository;
 import com.example.fashionmanager.repository.UserRepository;
+import com.example.fashionmanager.repository.VeAoRepository;
 import com.example.fashionmanager.repository.XeTaRepository;
 import com.example.fashionmanager.service.InitDatabaseService;
 import jakarta.annotation.PostConstruct;
@@ -22,6 +25,9 @@ public class InitComponent {
 
     private final HoaTietRepository hoaTietRepository;
     private final InitDatabaseService initDatabaseService;
+    private final ChatLieuRepository chatLieuRepository;
+    private final MauSacRepository mauSacRepository;
+    private final VeAoRepository veAoRepository;
     private final XeTaRepository xeTaRepository;
     @PostConstruct
     private void initDatabase() {
@@ -34,11 +40,22 @@ public class InitComponent {
         if (kieuDangRepository.count() == 0) {
             initDatabaseService.initKieuDang();
         }
+        if (chatLieuRepository.count() == 0) {
+            initDatabaseService.initChatLieu();
+        }
         if (hoaTietRepository.count() == 0) {
             initDatabaseService.initHoaTiet();
         }
         if (kieuDetResponsitory.count() == 0) {
             initDatabaseService.initKieuDet();
+        }
+
+        if (mauSacRepository.count() == 0) {
+            initDatabaseService.initMauSac();
+        }
+
+        if (veAoRepository.count() == 0) {
+            initDatabaseService.initVeAo();
         }
 
         if (xeTaRepository.count() == 0) {

@@ -21,8 +21,13 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     private final PasswordEncoder passwordEncoder;
     private final KieuDangRepository kieuDangRepository;
+    private final ChatLieuRepository chatLieuRepository;
+
     private final HoaTietRepository hoaTietRepository;
     private final KieuDetResponsitory kieuDetResponsitory;
+    private final MauSacRepository mauSacRepository;
+    private final VeAoRepository veAoRepository;
+
     private final XeTaRepository xeTaRepository;
     @Override
     @Transactional
@@ -199,7 +204,59 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initChatLieu() {
-
+        Set<ChatLieuEntity> chatLieuEntities = new HashSet<>();
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Laine (Wool)")
+                .moTa("""
+                        Laine là loại chất liệu phổ biến nhất cho áo suit. Nó có nhiều biến thể, bao gồm laine worsted 
+                        (mềm, mịn), laine tweed (dày, có kết cấu), và laine flannel (được làm từ sợi mỏng và có cảm nhận
+                         mịn). Laine thích hợp cho mọi mùa và có thể tạo ra các bộ suit cổ điển hoặc hiện đại.                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Linen")
+                .moTa("""
+                        Là một loại chất liệu tự nhiên, linen thích hợp cho mùa hè vì nó thoáng mát và hút ẩm tốt. 
+                        Tuy nhiên, linen có thể nhăn và nhàu, nên bạn cần phải sử dụng nó một cách cẩn thận.                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Cotton")
+                .moTa("""
+                        Cotton là một chất liệu phổ biến cho áo suit mùa hè. Nó thoáng mát, nhẹ, và dễ chăm sóc. 
+                        Cotton có thể có nhiều biến thể, bao gồm chino (mịn, không sáng bóng) và khaki (được xử lý để 
+                        sáng bóng hơn).                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Silk (Lụa)")
+                .moTa("""
+                        Lụa thường được sử dụng cho áo suit cổ điển và trong các bữa tiệc hoặc dịp đặc biệt khác. 
+                        Nó có cảm nhận mịn và sáng bóng, tạo ra một vẻ ngoại hình sang trọng.                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Mohair")
+                .moTa("""
+                        Mohair là một loại sợi tạo từ sợi lông của dê Angora. Chất liệu này thường sáng bóng và bóng 
+                        loáng, và thích hợp cho bộ suit dành cho mùa hè hoặc các sự kiện quan trọng.                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Velvet (Nhung)")
+                .moTa("""
+                        Velvet là một loại vải mịn và mềm, thường được sử dụng cho áo suit cho các sự kiện hoặc trong 
+                        mùa đông. Nó có cảm nhận mượt mà và sang trọng.                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Tweed")
+                .moTa("""
+                        Tweed là loại vải dày, chứa nhiều kết cấu và thường được sử dụng cho áo suit cổ điển hoặc áo 
+                        blazer. Nó thích hợp cho mùa đông và tạo ra vẻ ngoại hình lịch lãm.                                      
+                        """)
+                .build());
+        chatLieuRepository.saveAll(chatLieuEntities);
     }
 
     @Override
@@ -209,7 +266,32 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initMauSac() {
-
+        Set<MauSacEntity> mauSacEntities = new HashSet<>();
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#000000")
+                .tenMau("Màu Đen (Black)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#808080")
+                .tenMau("Màu Xám (Gray)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#000080")
+                .tenMau("Màu Xanh Navy (Navy Blue)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#0047AB")
+                .tenMau("Màu Xanh Cobalt (Cobalt Blue)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#964B00")
+                .tenMau("Màu Nâu (Brown)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#36454F")
+                .tenMau("Màu Xám Charcoal (Charcoal Gray)")
+                .build());
+        mauSacRepository.saveAll(mauSacEntities);
     }
 
     @Override
@@ -298,7 +380,66 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initVeAo() {
-
+        Set<VeAoEntity> veAoEntities = new HashSet<>();
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Notch (Notch Lapel)")
+                .moTa("""
+                        Loại ve này là phổ biến và truyền thống. Nó có hình tam giác hoặc ve đứng ở góc 
+                        cạnh của áo blazer hoặc áo vest
+                         """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Peak (Peak Lapel)")
+                .moTa("""
+                        Ve Peak có hình núi cao và được sử dụng để tạo ra một phong cách thanh lịch và sang trọng. 
+                        Thường thấy trên áo suit vest và áo blazer đắt tiền.
+                         """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Shawl (Shawl Lapel)")
+                .moTa("""
+                        Ve Shawl là loại ve tròn, mềm mại và thường thấy trên áo tuxedo hoặc áo suit dự tiệc.
+                         """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve kép (Double-Breasted)")
+                .moTa("""
+                        Loại ve này thường đi kèm với áo suit kép nút hoặc áo blazer kép nút. Nó có hai dãy ve và thường 
+                        tạo điểm nhấn mạnh vùng ngực.
+                         """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Gorge (Gorge)")
+                .moTa("""
+                        Ve Gorge là vùng gập của áo suit ở phía trên đầu ve áo. Độ cao và rộng của ve Gorge có thể thay 
+                        đổi để tạo ra phong cách khác nhau.                       
+                        """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Patch (Patch Pockets)")
+                .moTa("""
+                        Loại ve này không phải là vét được may thành một lớp vải riêng biệt mà thường được may trực tiếp
+                         lên áo suit. Nó thường thấy trên áo blazer thể thao hoặc áo vest không chính thống.                       
+                        """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Jetted (Jetted Pockets)")
+                .moTa("""
+                        Ve Jetted là loại ve ẩn bên trong áo suit. Đây là loại ve phổ biến trên áo suit cổ điển.                       
+                        """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Flap (Flap Pockets)")
+                .moTa("""
+                        Loại ve này là loại ve được che kín bằng nắp. Nó thường thấy trên áo suit thể thao và áo vest.                       
+                        """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve besom (Besom Pockets)")
+                .moTa("""
+                        Ve besom là loại ve phẳng và không có nắp. Nó thường thấy trên áo suit cổ điển và áo suit dự tiệc.                        """)
+                .build());
+        veAoRepository.saveAll(veAoEntities);
     }
 
 
