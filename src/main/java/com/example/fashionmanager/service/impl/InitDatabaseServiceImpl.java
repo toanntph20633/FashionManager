@@ -26,6 +26,7 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
     private final KieuDangRepository kieuDangRepository;
     private final KieuTuiRepository kieuTuiRepository;
     private final HoaTietRepository hoaTietRepository;
+    private final XeTaRepository xeTaRepository;
     @Override
     @Transactional
     public void initData() {
@@ -103,7 +104,29 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initXeTa() {
-
+        Set<XetaEntity> xetaEntities = new HashSet<>();
+        xetaEntities.add(XetaEntity.builder()
+                .tenXeTa("Xẻ tà kép (Double Vent)")
+                .moTa("""
+                        Loại xẻ tà này có hai xẻ tà bên hông áo, mỗi xẻ ở một bên. Xẻ tà kép thường tạo ra dáng 
+                        vẻ thoải mái khi bạn đi hoặc ngồi và giúp áo suit giữ dáng.
+                        """)
+                .build());
+        xetaEntities.add(XetaEntity.builder()
+                .tenXeTa("Xẻ tà đơn (Single Vent)")
+                .moTa("""
+                        Loại xẻ tà này chỉ có một xẻ tà ở giữa lưng áo. Xẻ tà đơn phổ biến trong áo suit cổ điển và 
+                        thường tạo ra phong cách truyền thống.
+                        """)
+                .build());
+        xetaEntities.add(XetaEntity.builder()
+                .tenXeTa("Không có xẻ tà (No Vent)")
+                .moTa("""
+                        Một số áo suit, đặc biệt là các bộ suit dự tiệc hoặc thời trang, có thể không có xẻ tà. Áo suit 
+                        này thường có dáng ôm sát và phong cách hiện đại.
+                        """)
+                .build());
+        xeTaRepository.saveAll(xetaEntities);
     }
 
     @Override
