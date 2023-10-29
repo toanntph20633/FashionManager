@@ -2,6 +2,9 @@ package com.example.fashionmanager.service.impl;
 
 import com.example.fashionmanager.controller.admin.sanpham.quanlykieutui.KieuTuiController;
 import com.example.fashionmanager.entity.*;
+import com.example.fashionmanager.enums.DiscountType;
+import com.example.fashionmanager.enums.DotGiamGiaStatus;
+import com.example.fashionmanager.enums.LoaiUuDaiDDG;
 import com.example.fashionmanager.repository.*;
 import com.example.fashionmanager.entity.*;
 import com.example.fashionmanager.repository.*;
@@ -11,8 +14,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -33,6 +39,9 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
     private final VeAoRepository veAoRepository;
 
     private final XeTaRepository xeTaRepository;
+    private final DotGiamGiaRepository dotGiamGiaRepository;
+
+
     @Override
     @Transactional
     public void initData() {
@@ -210,9 +219,9 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
         kieuTuiEntities.add(KieuTuiEntity.builder()
                 .tenKieuTui("Welt Pockets (Túi mắt cáo)")
                 .moTa("""
-                       Đây là kiểu túi dạng rãnh được may bên trong suit jacket. Chúng thường không có nắp và tạo ra một
-                        vẻ gọn gàng và thanh lịch.
-                        """)
+                        Đây là kiểu túi dạng rãnh được may bên trong suit jacket. Chúng thường không có nắp và tạo ra một
+                         vẻ gọn gàng và thanh lịch.
+                         """)
                 .build());
         kieuTuiEntities.add(KieuTuiEntity.builder()
                 .tenKieuTui("Ticket Pocket (Túi vé)")
@@ -487,9 +496,48 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initDotGiamGia() {
-        DotGiamGiaEntity dotGiamGiaEntity = DotGiamGiaEntity.builder()
-
-                .build();
+        List<DotGiamGiaEntity> dotGiamGiaEntities = new ArrayList<>();
+        dotGiamGiaEntities.add(DotGiamGiaEntity.builder()
+                .tenDotGiamGia("Sự kện khai trương")
+                .dotGiamGiaStatus(DotGiamGiaStatus.HOAT_DONG)
+                .ngayBatDau(LocalDate.of(2023, 11, 20))
+                .ngayKetThuc(LocalDate.of(2023, 11, 25))
+                .loaiUuDaiDDG(LoaiUuDaiDDG.HOA_DON)
+                .loaiGiamGiaHD(DiscountType.PERCENT)
+                .giaTriGiamHD(new BigDecimal(20))
+                .soTienHoaDonYeuCau(new BigDecimal(0))
+                .build());
+        dotGiamGiaEntities.add(DotGiamGiaEntity.builder()
+                .tenDotGiamGia("Sự kện mùa thu")
+                .dotGiamGiaStatus(DotGiamGiaStatus.HOAT_DONG)
+                .ngayBatDau(LocalDate.of(2023, 7, 20))
+                .ngayKetThuc(LocalDate.of(2023, 7, 25))
+                .loaiUuDaiDDG(LoaiUuDaiDDG.HOA_DON)
+                .loaiGiamGiaHD(DiscountType.PERCENT)
+                .giaTriGiamHD(new BigDecimal(20))
+                .soTienHoaDonYeuCau(new BigDecimal(0))
+                .build());
+        dotGiamGiaEntities.add(DotGiamGiaEntity.builder()
+                .tenDotGiamGia("Sự kện mùa đông")
+                .dotGiamGiaStatus(DotGiamGiaStatus.HOAT_DONG)
+                .ngayBatDau(LocalDate.of(2023, 11, 29))
+                .ngayKetThuc(LocalDate.of(2023, 12, 31))
+                .loaiUuDaiDDG(LoaiUuDaiDDG.HOA_DON)
+                .loaiGiamGiaHD(DiscountType.PERCENT)
+                .giaTriGiamHD(new BigDecimal(20))
+                .soTienHoaDonYeuCau(new BigDecimal(0))
+                .build());
+        dotGiamGiaEntities.add(DotGiamGiaEntity.builder()
+                .tenDotGiamGia("Sự kện tết")
+                .dotGiamGiaStatus(DotGiamGiaStatus.HOAT_DONG)
+                .ngayBatDau(LocalDate.of(2024, 2, 10))
+                .ngayKetThuc(LocalDate.of(2024, 2, 21))
+                .loaiUuDaiDDG(LoaiUuDaiDDG.HOA_DON)
+                .loaiGiamGiaHD(DiscountType.PERCENT)
+                .giaTriGiamHD(new BigDecimal(20))
+                .soTienHoaDonYeuCau(new BigDecimal(0))
+                .build());
+        dotGiamGiaRepository.saveAll(dotGiamGiaEntities);
     }
 
 
