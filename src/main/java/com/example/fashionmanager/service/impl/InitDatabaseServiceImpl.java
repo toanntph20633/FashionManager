@@ -24,6 +24,7 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
     private final ChatLieuRepository chatLieuRepository;
 
     private final HoaTietRepository hoaTietRepository;
+    private final MauSacRepository mauSacRepository;
     private final VeAoRepository veAoRepository;
 
     private final XeTaRepository xeTaRepository;
@@ -208,7 +209,32 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initMauSac() {
-
+        Set<MauSacEntity> mauSacEntities = new HashSet<>();
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#000000")
+                .tenMau("Màu Đen (Black)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#808080")
+                .tenMau("Màu Xám (Gray)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#000080")
+                .tenMau("Màu Xanh Navy (Navy Blue)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#0047AB")
+                .tenMau("Màu Xanh Cobalt (Cobalt Blue)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#964B00")
+                .tenMau("Màu Nâu (Brown)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#36454F")
+                .tenMau("Màu Xám Charcoal (Charcoal Gray)")
+                .build());
+        mauSacRepository.saveAll(mauSacEntities);
     }
 
     @Override
