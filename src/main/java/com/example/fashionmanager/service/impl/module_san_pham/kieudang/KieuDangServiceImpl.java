@@ -1,7 +1,6 @@
 package com.example.fashionmanager.service.impl.module_san_pham.kieudang;
 
 import com.example.fashionmanager.dto.ListReponseDto;
-import com.example.fashionmanager.dto.ListRequestDto;
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.request.CreateKieuDangRequest;
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.request.ListKieuDangRequest;
 import com.example.fashionmanager.dto.sanpham.quanlykieudang.request.UpdateKieuDangRequest;
