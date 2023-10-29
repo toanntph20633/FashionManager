@@ -1,5 +1,6 @@
 package com.example.fashionmanager.init;
 
+import com.example.fashionmanager.repository.HoaTietRepository;
 import com.example.fashionmanager.repository.KieuDangRepository;
 import com.example.fashionmanager.repository.KieuDetResponsitory;
 import com.example.fashionmanager.repository.UserRepository;
@@ -18,6 +19,7 @@ public class InitComponent {
     private final KieuDangRepository kieuDangRepository;
     private final KieuDetResponsitory kieuDetResponsitory;
 
+    private final HoaTietRepository hoaTietRepository;
     private final InitDatabaseService initDatabaseService;
 
     @PostConstruct
@@ -30,6 +32,9 @@ public class InitComponent {
         }
         if (kieuDangRepository.count() == 0) {
             initDatabaseService.initKieuDang();
+        }
+        if (hoaTietRepository.count() == 0) {
+            initDatabaseService.initHoaTiet();
         }
         if (kieuDetResponsitory.count() == 0) {
             initDatabaseService.initKieuDet();
