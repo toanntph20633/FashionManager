@@ -221,5 +221,12 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     }
 
+    @Override
+    public void initDotGiamGia() {
+        DotGiamGiaEntity dotGiamGiaEntity = DotGiamGiaEntity.builder()
+
+                .build();
+    }
+
 
 }

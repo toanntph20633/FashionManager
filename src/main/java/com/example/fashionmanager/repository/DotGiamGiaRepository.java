@@ -20,4 +20,6 @@ public interface DotGiamGiaRepository extends JpaRepository<DotGiamGiaEntity,Lon
             """)
     boolean existsByDotGiamGiaDangHoatDong(DotGiamGiaStatus dotGiamGiaStatus, LocalDate now,Long id);
 
+    @Override
+    long count();
 }

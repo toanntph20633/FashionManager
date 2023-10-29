@@ -17,4 +17,5 @@ public interface InitDatabaseService {
      void initLopLot();
      void initHoaTiet();
      void initVeAo();
+     void initDotGiamGia();
 }
