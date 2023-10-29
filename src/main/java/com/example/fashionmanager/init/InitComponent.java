@@ -4,6 +4,7 @@ import com.example.fashionmanager.repository.HoaTietRepository;
 import com.example.fashionmanager.repository.KieuDangRepository;
 import com.example.fashionmanager.repository.MauSacRepository;
 import com.example.fashionmanager.repository.UserRepository;
+import com.example.fashionmanager.repository.XeTaRepository;
 import com.example.fashionmanager.service.InitDatabaseService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class InitComponent {
     private final HoaTietRepository hoaTietRepository;
     private final InitDatabaseService initDatabaseService;
     private final MauSacRepository mauSacRepository;
+    private final XeTaRepository xeTaRepository;
     @PostConstruct
     private void initDatabase() {
         if (!isInitDatabase) {
@@ -38,5 +40,8 @@ public class InitComponent {
             initDatabaseService.initMauSac();
         }
 
+        if (xeTaRepository.count() == 0) {
+            initDatabaseService.initXeTa();
+        }
     }
 }
