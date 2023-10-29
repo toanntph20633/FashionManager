@@ -22,6 +22,7 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
     private final PasswordEncoder passwordEncoder;
     private final KieuDangRepository kieuDangRepository;
     private final CauTrucKhuyRepository cauTrucKhuyRepository;
+    private final HoaTietRepository hoaTietRepository;
     @Override
     @Transactional
     public void initData() {
@@ -190,7 +191,66 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initHoaTiet() {
-
+        Set<HoaTietEntity> hoaTietEntities = new HashSet<>();
+        hoaTietEntities.add(HoaTietEntity.builder()
+                .tenHoaTiet("Solid Color(Màu đơn)")
+                .moTa("""
+                        Áo suit một màu là một trong những lựa chọn phổ biến nhất.
+                        Áo suit này có màu đơn và không có họa tiết hoặc hoa văn nào.
+                        """)
+                .build());
+        hoaTietEntities.add(HoaTietEntity.builder()
+                .tenHoaTiet("Herringbone")
+                .moTa("""
+                        Họa tiết herringbone là một loại mô hình zigzag tạo ra từ việc kết hợp các 
+                        dải màu tương phản nhau. Điều này tạo ra một mô hình hình xương cá trên áo.
+                        """)
+                .build());
+        hoaTietEntities.add(HoaTietEntity.builder()
+                .tenHoaTiet("Pinstripe (Vạt ngang nhỏ)")
+                .moTa("""
+                        Pinstripe là một họa tiết được tạo ra bằng các dải ngang nhỏ và 
+                        thường có khoảng cách đều đặn. Nó thường tạo ra một diện mạo chuyên nghiệp và 
+                        thích hợp cho môi trường công sở.
+                        """)
+                .build());
+        hoaTietEntities.add(HoaTietEntity.builder()
+                .tenHoaTiet("Check (Kẻ ô)")
+                .moTa("""
+                        Họa tiết kẻ ô là một loại họa tiết có các dải ngang và dọc tạo thành các ô vuông 
+                        nhỏ hoặc lớn. Có nhiều loại kẻ ô khác nhau, bao gồm kẻ ô nhỏ (micro check), kẻ ô lớn 
+                        (windowpane check), và nhiều họa tiết kẻ khác.
+                        """)
+                .build());
+        hoaTietEntities.add(HoaTietEntity.builder()
+                .tenHoaTiet("Houndstooth (Họa tiết chó săn)")
+                .moTa("""
+                        Houndstooth là một họa tiết thường có dạng ô vuông nhỏ
+                         tạo nên một mô hình sọc xéo hoặc zigzag. Nó thường xuất hiện trong hai màu tương phản.
+                        """)
+                .build());
+        hoaTietEntities.add(HoaTietEntity.builder()
+                .tenHoaTiet("Bird's Eye")
+                .moTa("""
+                        Họa tiết bird's eye tạo ra một mô hình nhỏ, 
+                        giống như các điểm đen hoặc màu tương tự trên nền áo.
+                        """)
+                .build());
+        hoaTietEntities.add(HoaTietEntity.builder()
+                .tenHoaTiet("Glen Plaid (Kẻ sọc nhỏ)")
+                .moTa("""
+                        Họa tiết glen plaid có các dải sọc mỏng xen kẽ với các dải sọc khác tạo
+                         ra một họa tiết phức tạp. Nó thường xuất hiện trong các tông màu tối.
+                        """)
+                .build());
+        hoaTietEntities.add(HoaTietEntity.builder()
+                .tenHoaTiet("Prince of Wales Check (Kẻ hoàng gia xứ Wales)")
+                .moTa("""
+                        Họa tiết này tạo ra một mô hình lớn với các dải sọc và kẻ sọc nhỏ hơn xen kẽ. Nó thường có màu
+                         trung tính và thanh lịch.
+                        """)
+                .build());
+        hoaTietRepository.saveAll(hoaTietEntities);
     }
 
     @Override
