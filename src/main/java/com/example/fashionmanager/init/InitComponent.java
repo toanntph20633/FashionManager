@@ -1,6 +1,9 @@
 package com.example.fashionmanager.init;
 
 import com.example.fashionmanager.repository.*;
+import com.example.fashionmanager.repository.HoaTietRepository;
+import com.example.fashionmanager.repository.KieuDangRepository;
+import com.example.fashionmanager.repository.UserRepository;
 import com.example.fashionmanager.service.InitDatabaseService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,7 @@ public class InitComponent {
     private final LopLotRepository lopLotRepository;
     private final ChatLieuRepository chatLieuRepository;
     private final KieuTuiRepository kieuTuiRepository;
+    private final HoaTietRepository hoaTietRepository;
     private final InitDatabaseService initDatabaseService;
 
     @PostConstruct
@@ -38,6 +42,9 @@ public class InitComponent {
         }
         if(kieuTuiRepository.count() == 0){
             initDatabaseService.initKieuTui();
+        }
+        if (hoaTietRepository.count() == 0) {
+            initDatabaseService.initHoaTiet();
         }
 
     }
