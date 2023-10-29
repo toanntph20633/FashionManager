@@ -1,4 +1,4 @@
-package com.example.fashionmanager.dto.sanpham.quanlykieudang.request;
+package com.example.fashionmanager.dto.sanpham.quanlymausac.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,9 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Getter
 @Setter
+@Getter
 @SuperBuilder
-public class UpdateKieuDangRequest extends CreateKieuDangRequest {
+@AllArgsConstructor
+@NoArgsConstructor
+public class UpdateMauSacRequest extends CreateMauSacRequest{
     private Long id;
 }
