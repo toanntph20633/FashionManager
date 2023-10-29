@@ -1,5 +1,8 @@
 package com.example.fashionmanager.service.impl;
 
+import com.example.fashionmanager.controller.admin.sanpham.quanlykieutui.KieuTuiController;
+import com.example.fashionmanager.entity.*;
+import com.example.fashionmanager.repository.*;
 import com.example.fashionmanager.entity.*;
 import com.example.fashionmanager.repository.*;
 import com.example.fashionmanager.service.InitDatabaseService;
@@ -22,7 +25,14 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
     private final PasswordEncoder passwordEncoder;
     private final KieuDangRepository kieuDangRepository;
     private final CauTrucKhuyRepository cauTrucKhuyRepository;
+    private final KieuTuiRepository kieuTuiRepository;
+    private final ChatLieuRepository chatLieuRepository;
+
     private final HoaTietRepository hoaTietRepository;
+    private final KieuDetResponsitory kieuDetResponsitory;
+    private final MauSacRepository mauSacRepository;
+    private final VeAoRepository veAoRepository;
+
     private final XeTaRepository xeTaRepository;
     @Override
     @Transactional
@@ -128,12 +138,107 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initKieuDet() {
-
+        Set<KieuDetEntity> kieuDetEntities = new HashSet<>();
+        kieuDetEntities.add(KieuDetEntity.builder()
+                .tenKieuDet("LV2025")
+                .moTa("""
+                        Đây là kiểu dệt đơn sắc, nghĩa là áo suit được làm từ một màu duy nhất mà không có hoa văn hay 
+                        kết cấu khác. Màu sắc phổ biến cho áo suit màu đơn bao gồm xám, đen, xanh navy và xám tro.
+                        """)
+                .build());
+        kieuDetEntities.add(KieuDetEntity.builder()
+                .tenKieuDet("Pinstripe (Áo suit vằn tàu)")
+                .moTa("""
+                        Loại dệt này có sợi sợi mỏng đứng dọc trên bề mặt áo, tạo ra vẻ nổi bật và sang trọng. Vẻ nổi 
+                        bật này có thể tạo thêm chiều cao và gầy dáng cho người mặc
+                        """)
+                .build());
+        kieuDetEntities.add(KieuDetEntity.builder()
+                .tenKieuDet("Herringbone (Áo suit chéo ốc)")
+                .moTa("""
+                        Kiểu dệt herringbone tạo ra các đường cheo chéo trên bề mặt áo, tương tự như các bộ xếp cổ cáo. 
+                        Đây là kiểu dệt phổ biến và mang tính biểu tượng trong thời trang nam.
+                        """)
+                .build());
+        kieuDetEntities.add(KieuDetEntity.builder()
+                .tenKieuDet("Birdseye (Áo suit họa tiết điểm chim)")
+                .moTa("""
+                        Birdseye là một loại họa tiết nhỏ giọt, tạo ra một mặt đứng đứng giống như điểm chim. Nó thường
+                         được thực hiện trên nền màu sáng và tạo ra một vẻ ngoại hình độc đáo.
+                        """)
+                .build());
+        kieuDetEntities.add(KieuDetEntity.builder()
+                .tenKieuDet("Houndstooth (Áo suit họa tiết chó săn)")
+                .moTa("""
+                        Houndstooth là một loại họa tiết tương tự như các hình chó săn, với các hình vuông nhỏ xen kẽ 
+                        với nhau. Nó tạo ra một vẻ ngoại hình phô trương và thường được thực hiện trên nền màu sáng
+                        """)
+                .build());
+        kieuDetEntities.add(KieuDetEntity.builder()
+                .tenKieuDet("Check (Áo suit họa tiết caro)")
+                .moTa("""
+                        Kiểu dệt caro tạo ra các hình vuông lớn hoặc nhỏ trên bề mặt áo. Kiểu dệt này có thể biến đổi 
+                        từ caro nhỏ đến caro lớn và có thể tạo ra một vẻ ngoại hình phong cách và lôi cuốn.
+                        """)
+                .build());
+        kieuDetEntities.add(KieuDetEntity.builder()
+                .tenKieuDet("Tweed (Áo suit tweed)")
+                .moTa("""
+                        Tweed là một loại vải dày và đầy kết cấu, thường có họa tiết và màu sắc đa dạng. Nó thường được 
+                        sử dụng trong các bộ suit dành cho thời tiết lạnh hoặc trong các bộ suit phong cách cổ điển.
+                        """)
+                .build());
+        kieuDetEntities.add(KieuDetEntity.builder()
+                .tenKieuDet("Glen Plaid (Áo suit vằn cao cấp)")
+                .moTa("""
+                        Loại họa tiết này kết hợp giữa các đường vuông và đường kẻ nhỏ, tạo ra một vẻ ngoại hình tinh tế và đẳng cấp.
+                        """)
+                .build());
+        kieuDetResponsitory.saveAll(kieuDetEntities);
     }
 
     @Override
     public void initKieuTui() {
-
+        Set<KieuTuiEntity> kieuTuiEntities = new HashSet<>();
+        kieuTuiEntities.add(KieuTuiEntity.builder()
+                .tenKieuTui("Flap Pockets (Túi nắp)")
+                .moTa("""
+                        Đây là kiểu túi phổ biến nhất trên suit jacket. Chúng có nắp hoặc nắp che đi một phần hoặc toàn 
+                        bộ túi. Tùy theo phong cách, túi có thể được may vào áo ở bên ngoài (flap pockets nằm ở bên 
+                        ngoài) hoặc bên trong (flap pockets nằm ẩn bên trong).
+                        """)
+                .build());
+        kieuTuiEntities.add(KieuTuiEntity.builder()
+                .tenKieuTui("Welt Pockets (Túi mắt cáo)")
+                .moTa("""
+                       Đây là kiểu túi dạng rãnh được may bên trong suit jacket. Chúng thường không có nắp và tạo ra một
+                        vẻ gọn gàng và thanh lịch.
+                        """)
+                .build());
+        kieuTuiEntities.add(KieuTuiEntity.builder()
+                .tenKieuTui("Ticket Pocket (Túi vé)")
+                .moTa("""
+                        Túi vé là một túi nhỏ, thường được đặt bên trên một trong túi flap hoặc welt pockets. Ban đầu, 
+                        chúng được sử dụng để đựng vé máy bay hoặc vé tàu, nhưng ngày nay chúng thường chỉ mang tính 
+                        chất thẩm mỹ.
+                        """)
+                .build());
+        kieuTuiEntities.add(KieuTuiEntity.builder()
+                .tenKieuTui("Patch Pockets (Túi gắn ngoài)")
+                .moTa("""
+                        Đây là túi nằm ở bên ngoài suit jacket và được gắn thường bằng việc may thêm một lớp vải trên 
+                        bề mặt áo. Chúng tạo ra một vẻ phóng khoáng và thường xuất hiện trên các suit jacket không phải 
+                        dự tiệc hoặc không phải suit cổ điển.
+                        """)
+                .build());
+        kieuTuiEntities.add(KieuTuiEntity.builder()
+                .tenKieuTui("Interior Pockets (Túi bên trong)")
+                .moTa("""
+                        Suit jacket cũng có thể đi kèm với các túi bên trong được thiết kế để đựng điện thoại di động, 
+                        ví, bút và các vật dụng cá nhân khác.
+                        """)
+                .build());
+        kieuTuiRepository.saveAll(kieuTuiEntities);
     }
 
     @Override
@@ -143,7 +248,59 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initChatLieu() {
-
+        Set<ChatLieuEntity> chatLieuEntities = new HashSet<>();
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Laine (Wool)")
+                .moTa("""
+                        Laine là loại chất liệu phổ biến nhất cho áo suit. Nó có nhiều biến thể, bao gồm laine worsted 
+                        (mềm, mịn), laine tweed (dày, có kết cấu), và laine flannel (được làm từ sợi mỏng và có cảm nhận
+                         mịn). Laine thích hợp cho mọi mùa và có thể tạo ra các bộ suit cổ điển hoặc hiện đại.                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Linen")
+                .moTa("""
+                        Là một loại chất liệu tự nhiên, linen thích hợp cho mùa hè vì nó thoáng mát và hút ẩm tốt. 
+                        Tuy nhiên, linen có thể nhăn và nhàu, nên bạn cần phải sử dụng nó một cách cẩn thận.                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Cotton")
+                .moTa("""
+                        Cotton là một chất liệu phổ biến cho áo suit mùa hè. Nó thoáng mát, nhẹ, và dễ chăm sóc. 
+                        Cotton có thể có nhiều biến thể, bao gồm chino (mịn, không sáng bóng) và khaki (được xử lý để 
+                        sáng bóng hơn).                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Silk (Lụa)")
+                .moTa("""
+                        Lụa thường được sử dụng cho áo suit cổ điển và trong các bữa tiệc hoặc dịp đặc biệt khác. 
+                        Nó có cảm nhận mịn và sáng bóng, tạo ra một vẻ ngoại hình sang trọng.                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Mohair")
+                .moTa("""
+                        Mohair là một loại sợi tạo từ sợi lông của dê Angora. Chất liệu này thường sáng bóng và bóng 
+                        loáng, và thích hợp cho bộ suit dành cho mùa hè hoặc các sự kiện quan trọng.                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Velvet (Nhung)")
+                .moTa("""
+                        Velvet là một loại vải mịn và mềm, thường được sử dụng cho áo suit cho các sự kiện hoặc trong 
+                        mùa đông. Nó có cảm nhận mượt mà và sang trọng.                                      
+                        """)
+                .build());
+        chatLieuEntities.add(ChatLieuEntity.builder()
+                .tenChatLieu("Tweed")
+                .moTa("""
+                        Tweed là loại vải dày, chứa nhiều kết cấu và thường được sử dụng cho áo suit cổ điển hoặc áo 
+                        blazer. Nó thích hợp cho mùa đông và tạo ra vẻ ngoại hình lịch lãm.                                      
+                        """)
+                .build());
+        chatLieuRepository.saveAll(chatLieuEntities);
     }
 
     @Override
@@ -153,7 +310,32 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initMauSac() {
-
+        Set<MauSacEntity> mauSacEntities = new HashSet<>();
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#000000")
+                .tenMau("Màu Đen (Black)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#808080")
+                .tenMau("Màu Xám (Gray)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#000080")
+                .tenMau("Màu Xanh Navy (Navy Blue)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#0047AB")
+                .tenMau("Màu Xanh Cobalt (Cobalt Blue)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#964B00")
+                .tenMau("Màu Nâu (Brown)")
+                .build());
+        mauSacEntities.add(MauSacEntity.builder()
+                .maMau("#36454F")
+                .tenMau("Màu Xám Charcoal (Charcoal Gray)")
+                .build());
+        mauSacRepository.saveAll(mauSacEntities);
     }
 
     @Override
@@ -278,7 +460,66 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initVeAo() {
-
+        Set<VeAoEntity> veAoEntities = new HashSet<>();
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Notch (Notch Lapel)")
+                .moTa("""
+                        Loại ve này là phổ biến và truyền thống. Nó có hình tam giác hoặc ve đứng ở góc 
+                        cạnh của áo blazer hoặc áo vest
+                         """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Peak (Peak Lapel)")
+                .moTa("""
+                        Ve Peak có hình núi cao và được sử dụng để tạo ra một phong cách thanh lịch và sang trọng. 
+                        Thường thấy trên áo suit vest và áo blazer đắt tiền.
+                         """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Shawl (Shawl Lapel)")
+                .moTa("""
+                        Ve Shawl là loại ve tròn, mềm mại và thường thấy trên áo tuxedo hoặc áo suit dự tiệc.
+                         """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve kép (Double-Breasted)")
+                .moTa("""
+                        Loại ve này thường đi kèm với áo suit kép nút hoặc áo blazer kép nút. Nó có hai dãy ve và thường 
+                        tạo điểm nhấn mạnh vùng ngực.
+                         """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Gorge (Gorge)")
+                .moTa("""
+                        Ve Gorge là vùng gập của áo suit ở phía trên đầu ve áo. Độ cao và rộng của ve Gorge có thể thay 
+                        đổi để tạo ra phong cách khác nhau.                       
+                        """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Patch (Patch Pockets)")
+                .moTa("""
+                        Loại ve này không phải là vét được may thành một lớp vải riêng biệt mà thường được may trực tiếp
+                         lên áo suit. Nó thường thấy trên áo blazer thể thao hoặc áo vest không chính thống.                       
+                        """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Jetted (Jetted Pockets)")
+                .moTa("""
+                        Ve Jetted là loại ve ẩn bên trong áo suit. Đây là loại ve phổ biến trên áo suit cổ điển.                       
+                        """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve Flap (Flap Pockets)")
+                .moTa("""
+                        Loại ve này là loại ve được che kín bằng nắp. Nó thường thấy trên áo suit thể thao và áo vest.                       
+                        """)
+                .build());
+        veAoEntities.add(VeAoEntity.builder()
+                .tenVeAo("Ve besom (Besom Pockets)")
+                .moTa("""
+                        Ve besom là loại ve phẳng và không có nắp. Nó thường thấy trên áo suit cổ điển và áo suit dự tiệc.                        """)
+                .build());
+        veAoRepository.saveAll(veAoEntities);
     }
 
 
