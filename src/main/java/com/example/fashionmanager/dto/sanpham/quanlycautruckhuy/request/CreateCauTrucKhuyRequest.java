@@ -1,16 +1,16 @@
-package com.example.fashionmanager.dto.sanpham.quanlyloplot.request;
+package com.example.fashionmanager.dto.sanpham.quanlycautruckhuy.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class UpdateLopLotRequest extends CreateLopLotRequest{
-    private Long id;
+public class CreateCauTrucKhuyRequest {
+    private String tenCauTrucKhuy;
+    private String moTa;
 }

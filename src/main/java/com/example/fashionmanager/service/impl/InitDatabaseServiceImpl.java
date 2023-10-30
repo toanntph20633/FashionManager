@@ -30,6 +30,7 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     private final PasswordEncoder passwordEncoder;
     private final KieuDangRepository kieuDangRepository;
+    private final CauTrucKhuyRepository cauTrucKhuyRepository;
     private final KieuTuiRepository kieuTuiRepository;
     private final ChatLieuRepository chatLieuRepository;
 
@@ -353,7 +354,43 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initCauTrucKhuy() {
-
+        Set<CauTrucKhuyEntity> cauTrucKhuyEntities = new HashSet<>();
+        cauTrucKhuyEntities.add(CauTrucKhuyEntity.builder()
+                .tenCauTrucKhuy("1 Khuy (One-Button)")
+                .moTa("""
+                        Áo vest có một nút duy nhất ở phía trên giữa. Đây thường là loại khuy phù hợp với áo vest một 
+                        hàng cúc (single-breasted) và tạo sự đơn giản và thanh lịch.
+                        """)
+                .build());
+        cauTrucKhuyEntities.add(CauTrucKhuyEntity.builder()
+                .tenCauTrucKhuy("2 Khuy (Two-Button)")
+                .moTa("""
+                        Áo vest có hai nút ở phía trên, với nút trên ở phía trên và nút dưới ở phía dưới. Đây là loại 
+                        cấu trúc khuy phổ biến và tạo ra vẻ thanh thoát, phù hợp cho áo vest một hàng cúc.
+                        """)
+                .build());
+        cauTrucKhuyEntities.add(CauTrucKhuyEntity.builder()
+                .tenCauTrucKhuy("3 Khuy (Three-Button)")
+                .moTa("""
+                        Cấu trúc áo vest có ba nút ở phía trên, với hai nút trên cùng một khoảng và một nút phía dưới. 
+                        Áo vest ba hàng cúc thường sử dụng cấu trúc này, và nó có thể giúp tạo ra một vẻ nghiêm túc và lịch lãm.
+                        """)
+                .build());
+        cauTrucKhuyEntities.add(CauTrucKhuyEntity.builder()
+                .tenCauTrucKhuy("4 Khuy (Four-Button)")
+                .moTa("""
+                       Loại cấu trúc này có bốn nút ở phía trên áo vest. Nó thường xuất hiện trên các áo vest nhiều hàng 
+                       cúc và thể hiện một phong cách sang trọng và độc đáo.
+                        """)
+                .build());
+        cauTrucKhuyEntities.add(CauTrucKhuyEntity.builder()
+                .tenCauTrucKhuy("5 Khuy (Double-Breasted)")
+                .moTa("""
+                       Áo vest kép cúc có hai hàng nút xếp chéo và thường đi kèm với sáu hoặc tám nút, tạo nên một vẻ 
+                       lịch lãm và độc đáo.
+                        """)
+                .build());
+        cauTrucKhuyRepository.saveAll(cauTrucKhuyEntities);
     }
 
     @Override
