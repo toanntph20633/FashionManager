@@ -41,6 +41,7 @@ public class InitComponent {
     private final MauSacRepository mauSacRepository;
     private final VeAoRepository veAoRepository;
     private final XeTaRepository xeTaRepository;
+    private final KichThuocRepository kichThuocRepository;
     @PostConstruct
     private void initDatabase() {
         if (!isInitDatabase) {
@@ -78,6 +79,9 @@ public class InitComponent {
 
         if (xeTaRepository.count() == 0) {
             initDatabaseService.initXeTa();
+        }
+        if (kichThuocRepository.count() == 0) {
+            initDatabaseService.initKichThuoc();
         }
     }
 }
