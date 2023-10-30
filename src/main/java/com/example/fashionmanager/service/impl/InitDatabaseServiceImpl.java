@@ -38,7 +38,7 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
     private final KieuDetResponsitory kieuDetResponsitory;
     private final MauSacRepository mauSacRepository;
     private final VeAoRepository veAoRepository;
-
+    private final KichThuocRepository kichThuocRepository;
     private final XeTaRepository xeTaRepository;
     private final DotGiamGiaRepository dotGiamGiaRepository;
 
@@ -349,7 +349,64 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initKichThuoc() {
-
+        Set<KichThuocEntity> kichThuocEntities = new HashSet<>();
+        kichThuocEntities.add(KichThuocEntity.builder()
+                .maKichThuoc("Size001")
+                .tenKichThuoc("S")
+                .coTay(17)
+                .vongCo(37)
+                .vongMong(92)
+                .nach(32)
+                .soDoBapTay(30)
+                .soDaiCanhTay(62)
+                .doDaiVai(43)
+                .vongEo(78)
+                .vongNguc(94)
+                .doDaiAo(52)
+                .build());
+        kichThuocEntities.add(KichThuocEntity.builder()
+                .maKichThuoc("Size002")
+                .tenKichThuoc("M")
+                .coTay(18)
+                .vongCo(38)
+                .vongMong(96)
+                .nach(34)
+                .soDoBapTay(31)
+                .soDaiCanhTay(64)
+                .doDaiVai(45)
+                .vongEo(83)
+                .vongNguc(100)
+                .doDaiAo(53)
+                .build());
+        kichThuocEntities.add(KichThuocEntity.builder()
+                .maKichThuoc("Size003")
+                .tenKichThuoc("L")
+                .coTay(19)
+                .vongCo(39)
+                .vongMong(100)
+                .nach(36)
+                .soDoBapTay(32)
+                .soDaiCanhTay(66)
+                .doDaiVai(47)
+                .vongEo(86)
+                .vongNguc(106)
+                .doDaiAo(54)
+                .build());
+        kichThuocEntities.add(KichThuocEntity.builder()
+                .maKichThuoc("Size004")
+                .tenKichThuoc("XL")
+                .coTay(20)
+                .vongCo(40)
+                .vongMong(104)
+                .nach(38)
+                .soDoBapTay(33)
+                .soDaiCanhTay(68)
+                .doDaiVai(49)
+                .vongEo(90)
+                .vongNguc(112)
+                .doDaiAo(55)
+                .build());
+        kichThuocRepository.saveAll(kichThuocEntities);
     }
 
     @Override
@@ -379,16 +436,16 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
         cauTrucKhuyEntities.add(CauTrucKhuyEntity.builder()
                 .tenCauTrucKhuy("4 Khuy (Four-Button)")
                 .moTa("""
-                       Loại cấu trúc này có bốn nút ở phía trên áo vest. Nó thường xuất hiện trên các áo vest nhiều hàng 
-                       cúc và thể hiện một phong cách sang trọng và độc đáo.
-                        """)
+                        Loại cấu trúc này có bốn nút ở phía trên áo vest. Nó thường xuất hiện trên các áo vest nhiều hàng 
+                        cúc và thể hiện một phong cách sang trọng và độc đáo.
+                         """)
                 .build());
         cauTrucKhuyEntities.add(CauTrucKhuyEntity.builder()
                 .tenCauTrucKhuy("5 Khuy (Double-Breasted)")
                 .moTa("""
-                       Áo vest kép cúc có hai hàng nút xếp chéo và thường đi kèm với sáu hoặc tám nút, tạo nên một vẻ 
-                       lịch lãm và độc đáo.
-                        """)
+                        Áo vest kép cúc có hai hàng nút xếp chéo và thường đi kèm với sáu hoặc tám nút, tạo nên một vẻ 
+                        lịch lãm và độc đáo.
+                         """)
                 .build());
         cauTrucKhuyRepository.saveAll(cauTrucKhuyEntities);
     }
