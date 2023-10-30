@@ -38,7 +38,7 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
     private final KieuDetResponsitory kieuDetResponsitory;
     private final MauSacRepository mauSacRepository;
     private final VeAoRepository veAoRepository;
-
+    private final DanhMucRepository danhMucRepository;
     private final XeTaRepository xeTaRepository;
     private final DotGiamGiaRepository dotGiamGiaRepository;
 
@@ -252,7 +252,36 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initDanhMuc() {
-
+        Set<DanhMucEntity> danhMucEntities = new HashSet<>();
+        danhMucEntities.add(DanhMucEntity.builder()
+                .maDanhMuc("M001")
+                .tenDanhMuc("Wedding Suit")
+                .build());
+        danhMucEntities.add(DanhMucEntity.builder()
+                .maDanhMuc("M002")
+                .tenDanhMuc("Party Suit")
+                .build());
+        danhMucEntities.add(DanhMucEntity.builder()
+                .maDanhMuc("M003")
+                .tenDanhMuc("Holiday Suit")
+                .build());
+        danhMucEntities.add(DanhMucEntity.builder()
+                .maDanhMuc("M004")
+                .tenDanhMuc("Business Suit")
+                .build());
+        danhMucEntities.add(DanhMucEntity.builder()
+                .maDanhMuc("M005")
+                .tenDanhMuc("Funeral Suit")
+                .build());
+        danhMucEntities.add(DanhMucEntity.builder()
+                .maDanhMuc("M006")
+                .tenDanhMuc("Casual Suit")
+                .build());
+        danhMucEntities.add(DanhMucEntity.builder()
+                .maDanhMuc("M007")
+                .tenDanhMuc("Tuxedo Suit")
+                .build());
+        danhMucRepository.saveAll(danhMucEntities);
     }
 
     @Override
