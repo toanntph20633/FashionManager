@@ -89,5 +89,8 @@ public class InitComponent {
         if (xeTaRepository.count() == 0) {
             initDatabaseService.initXeTa();
         }
+        if (lopLotRepository.count() == 0) {
+            initDatabaseService.initLopLot();
+        }
     }
 }
