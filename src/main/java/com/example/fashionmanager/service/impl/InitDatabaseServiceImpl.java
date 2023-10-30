@@ -33,7 +33,7 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
     private final CauTrucKhuyRepository cauTrucKhuyRepository;
     private final KieuTuiRepository kieuTuiRepository;
     private final ChatLieuRepository chatLieuRepository;
-
+    private final LopLotRepository lopLotRepository;
     private final HoaTietRepository hoaTietRepository;
     private final KieuDetResponsitory kieuDetResponsitory;
     private final MauSacRepository mauSacRepository;
@@ -400,7 +400,53 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
 
     @Override
     public void initLopLot() {
-
+        Set<LopLotEntity> lopLotEntities = new HashSet<>();
+        lopLotEntities.add(LopLotEntity.builder()
+                .tenLopLot("Lớp lót đầy đủ (Full Lining)")
+                .moTa("""
+                         Lớp lót đầy đủ bao phủ toàn bộ bên trong áo suit, bao gồm áo blazer và quần. Lớp lót này thường
+                          làm từ chất liệu như satin hoặc polyester, giúp áo suit dễ dàng mặc vào và tháo ra, cũng như 
+                          giảm ma sát với cơ thể.
+                        """)
+                .build());
+        lopLotEntities.add(LopLotEntity.builder()
+                .tenLopLot("Lớp lót bán (Half Lining)")
+                .moTa("""
+                        Lớp lót bán chỉ bao phủ phần trên của áo suit, thường là phía lưng áo blazer. Phần dưới (quần) 
+                        thường không có lớp lót hoặc có một lớp lót nhẹ. Lớp lót bán giúp tạo ra sự thoải mái và giảm 
+                        nhiệt độ trong mùa hè.
+                        """)
+                .build());
+        lopLotEntities.add(LopLotEntity.builder()
+                .tenLopLot("Lớp lót nón (Unlined)")
+                .moTa("""
+                        Áo suit không có lớp lót được gọi là "unlined." Loại này thường mặc mát hơn trong thời tiết nóng
+                         và tạo nên vẻ sáng sủa và thông thoáng. Tuy nhiên, áo suit unlined có thể dễ bị nhăn và không 
+                         giữ dáng bằng cách tốt như áo suit có lớp lót.
+                        """)
+                .build());
+        lopLotEntities.add(LopLotEntity.builder()
+                .tenLopLot("Lớp lót cố định (Floating Canvas)")
+                .moTa("""
+                        Lớp lót bên trong áo suit cố định bằng nhiều nút và khuy, giúp áo suit giữ dáng và thích nghi 
+                        với hình dáng cơ thể người mặc. Loại này thường xuất hiện trong các áo suit chất lượng cao.
+                        """)
+                .build());
+        lopLotEntities.add(LopLotEntity.builder()
+                .tenLopLot("Lớp lót gắn dính (Fused Lining)")
+                .moTa("""
+                        Lớp lót gắn dính thường được kết nối với vải bên trong áo suit bằng keo hoặc chất dính. Loại này
+                         thường dễ bảo quản hơn, nhưng có thể làm áo suit ít thoải mái và không cải thiện tính đàn hồi của áo suit.
+                        """)
+                .build());
+        lopLotEntities.add(LopLotEntity.builder()
+                .tenLopLot("Lớp lót lưng vải (Back Lining)")
+                .moTa("""
+                        Lớp lót này chỉ bao phủ phía lưng của áo blazer, thường bên trong khu vực lưng và vai. Nó có thể
+                         giúp áo suit giữ dáng và thoải mái hơn.
+                        """)
+                .build());
+        lopLotRepository.saveAll(lopLotEntities);
     }
 
     @Override

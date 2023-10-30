@@ -1,5 +1,6 @@
 package com.example.fashionmanager.init;
 
+import com.example.fashionmanager.repository.LopLotRepository;
 import com.example.fashionmanager.repository.*;
 import com.example.fashionmanager.repository.ChatLieuRepository;
 import com.example.fashionmanager.repository.DotGiamGiaRepository;
@@ -24,9 +25,9 @@ public class InitComponent {
     @Value("${fashion.app.init.database}")
     private boolean isInitDatabase;
     private final UserRepository userRepository;
+    private final LopLotRepository lopLotRepository;
     private final KieuDangRepository kieuDangRepository;
     private final CauTrucKhuyRepository cauTrucKhuyRepository;
-    private final LopLotRepository lopLotRepository;
     private final ChatLieuRepository chatLieuRepository;
     private final KieuTuiRepository kieuTuiRepository;
     private final KieuDetResponsitory kieuDetResponsitory;
@@ -46,6 +47,15 @@ public class InitComponent {
         if (!isInitDatabase) {
             return;
         }
+
+        long userCount = userRepository.count();
+
+        if (userCount > 0) {
+            return;
+        }
+
+        initDatabaseService.initData();
+
         if (userRepository.count() == 0) {
             initDatabaseService.initData();
         }
@@ -78,6 +88,9 @@ public class InitComponent {
 
         if (xeTaRepository.count() == 0) {
             initDatabaseService.initXeTa();
+        }
+        if (lopLotRepository.count() == 0) {
+            initDatabaseService.initLopLot();
         }
     }
 }
