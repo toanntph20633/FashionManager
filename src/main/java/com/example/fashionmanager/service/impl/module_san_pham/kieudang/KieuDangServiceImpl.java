@@ -52,6 +52,7 @@ public class KieuDangServiceImpl implements KieuDangService {
         listReponseDto.setHasPreviousPage(kieuDangEntities.hasPrevious());
         listReponseDto.setPageCount(kieuDangEntities.getTotalPages());
         listReponseDto.setPageSize(kieuDangEntities.getSize());
+        listReponseDto.setTotalItemCount(kieuDangEntities.getTotalElements());
         return ResponseEntity.ok(listReponseDto);
     }
 
