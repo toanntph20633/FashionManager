@@ -22,6 +22,7 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
     private final PasswordEncoder passwordEncoder;
     private final KieuDangRepository kieuDangRepository;
     private final HoaTietRepository hoaTietRepository;
+    private final LoaiSanPhamRepository loaiSanPhamRepository;
     @Override
     @Transactional
     public void initData() {
@@ -95,6 +96,60 @@ public class InitDatabaseServiceImpl implements InitDatabaseService {
                          """)
                 .build());
         kieuDangRepository.saveAll(kieuDangEntities);
+    }
+
+    @Override
+    public void initLoaiSanPham() {
+        Set<LoaiSanPhamEntity> loaiSanPhamEntities = new HashSet<>();
+        loaiSanPhamEntities.add(LoaiSanPhamEntity.builder()
+                .maLoai(" Three-Piece Suit")
+                .tenLoai("""
+                        Áo suit veston
+                        """)
+                .build());
+        loaiSanPhamEntities.add(LoaiSanPhamEntity.builder()
+                .maLoai("Two-Button Suit")
+                .tenLoai("""
+                        Áo suit veston hai nút
+                        """)
+                .build());
+        loaiSanPhamEntities.add(LoaiSanPhamEntity.builder()
+                .maLoai(" Three-Button Suit")
+                .tenLoai("""
+                        Áo suit veston ba nút
+                        """)
+                .build());
+        loaiSanPhamEntities.add(LoaiSanPhamEntity.builder()
+                .maLoai("Double-Breasted Suit")
+                .tenLoai("""
+                        Áo suit veston cột
+                        """)
+                .build());
+        loaiSanPhamEntities.add(LoaiSanPhamEntity.builder()
+                .maLoai("No-Button Suit")
+                .tenLoai("""
+                        Áo suit veston chưa nút
+                        """)
+                .build());
+        loaiSanPhamEntities.add(LoaiSanPhamEntity.builder()
+                .maLoai("Pinstripe Suit")
+                .tenLoai("""
+                        Áo suit veston sọc sọc
+                        """)
+                .build());
+        loaiSanPhamEntities.add(LoaiSanPhamEntity.builder()
+                .maLoai("Tuxedo Suit hoặc Smoking Suit")
+                .tenLoai("""
+                        Áo suit veston cà vạt
+                        """)
+                .build());
+        loaiSanPhamEntities.add(LoaiSanPhamEntity.builder()
+                .maLoai("Linen Suit")
+                .tenLoai("""
+                        Áo suit veston dệt kim
+                        """)
+                .build());
+        loaiSanPhamRepository.saveAll(loaiSanPhamEntities);
     }
 
     @Override

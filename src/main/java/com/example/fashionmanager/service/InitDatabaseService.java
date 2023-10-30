@@ -3,6 +3,8 @@ package com.example.fashionmanager.service;
 public interface InitDatabaseService {
     void initData();
      void initKieuDang();
+
+     void initLoaiSanPham();
      void initXeTa();
      void initKieuDet();
      void initKieuTui();
