@@ -1,13 +1,11 @@
 package com.example.fashionmanager.service.impl.module_san_pham.loplot;
 
 import com.example.fashionmanager.dto.ListReponseDto;
-import com.example.fashionmanager.dto.sanpham.quanlykieudang.response.KieuDangResponse;
 import com.example.fashionmanager.dto.sanpham.quanlyloplot.request.CreateLopLotRequest;
 import com.example.fashionmanager.dto.sanpham.quanlyloplot.request.ListLopLotRequest;
 import com.example.fashionmanager.dto.sanpham.quanlyloplot.request.UpdateLopLotRequest;
 import com.example.fashionmanager.dto.sanpham.quanlyloplot.response.LopLotDetailResponse;
 import com.example.fashionmanager.dto.sanpham.quanlyloplot.response.LopLotResponse;
-import com.example.fashionmanager.entity.KieuDangEntity;
 import com.example.fashionmanager.entity.LopLotEntity;
 import com.example.fashionmanager.exception.ErrorResponse;
 import com.example.fashionmanager.exception.FashionManagerException;

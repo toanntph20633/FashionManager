@@ -8,8 +8,8 @@ import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @SuperBuilder
 public class CreateLopLotRequest {
     private String tenLopLot;
