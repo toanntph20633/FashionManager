@@ -26,6 +26,6 @@ public class SanPhamDanhMucEntity extends CommonEntity implements Serializable {
     private DanhMucEntity danhMucEntity;
 
     @ManyToOne
-    @JoinColumn(name = "san_pham_id")
+    @JoinColumn(name = "=765 san_pham_id")
     private SanPhamEntity sanPhamEntity;
 }
