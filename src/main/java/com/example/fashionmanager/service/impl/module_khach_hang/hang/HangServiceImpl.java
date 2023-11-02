@@ -56,6 +56,7 @@ public class HangServiceImpl implements HangService {
         List<HangResponse> rankReponses = rankEntities.stream().map(rank -> hangMapper.getHangReponse(rank)).toList();
         ListReponseDto<HangResponse> listReponseDto = new ListReponseDto<>();
         listReponseDto.setItems(rankReponses);
+        listReponseDto.setPageIndex(rankEntities.getTotalPages());
         listReponseDto.setHasNextPage(rankEntities.hasNext());
         listReponseDto.setHasPreviousPage(rankEntities.hasPrevious());
         listReponseDto.setPageCount(rankEntities.getTotalPages());

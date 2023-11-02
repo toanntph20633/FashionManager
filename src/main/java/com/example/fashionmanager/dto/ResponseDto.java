@@ -1,6 +1,7 @@
 package com.example.fashionmanager.dto;
 
 import com.example.fashionmanager.enums.ResponseStatus;
+import com.example.fashionmanager.exception.ErrorResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,4 +19,6 @@ public class ResponseDto<T> {
     private String message;
 
     private T content;
+
+
 }

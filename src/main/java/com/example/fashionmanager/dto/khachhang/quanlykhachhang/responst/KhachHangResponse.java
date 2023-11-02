@@ -14,11 +14,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class KhachHangResponse {
     private Long id;
-    private String makhachHang;
+    private String maKhachHang;
     private String tenKhachHang;
     private String soDienThoai;
     private String email;
     private LocalDate ngaySinh;
     private Long diemTichLuy;
     private String tenHang;
+    private Boolean active;
 }

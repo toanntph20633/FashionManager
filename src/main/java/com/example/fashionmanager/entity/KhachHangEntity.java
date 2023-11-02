@@ -49,7 +49,7 @@ public class KhachHangEntity extends CommonEntity implements Serializable {
     @ToString.Exclude
     private List<DiaChiEntity> listDiaChi ;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hang_id")
     private HangEntity hangEntity;
 

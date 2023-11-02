@@ -34,7 +34,7 @@ public class HangController {
     private HangService hangService;
     @GetMapping("list")
     public ListReponseDto<HangResponse> getList(@RequestParam(value = "page", defaultValue = "0") int page,
-                                               @RequestParam(value = "size", defaultValue = "2") int size,
+                                               @RequestParam(value = "size", defaultValue = "10") int size,
                                                @RequestParam(value = "active", defaultValue = "true") Boolean active,
                                                @RequestParam(value = "name", required = false) String name,
                                                @RequestParam(value = "code", required = false) String code) {
@@ -60,6 +60,7 @@ public class HangController {
         }
         return hangService.create(request);
     }
+
 
     @GetMapping("detail/{id}")
     public ResponseDto<HangResponse> detail(@PathVariable Long id) {
