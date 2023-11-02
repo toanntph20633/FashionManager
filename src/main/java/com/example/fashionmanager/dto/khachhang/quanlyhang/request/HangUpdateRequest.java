@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class HangUpdateRequest extends HangCreateResquest {
-    @NotNull(message = "Không để trống id")
+
     private Long id;
 }
