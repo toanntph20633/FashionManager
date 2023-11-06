@@ -1,6 +1,7 @@
 package com.example.fashionmanager.entity;
 
 import com.example.fashionmanager.entity.common.CommonEntity;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

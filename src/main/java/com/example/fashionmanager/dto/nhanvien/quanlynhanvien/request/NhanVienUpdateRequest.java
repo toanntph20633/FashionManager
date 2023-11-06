@@ -28,15 +28,15 @@ public class NhanVienUpdateRequest {
     private String diaChi;
     @NotNull(message = "Không để trống ")
     private boolean gioiTinh;
-    @NotNull(message = "Không để trống ")
-    @NotBlank(message = "Không để trống ")
-    private String email;
+
     @NotNull(message = "Không để trống ")
     @NotBlank(message = "Không để trống ")
     private String userName;
     @NotNull(message = "Không để trống ")
     @NotBlank(message = "Không để trống ")
     private String password;
-
+    @NotNull(message = "Không để trống ")
+    @NotBlank(message = "Không để trống ")
+    private String email;
     private boolean active;
 }

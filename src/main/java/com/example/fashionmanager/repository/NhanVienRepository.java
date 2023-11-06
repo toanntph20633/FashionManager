@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NhanVienRepository extends JpaRepository<NhanVienEntity,Long>, JpaSpecificationExecutor<NhanVienEntity> {
-    boolean existsByCccdAndDeleted(String cccd, Boolean delete);
+    boolean existsByCccd(String cccd);
 
     boolean existsByCccdAndDeletedAndIdNot(String cccd, Boolean delete, Long id);
 }

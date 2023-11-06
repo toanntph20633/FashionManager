@@ -1,7 +1,7 @@
 package com.example.fashionmanager.service;
 
 public interface InitDatabaseService {
-    void initData();
+//    void initData();
      void initKieuDang();
      void initXeTa();
      void initKieuDet();

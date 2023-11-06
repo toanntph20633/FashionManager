@@ -7,7 +7,11 @@ import com.example.fashionmanager.dto.nhanvien.quanlynhanvien.request.NhanVienUs
 import com.example.fashionmanager.dto.nhanvien.quanlynhanvien.response.NhanVienResponse;
 
 public interface NhanVienService {
-    ListReponseDto<NhanVienResponse> getActiveEmployees(int pageIndex, Long id,
+    ListReponseDto<NhanVienResponse> getActiveEmployees(int pageIndex,
+
+                                                            int pageSize,
+
+                                                            Long id,
 
                                                             String tenNhanVien,
 
@@ -17,7 +21,8 @@ public interface NhanVienService {
 
                                                             String diaChi,
 
-                                                            Boolean gioiTinh
+                                                            Boolean gioiTinh,
+                                                            Boolean active
                                                         );
     ResponseDto<NhanVienResponse> save(NhanVienUserCreateRequest request);
 

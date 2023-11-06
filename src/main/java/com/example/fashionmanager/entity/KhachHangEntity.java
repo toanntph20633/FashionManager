@@ -50,7 +50,7 @@ public class KhachHangEntity extends CommonEntity implements Serializable {
     @JoinColumn(name = "hang_id")
     private HangEntity hangEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity userEntity;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id")
+//    private UserEntity userEntity;
 }

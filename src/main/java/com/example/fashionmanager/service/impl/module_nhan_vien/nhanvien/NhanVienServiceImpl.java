@@ -23,7 +23,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,32 +42,42 @@ public class NhanVienServiceImpl implements NhanVienService{
     RoleRepository roleRepository;
     @Autowired
     UserRoleRepository userRoleRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Override
-    public ListReponseDto<NhanVienResponse> getActiveEmployees(int pageIndex, Long id, String tenNhanVien, String cccd, String soDienThoai, String diaChi, Boolean gioiTinh) {
-        int pageSize = 10; // Kích thước trang
+    public ListReponseDto<NhanVienResponse> getActiveEmployees(int pageIndex,int pageSize, Long id, String tenNhanVien, String cccd, String soDienThoai, String diaChi, Boolean gioiTinh,Boolean active) {
+
         Pageable pageable = PageRequest.of(pageIndex, pageSize);
 
         Specification<NhanVienEntity> employeeEntitySpecification = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-            predicates.add(criteriaBuilder.isTrue(root.get("active"))); // Điều kiện active = true
-
+            if(active == null) {
+                predicates.add(criteriaBuilder.isTrue(root.get("active"))); // Điều kiện active = true
+            }else {
+                predicates.add(criteriaBuilder.equal(root.get("active"), active));
+            }
             // Thêm điều kiện tìm kiếm theo tên
             if (tenNhanVien != null && !tenNhanVien.isEmpty()) {
                 predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("tenNhanVien")), "%" + tenNhanVien.toLowerCase() + "%"));
             }
             if (gioiTinh != null) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("tenNhanVien")), "%" + tenNhanVien.toLowerCase() + "%"));
+                if (gioiTinh) {
+                    // Giới tính là Nam
+                    predicates.add(criteriaBuilder.isTrue(root.get("gioiTinh")));
+
+                } else {
+                    // Giới tính là Nữ
+                    predicates.add(criteriaBuilder.isFalse(root.get("gioiTinh")));
+                }
             }
             if (diaChi != null) {
-                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("tenNhanVien")), "%" + tenNhanVien.toLowerCase() + "%"));
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("diaChi")), "%" + diaChi.toLowerCase() + "%"));
             }
 
             // Thêm điều kiện tìm kiếm theo căn cước
             if (cccd != null && !cccd.isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("cccd"), cccd));
+                predicates.add(criteriaBuilder.equal(root.get("cccd"), "%"+cccd+"%"));
             }
 
             // Thêm điều kiện tìm kiếm theo số điện thoại
@@ -112,7 +122,7 @@ public class NhanVienServiceImpl implements NhanVienService{
 
     @Override
     public ResponseDto<NhanVienResponse> save(NhanVienUserCreateRequest request) {
-        if(nhanVienRepository.existsByCccdAndDeleted(request.getCccd(), false)){
+        if(nhanVienRepository.existsByCccd(request.getCccd())){
             throw new FashionManagerException(
                     new ErrorResponse(
                             HttpStatus.INTERNAL_SERVER_ERROR,
@@ -122,11 +132,11 @@ public class NhanVienServiceImpl implements NhanVienService{
         }
 
         //Mã hoá mk
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
+//        String encodedPassword = passwordEncoder.encode(request.getPassword());
         // Tạo một UserEntity mới
         UserEntity userEntity = UserEntity.builder()
                 .userName(request.getUserName())
-                .password(encodedPassword)
+                .password(request.getPassword())
                 .email(request.getEmail())
                 .build();
 
@@ -191,8 +201,9 @@ public class NhanVienServiceImpl implements NhanVienService{
         );
 
 
-        // Cập nhật thông tin email trong UserEntity
+        // Cập nhật thông tin trong UserEntity
         UserEntity userEntity = getNhanVienEntity.getUserEntity();
+
         userEntity.setEmail(request.getEmail());
         userEntity.setUserName(request.getUserName());
         userEntity.setPassword(request.getPassword());
@@ -246,9 +257,10 @@ public class NhanVienServiceImpl implements NhanVienService{
 
     @Override
     public ResponseDto<NhanVienResponse> changeActive(Long id) {
-        NhanVienEntity nhanVienEntity = nhanVienRepository.findById(id).map(employee -> {
-            employee.setActive(!employee.isActive());
-            return employee;
+        NhanVienEntity nhanVienEntity = nhanVienRepository.findById(id).map(nhanVien -> {
+            nhanVien.setDeleted(false);
+            nhanVien.setActive(true);
+            return nhanVien;
         }).orElseThrow(() -> new FashionManagerException(
                         new ErrorResponse(
                                 HttpStatus.NOT_FOUND
@@ -259,7 +271,7 @@ public class NhanVienServiceImpl implements NhanVienService{
         ResponseDto<NhanVienResponse> responseDto = new ResponseDto<>();
         responseDto.setContent(nhanVienMapper.getNhanVienResponse(nhanVienRepository.save(nhanVienEntity)));
         responseDto.setStatus(ResponseStatus.SUCCESS);
-        responseDto.setMessage("Thay đổi trạng thái hoạt động nhân viên thành công");
+        responseDto.setMessage("Active nhân viên thành công");
         return responseDto;
     }
 }

@@ -13,21 +13,26 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("super-admin/nhan-vien-manager")
+@CrossOrigin(origins = "*", maxAge = -1)
 public class NhanVienController {
     @Autowired
     private NhanVienService nhanVienService;
 
+    // theieus size
     @GetMapping("list")
     public ListReponseDto<NhanVienResponse> getActiveNhanVien(
             @RequestParam(value = "pageIndex", defaultValue = "0") int pageIndex,
+            @RequestParam(value = "pageSize", defaultValue = "0") int pageSize,
             @RequestParam(value = "tenNhanVien", required = false) String tenNhanVien,
             @RequestParam(value = "cccd", required = false) String cccd,
             @RequestParam(value = "diaChi", required = false) String diaChi,
             @RequestParam(value = "gioiTinh", required = false) Boolean gioiTinh,
             @RequestParam(value = "soDienThoai", required = false) String soDienThoai,
-            @RequestParam(value = "id", required = false) Long id
+            @RequestParam(value = "id", required = false) Long id,
+            @RequestParam(value = "active", required = false) Boolean active
+
     ){
-        return nhanVienService.getActiveEmployees(pageIndex,id,tenNhanVien,cccd,soDienThoai,diaChi,gioiTinh);
+        return nhanVienService.getActiveEmployees(pageIndex,pageSize,id,tenNhanVien,cccd,soDienThoai,diaChi,gioiTinh,active);
     }
 
     @PostMapping("create")
