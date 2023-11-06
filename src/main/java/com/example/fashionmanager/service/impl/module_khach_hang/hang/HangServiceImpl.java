@@ -43,10 +43,10 @@ public class HangServiceImpl implements HangService {
         Specification<HangEntity> rankEntitySpecification = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (StringUtils.isNotBlank(request.getCode())) {
-                predicates.add(criteriaBuilder.like(root.get("ma"), "%" + request.getCode() + "%"));
+                predicates.add(criteriaBuilder.like(root.get("maHang"), "%" + request.getCode() + "%"));
             }
             if (StringUtils.isNotBlank(request.getName())) {
-                predicates.add(criteriaBuilder.like(root.get("ten"), "%" + request.getName() + "%"));
+                predicates.add(criteriaBuilder.like(root.get("tenHang"), "%" + request.getName() + "%"));
             }
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
 //            predicates.add(criteriaBuilder.equal(root.get("active"), request.isActive()));

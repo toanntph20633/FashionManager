@@ -42,10 +42,10 @@ public class KhachHangServiceImpl implements KhachHangService{
         Specification<KhachHangEntity> khachHangEntitySpecification = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
             if (StringUtils.isNotBlank(request.getCode())) {
-                predicates.add(criteriaBuilder.like(root.get("ma"), "%" + request.getCode() + "%"));
+                predicates.add(criteriaBuilder.like(root.get("maKhachHang"), "%" + request.getCode() + "%"));
             }
             if (StringUtils.isNotBlank(request.getName())) {
-                predicates.add(criteriaBuilder.like(root.get("ten"), "%" + request.getName() + "%"));
+                predicates.add(criteriaBuilder.like(root.get("tenKhachHang"), "%" + request.getName() + "%"));
             }
             predicates.add(criteriaBuilder.isFalse(root.get("deleted")));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
@@ -163,4 +163,6 @@ public class KhachHangServiceImpl implements KhachHangService{
         responseDto.setMessage("Thay đổi trạng thái hoạt động khách hàng thành công");
         return responseDto;
     }
+
+
 }
