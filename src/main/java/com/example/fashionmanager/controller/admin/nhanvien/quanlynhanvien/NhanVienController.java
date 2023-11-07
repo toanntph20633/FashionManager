@@ -29,10 +29,11 @@ public class NhanVienController {
             @RequestParam(value = "gioiTinh", required = false) Boolean gioiTinh,
             @RequestParam(value = "soDienThoai", required = false) String soDienThoai,
             @RequestParam(value = "id", required = false) Long id,
-            @RequestParam(value = "active", required = false) Boolean active
+            @RequestParam(value = "active", required = false) Boolean active,
+            @RequestParam(value = "deleted",required = false) Boolean deleted
 
     ){
-        return nhanVienService.getActiveEmployees(pageIndex,pageSize,id,tenNhanVien,cccd,soDienThoai,diaChi,gioiTinh,active);
+        return nhanVienService.getActiveEmployees(pageIndex,pageSize,id,tenNhanVien,cccd,soDienThoai,diaChi,gioiTinh,active,deleted);
     }
 
     @PostMapping("create")

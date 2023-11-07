@@ -22,7 +22,8 @@ public interface NhanVienService {
                                                             String diaChi,
 
                                                             Boolean gioiTinh,
-                                                            Boolean active
+                                                            Boolean active,
+                                                            Boolean deleted
                                                         );
     ResponseDto<NhanVienResponse> save(NhanVienUserCreateRequest request);
 

@@ -46,12 +46,15 @@ public class NhanVienServiceImpl implements NhanVienService{
 //    private PasswordEncoder passwordEncoder;
 
     @Override
-    public ListReponseDto<NhanVienResponse> getActiveEmployees(int pageIndex,int pageSize, Long id, String tenNhanVien, String cccd, String soDienThoai, String diaChi, Boolean gioiTinh,Boolean active) {
+    public ListReponseDto<NhanVienResponse> getActiveEmployees(int pageIndex,int pageSize, Long id, String tenNhanVien, String cccd, String soDienThoai, String diaChi, Boolean gioiTinh,Boolean active,Boolean deleted) {
 
         Pageable pageable = PageRequest.of(pageIndex, pageSize);
 
         Specification<NhanVienEntity> employeeEntitySpecification = ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
+            if(deleted == null) {
+                predicates.add(criteriaBuilder.isFalse(root.get("deleted"))); // Điều kiện delete = false
+            }
             if(active == null) {
                 predicates.add(criteriaBuilder.isTrue(root.get("active"))); // Điều kiện active = true
             }else {
@@ -77,12 +80,12 @@ public class NhanVienServiceImpl implements NhanVienService{
 
             // Thêm điều kiện tìm kiếm theo căn cước
             if (cccd != null && !cccd.isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("cccd"), "%"+cccd+"%"));
+                predicates.add(criteriaBuilder.like(root.get("cccd"), cccd+"%"));
             }
 
             // Thêm điều kiện tìm kiếm theo số điện thoại
             if (soDienThoai != null && !soDienThoai.isEmpty()) {
-                predicates.add(criteriaBuilder.equal(root.get("soDienThoai"), soDienThoai));
+                predicates.add(criteriaBuilder.like(root.get("soDienThoai"), soDienThoai+"%"));
             }
 
             // Thêm điều kiện tìm kiếm theo id
@@ -116,6 +119,7 @@ public class NhanVienServiceImpl implements NhanVienService{
         listResponseDto.setHasPreviousPage(nhanVienEntities.hasPrevious());
         listResponseDto.setPageCount(nhanVienEntities.getTotalPages());
         listResponseDto.setPageSize(pageSize);
+
 
         return listResponseDto;
     }
@@ -258,8 +262,7 @@ public class NhanVienServiceImpl implements NhanVienService{
     @Override
     public ResponseDto<NhanVienResponse> changeActive(Long id) {
         NhanVienEntity nhanVienEntity = nhanVienRepository.findById(id).map(nhanVien -> {
-            nhanVien.setDeleted(false);
-            nhanVien.setActive(true);
+            nhanVien.setActive(!nhanVien.isActive());
             return nhanVien;
         }).orElseThrow(() -> new FashionManagerException(
                         new ErrorResponse(
