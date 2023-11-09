@@ -29,7 +29,7 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
-        security.csrf(o -> o.disable()).cors(o -> o.disable())
+        security.csrf(o -> o.disable()).cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configure(security))
                 .authorizeHttpRequests(o ->
                         o
                                 .requestMatchers("admin/**", "auth/admin/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUPER_ADMIN")

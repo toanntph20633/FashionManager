@@ -7,6 +7,7 @@ import com.example.fashionmanager.enums.DotGiamGiaStatus;
 import com.example.fashionmanager.service.impl.module_san_pham.dot_giam_gia.DotGiamGiaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("admin/quan-ly-dot-giam-gia")
+@CrossOrigin("*")
 public class DotGiamGiaController {
     @Autowired
     private DotGiamGiaService dotGiamGiaService;
